@@ -1,0 +1,110 @@
+\documentclass[a4paper,10pt]{scrbook}
+
+% Seitenlayout
+\usepackage[a4paper,top=1.5cm,right=2.0cm,bottom=2cm,left=2.0cm]{geometry}
+\usepackage{lscape}
+\usepackage{fancyhdr}
+
+% Zeichen
+\usepackage[ngerman]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath, amsthm, amssymb}
+\usepackage{color}
+
+% Zeichensatz
+\usepackage[colorlinks,%
+	    citecolor=black,%
+	    filecolor=black,%
+	    linkcolor=black,%
+	    urlcolor=black,%
+	    pdftitle = {Mitschrift - CG},%
+	    pdfauthor = {Martin Lenders}%
+	]{hyperref}
+\usepackage{listings}
+\usepackage{multicol}
+
+% Grafik
+\usepackage{graphicx}
+\usepackage{pstricks}
+\usepackage{pst-node}
+\usepackage{pst-plot}
+\usepackage{pst-3dplot}
+\usepackage{pst-tree}
+\usepackage{pst-func}
+
+% Color definitions
+\definecolor{lgray}{gray}{0.95}
+\definecolor{save}{rgb}{0.498,0,0.3333}
+\definecolor{identifier}{rgb}{0,0,0.1}
+\definecolor{string}{rgb}{0.192,0,1}
+\definecolor{comment}{rgb}{0.25,0.5,0.37}
+\definecolor{yellow}{rgb}{1,1,0}
+\definecolor{sand}{rgb}{1,1,.75}
+\definecolor{red}{rgb}{1,0,0}
+\definecolor{melon}{rgb}{1,0.6,.5}
+\definecolor{green}{rgb}{0,1,0}
+\definecolor{lime}{rgb}{.75,1,.75}
+\definecolor{blue}{rgb}{0,0,1}
+\definecolor{azure}{rgb}{.75,.75,1}
+
+% Einstellungen für Pakete
+\lstset{%
+	tabsize=4,%
+	frame=,%
+	basicstyle=\footnotesize\changefont{pcr}{m}{n},%
+	emphstyle=\textit,%
+	language=Java,%
+	numberstyle=\tiny\textsf,%
+	numbersep=5pt,%
+	numbers=none,%
+	keywordstyle=\color{save}\textbf,%
+	identifierstyle=\color{identifier},%
+	stringstyle=\color{string},%
+	backgroundcolor=\color{lgray},%
+	showstringspaces=false,%
+	commentstyle=\color{comment},%
+	extendedchars=true,%
+	xleftmargin=1em,%
+	inputencoding=utf8%
+}
+
+\psset{%
+	algebraic=true,
+	angleA=0,%
+	angleB=180,%
+	unit=1cm,%
+	arrows=->,
+	subgriddiv=0,%
+	griddots=5,%
+	gridlabels=7pt%
+}
+
+\renewcommand{\chaptermark}[1]{markboth{#1}{}}
+\renewcommand{\sectionmark}[1]{\markright{\thesection\ #1}}
+\pagestyle{fancy}
+\fancyhf{}
+\fancyfoot[LE,RO]{\sffamily\thepage}
+\fancyhead[LE]{\footnotesize\sffamily\bfseries\leftmark}
+\fancyhead[RO]{\footnotesize\sffamily\rightmark} 
+
+% Eigene Befehle
+\newcommand{\Defi}{\paragraph*{Definition}}
+\newcommand{\Lemma}{\paragraph*{Lemma}}
+\newcommand{\Satz}{\paragraph*{Satz}}
+\newcommand{\Bew}{\paragraph*{Beweis}}
+
+% Neudefinitionen
+\renewcommand{\thepart}{\Alph{part}}
+\newcommand{\vtwo}[2]{\begin{pmatrix}#1\\#2\end{pmatrix}}
+\newcommand{\vthree}[3]{\begin{pmatrix}#1\\#2\\#3\end{pmatrix}}
+
+\title{Mitschrift\\{\LARGE Computergrafik}}
+\author{Martin Lenders}
+
+\begin{document}
+\maketitle
+\tableofcontents
+
+\input{1_intro.tex}
+\input{2_coord_trans.tex}
+\end{document}

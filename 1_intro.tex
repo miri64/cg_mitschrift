@@ -1,0 +1,60 @@
+\chapter{Einführung}
+\section{Organisatorisches}
+\subsection{Übungsblätter:}
+\begin{itemize}
+ \item Ausgabe: Mittwoch, Abgabe: Freitag
+ \item Abgabe in Zweiergruppen
+ \item 60\% der Punkte müssen erreicht werden
+ \item min. einmal Vorrechnen
+\end{itemize}
+
+\subsection{Programmierung}
+\begin{itemize}
+ \item Aufgaben in Java gestaltet
+ \item mit OpenGL-Interface
+ \item auf Nachfrage kann auch C/C++ verwendet werden
+\end{itemize}
+
+\section{Übersicht}
+\begin{center}
+\begin{psmatrix}
+ \rnode{GM}{
+ \begin{minipage}{3cm}
+  \centering
+  Geometrisches Modell\\(im Computer)
+ \end{minipage}
+ } & \rnode{B1}{Bild} & \\
+ \rnode{PH}{Punkthaufen} && \rnode{A}{Auge} & \rnode{G}{Gehirn}\\
+ \rnode{W}{Wirklichkeit} & \rnode{B2}{Bild}
+ \ncline{GM}{B1}
+ \ncline{PH}{GM}
+ \ncline{W}{PH}\naput[nrot=90]{\textit{\footnotesize Laserscanner}}
+ \ncline{W}{B2}\nbput{\textit{\footnotesize Kamera}}
+ \ncline{B2}{GM}
+ \ncline{B2}{A}
+ \ncline{B1}{A}
+ \ncline{W}{A}
+ \ncline{A}{G}
+ \ncbox[linearc=0.3,boxsize=1cm,nodesep=5pt,linecolor=red]{1,1}{1,2}
+ \ncbox[linearc=1.5,boxsize=1.5cm,nodesep=10pt,linecolor=green]{1,1}{3,2}
+ \ncbox[linearc=0.3,boxsize=1.5cm,nodesep=5pt,linecolor=blue]{1,1}{2,1}
+\end{psmatrix}
+\end{center}
+
+\begin{itemize}
+ \item \textsc{\color{red}Computergrafik}
+ \item \textsc{\color{green}Bildbearbeitung / Bilderkennung}
+ \item \textsc{\color{blue}Geometrisches Rechnen / Geometrische Modellierung}
+\end{itemize}
+
+\subsection{Fahrplan}
+\begin{itemize}
+ \item Koordinatiensysteme, geometrische Transformationen
+ \item Licht und Farben
+ \item Rasterung
+ \item Beleuchtung und Schattierung
+ \item rendering-pipeline: vom Modell bis zum gerasterten Bildbearbeitung
+ \item geometrische Modellierung: Kurven, Flächen und Splines
+ \item {\color{red}\large Kein Anwendungskurs für OpenGL, JOGL, Javaview etc.!}
+\end{itemize}
+

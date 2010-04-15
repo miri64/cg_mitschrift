@@ -1,0 +1,150 @@
+\chapter{Koordinatensysteme, geometrische Transformationen}
+\section{kartesische Koordinaten}
+\begin{center}
+\begin{pspicture}[unit=0.5cm](0,0)(5,3)
+	\psaxes[Dx=2,Dy=2](0,0)(0,0)(10,6)[$x$,0][$y$,0]
+	\psdot(5,3)\rput[bl](5,3){$p = \vtwo{x}{y} = \vtwo{5}{3}$}
+\end{pspicture}
+\end{center}
+
+\section{Geometrische Transformationen}
+\begin{itemize}
+ \item \emph{Tranlation}: $p \mapsto p + t \qquad t \in \mathbb{R}^2$,  Translationsvektor
+	\begin{center}
+	 \begin{pspicture}[unit=0.5cm](0,0)(4,4)
+	  \psaxes[labels=none,ticks=none](0,0)(0,0)(8,8)
+	  \pspolygon[linestyle=dotted](6,5)(7,7.5)(2,8)(3,3)
+	  \rput[lb](5,3){\psline[linecolor=red](0,0)(1,2)\uput{3pt}[r]{0}(0.5,1){\color{red}$t$}}
+	  \rput[lb](6,5.5){\psline[linecolor=red](0,0)(1,2)\uput{3pt}[r]{0}(0.5,1){\color{red}$t$}}
+	  \rput[lb](1,6){\psline[linecolor=red](0,0)(1,2)\uput{3pt}[r]{0}(0.5,1){\color{red}$t$}}
+	  \rput[lb](2,1){\psline[linecolor=red](0,0)(1,2)\uput{3pt}[r]{0}(0.5,1){\color{red}$t$}}
+	  \pspolygon(5,3)(6,5.5)(1,6)(2,1)
+	  \psdot(5,3)
+	  \psdot(6,5.5)
+	  \psdot(1,6)
+	  \psdot(2,1)
+	 \end{pspicture}
+	\end{center}
+
+ \item \emph{Rotation} (um den Ursprung $\vtwo{0}{0}$):
+	\[p \mapsto M \cdot p \qquad M = \begin{pmatrix}
+	                                  \cos{\alpha} & -\sin{\alpha} \\
+	                                  \sin{\alpha} & \cos{\alpha}
+	                                 \end{pmatrix}\text{, Rotationsmatrix}\]
+	\begin{center}
+	 \begin{pspicture}[unit=0.5cm](-2,-2)(2,2)
+	  \psaxes[labels=none,ticks=none](0,0)(-4,-4)(4,4)
+	  \SpecialCoor
+	  \rput[tl](-4,4){\color{red}$\alpha = 20^\circ$}
+	  \psarc[linecolor=red](0,0){3}{30}{50}\uput{3pt}[40]{0}(3;40){\color{red}$\alpha$}
+	  \psarc[linecolor=red](0,0){4}{135}{155}\uput{3pt}[145]{0}(4;145){\color{red}$\alpha$}
+	  \psarc[linecolor=red](0,0){2}{-70}{-50}\uput{3pt}[-60]{0}(2;-60){\color{red}$\alpha$}
+	  \pspolygon(3;30)(4;135)(2;-70)
+	  \pspolygon[linestyle=dotted](3;50)(4;155)(2;-50)
+	 \end{pspicture}
+	\end{center}
+ \item \emph{Rotation} um den Punkt $c$: $p \mapsto M(p -c) + c = Mp + (c - Mc), \qquad c \mapsto c$
+ \item \emph{gleichförmige Skalierung}:
+	\begin{align*}
+	&&p &\mapsto \lambda \cdot p = \begin{pmatrix}
+	                               \lambda & 0 \\
+	                               0 & \lambda
+	                              \end{pmatrix} \cdot p, \qquad \lambda \neq 0\\
+	&\lambda = 1& p &\mapsto -p = \begin{pmatrix}
+	                                     -1 & 0 \\
+	                                     0 & -1
+	                                    \end{pmatrix} \cdot p = \text{Spiegelung am Ursprung $=$ Rotation um $180^\circ$}
+	\end{align*}
+ \item \emph{Ungleichförmige Skalierung}:
+	\[M = \begin{pmatrix}
+	       \lambda_1 & 0 \\
+	       0 & \lambda_2
+	      \end{pmatrix} \qquad p \mapsto M \cdot p\]
+	\[\vtwo{x}{y} = \vtwo{\lambda_1 x}{\lambda_2 y}\]
+	\[M = \begin{pmatrix}
+	       -1 & 0 \\
+	       0 & 1
+	      \end{pmatrix} \text{resultiert in der Spiegelung an der $x$-Achse}\]
+	\[M = \begin{pmatrix}
+	       1 & 0 \\
+	       0 & -1
+	      \end{pmatrix} \text{resultiert in der Spiegelung an der $y$-Achse}\]
+ \item \emph{Scherung}
+	\[M = \overset{\text{Scherung auf der $x$-Achse}}{\begin{pmatrix}
+		1 &  \lambda \\
+		0 & 1
+	      \end{pmatrix}} \left(\text{oder } \overset{\text{Scherung auf der $y$-Achse}}{\begin{pmatrix}
+		1 & 0 \\
+		\lambda & 1 \\
+	      \end{pmatrix}}
+	      \right)\]
+	      \[\vtwo{x}{y} \mapsto \begin{pmatrix}
+		1 &  \lambda \\
+		0 & 1
+	      \end{pmatrix} \vtwo{x}{y} = \vtwo{x+ \lambda y}{y}\]
+	 \begin{center}
+	 \begin{pspicture}[unit=0.5cm](0,0)(4,2.1)
+	  \rput[tl](0.1,4){\color{red}$\lambda = 0{,}5$}
+	  \psaxes[labels=none,ticks=none](0,0)(0,0)(8,4.2)
+	  \psline[linecolor=red](4,1)(4.5,1)
+	  \psline[linecolor=red](4,2)(5,2)
+	  \psline[linecolor=red](4,3)(5.5,3)
+	  \psline[linecolor=red](4,4)(6,4)
+	  \psdot(4,1)\psdot[dotstyle=o](4.5,1)
+	  \psdot(4,2)\psdot[dotstyle=o](5,2)
+	  \psdot(4,3)\psdot[dotstyle=o](5.5,3)
+	  \psdot(4,4)\psdot[dotstyle=o](6,4)
+	 \end{pspicture}
+	\end{center}
+\end{itemize}
+Flächeninhalt:
+\begin{itemize}
+ \item Translationen, Rotationen, Scherungen und Spiegelungen ändern den Flächeninhalt \underline{nicht}.
+ \item Skalierung ändert den Flächeninhalt um den Faktor $\lambda_1 \cdot \lambda_2$
+\end{itemize}
+
+\Defi Eine Verknüpfung mehrerer dieser Transformationen bildet eine \textbf{affine Transformation}.
+	Allgemein ist diese:
+	\[ p \mapsto M \cdot p = b, \qquad M \in \mathbb{R}^{2 \times 2}, b \in \mathbb{R}^2, \det M \neq 0 \]
+	Der Flächeninhalt ändert sich um den Faktor $\det M$
+
+\Defi Die Verknüpfung von Translation, Rotation und Spiegelung heißt \textbf{starre Bewegung} oder \textbf{Isometrie}.
+	Allgemein ist diese:
+	\[ p \mapsto Mp + t \text{ mit \textbf{orthogonaler Matrix} $M$ (d. h. $\det M = \pm 1$)}\]
+	die Isometrien zerfallen:
+	\begin{itemize}
+	 \item \textbf{orientierungserhaltende} ($\det M = 1$) und
+	 \item \textbf{orientierungsumkehrende} ($\det M = -1$) Isometrien
+	\end{itemize}
+
+\section{Homogene Koordinaten}
+\Defi \textbf{Homogene Koordinaten}: Statt $p = \vtwo{x}{y}$ verwendet man eine dritte Koordinate
+	$p = \vthree{x}{y}{1}$
+
+\paragraph*{Konvention} Die Koordinaten $\vthree{x}{y}{z}$ und
+	$\vthree{\lambda x}{\lambda y}{\lambda z}$ stellen denselben Punkt dar ($\lambda \neq 0$)
+
+Der Punkt $\vthree{x}{y}{z}$ mit $z \neq 0$ hat die kartesischen Koordinaten $\vtwo{\frac{x}{z}}{\frac{y}{z}}$
+
+\subsection{Allgemeine affine Transformation in homogenen Koordinaten}
+\[\vthree{x}{y}{z} \mapsto \underbrace{\begin{pmatrix}
+				m_{11} & m_{12} & b_1\\
+				m_{21} & m_{22} & b_2\\
+				0 & 0 & 1
+                           \end{pmatrix}}_{M'} \cdot \vthree{x}{y}{z}\]
+\[\vthree{x}{y}{1} \mapsto \vthree{m_{11}x + m_{12}y + b_1}{m_{21}x + m_{22}y + b_2}{1}\]
+
+Die Matrizen $M'$ und $\lambda M'$ beschreiben dieselbe Transformation $(\lambda \neq 0)$
+
+\[p \mapsto M' p \text{ mit } M' = \begin{pmatrix}
+                                    m_{11} & m_{12} & m_{13} \\
+                                    m_{21} & m_{22} & m_{23} \\
+                                    0 & 0 & m_{33}
+                                   \end{pmatrix} \text{ und $\det M' \neq 0$}
+\]
+\[\det M' \neq 0 \Leftrightarrow m_{33} \neq 0 \land \begin{vmatrix}
+                                                    m_{11} & m_{12} \\
+                                                    m_{21} & m_{22}
+                                                   \end{vmatrix} \neq 0
+\]
+$\Rightarrow$ o. B. d. A. kann man auch $m_{33} = 1$ annehmen (Dann kann man die dritte Zeile auch weglassen).
