@@ -148,3 +148,340 @@ Die Matrizen $M'$ und $\lambda M'$ beschreiben dieselbe Transformation $(\lambda
                                                    \end{vmatrix} \neq 0
 \]
 $\Rightarrow$ o. B. d. A. kann man auch $m_{33} = 1$ annehmen (Dann kann man die dritte Zeile auch weglassen).
+
+\section{Die projektive Ebene}
+\Defi Die (reelle) \textbf{projektive Ebene} $P^2$ besteht aus den Äquivalenzklassen vo Punkten
+	$\vthree{x}{y}{z} \neq \vthree{0}{0}{0}$, wobei $\vthree{x}{y}{z}$ und $\vthree{\lambda x}{\lambda y}{\lambda z}$
+	denselben Punkt darstellen ($\lambda \neq 0$)
+
+\subsection{Geraden in der projektiven Ebene}
+Gerade in $\mathbb{R}^2$ (karthesische Koordinaten):
+ \[y = ax + b \text{(Gerade darf nicht senkrecht sein)}\]
+ \[ax + bx = -c\]
+
+\[\Updownarrow\]
+
+Gerade in Homogenen Koordinaten
+\[\vtwo{x}{y} \longrightarrow \vthree{x}{y}{1}\]
+\[ax + by + c = 0 \Leftrightarrow \vthree{a}{b}{c} \cdot \vthree{x}{y}{1} = 0\]
+
+Allgemeine Gleichung einer Geraden in $P^2$
+\[\vthree{a}{b}{c} \cdot \vthree{x}{y}{z} = 0 \Leftrightarrow ax + by + cz = 0 \qquad \vthree{a}{b}{c} \neq \vthree{0}{0}{0}\]
+
+Wenn $\vthree{x}{y}{z}$ die Gleichung erfüllt, dann erfüllt auch $\vthree{\lambda x}{\lambda y}{\lambda z}$ die Gleichung.
+
+$\vthree{a}{b}{c}$ und $\vthree{\lambda a}{\lambda b}{\lambda c}$ stellen dieselbe Gerade dar.
+
+\begin{description}
+ \item[projektive Punkte] $\vthree{x}{y}{z} \neq \vthree{0}{0}{0}$ Skalierung egal.
+ \item[projektive Gerade] $\vthree{a}{b}{c} \neq \vthree{0}{0}{0}$ Skalierung egal
+\end{description}
+\Satz Punkt $\vthree{x}{y}{z}$ liegt auf der Geraden $\vthree{a}{b}{c}$:
+\[\vthree{a}{b}{c} \cdot \vthree{x}{y}{z} = 0\]
+
+\Satz	Zwei verschiedene Geraden schneiden sich in genau einem Punkt.
+\Bew	Gerade $\forall \lambda: \vthree{a_1}{b_1}{c_1}, \vthree{a_2}{b_2}{c_2} \neq \lambda \vthree{a_1}{b_1}{c_1}$.
+
+Schnittpunkt:
+\begin{align*}
+ a_1 x + b_1 y + c_1 z &= 0\\
+ a_2 x + b_2 y + c_2 z &= 0
+\end{align*}
+
+Koeffizientenmatrix $A = \begin{pmatrix}
+                          a_1 & b_1 & c_1 \\
+                          a_2 & b_2 & c_2
+                         \end{pmatrix}, \rg A = 2$\\
+$\Rightarrow$ Lösungsmenge ist eindimensional
+\[ L = \left\{\left.\lambda \vthree{x_0}{y_0}{z_0} \right| y \in \mathbb{R}\right\} \text{ist ein projektiver Punkt}\]
+
+$\vthree{x_0}{y_0}{z_0}$ kann als $\vthree{a_1}{b_1}{c_1} \times \vthree{a_2}{b_2}{c_2} = \vthree{
+		\begin{vmatrix}
+		 b_1 & b_2 \\
+		 c_1 & c_2
+		\end{vmatrix}}{
+		\begin{vmatrix}
+		 c_1 & c_2 \\
+		 a_1 & a_2
+		\end{vmatrix}}{
+		\begin{vmatrix}
+		 a_1 & a_2 \\
+		 b_1 & b_2
+		\end{vmatrix}}
+$ berechnet werden (Kreuzprodukt)
+
+\begin{center}
+	\begin{pspicture}(-1,0)(3,3.5)
+		\pstThreeDLine[fillstyle=hlines,hatchcolor=gray,linecolor=gray]{-}(0,0,0)(-2,1,0.5)(-4,0,1.5)(-2,-1,1)
+		\pstThreeDSquare(0,0,0)(-0.4,0.2,0.1)(0.363,0.242,0.968)
+		\pstThreeDDot[dotsize=1pt](-0.0185,0.221,0.534)
+		\pstThreeDSquare(0,0,0)(-0.4,-0.2,0.2)(0.363,0.242,0.968)
+		\pstThreeDDot[dotsize=1pt](-0.0185,0.021,0.584)
+		\pstThreeDDot(-0.0185,0.221,0.534)
+		\pstThreeDLine(0,0,0)(-2.2,1.1,0.55)\pstThreeDPut(-2.4,1.2,0.6){$\vec u$}
+		\pstThreeDLine(0,0,0)(-2.2,-1.1,1.1)\pstThreeDPut(-2.4,-1.2,1.2){$\vec v$}
+		\pstThreeDLine(1.815,1.21,4.84)\pstThreeDPut(2,1.41,5.2){$\vec u \times \vec v$}y
+	\end{pspicture}
+\end{center}
+
+
+\Satz Durch zwei verschiedene Punkte gint es genau eine Geraden
+
+\Bew gleich wie oben: $\vthree{a}{b}{c}$ mit $\vthree{x}{y}{z}$ vertauschen.
+
+\paragraph*{Dualitätsprinzip} Man kann in einem Satz der projektiben Geometrie der Ebene "`Punkte"' und "`Geraden"'
+	vertauschen und es bleibt ein gültiger Satz.
+	
+\pagebreak
+\subsection{Modelle der projektiven Ebene}
+\begin{enumerate}
+ \item \emph{Räumliches Modell der projektiven Ebene}
+	$\left\{\left.\lambda \vthree{x_0}{y_0}{z_0}\right| \lambda \in \mathbb{R}\right\}$...
+		Geraden durch den Ursprung im $\mathbb{R}^3$ entsprechen den projektiven Punkten.
+	\begin{center}
+	 \begin{pspicture}(-5,-2)(5,4)
+	  \pstThreeDCoor[xMin=-4,xMax=4,yMin=-4,yMax=4]
+	  \pstThreeDLine{-}(-4,2,0)(4,-2,0)
+	  \pstThreeDLine{-}(-2,-4,0)(2,4,0)
+	  \pstThreeDLine{-}(3,-1.5,0)(-1.5,-3,0)(-3,1.5,0)(1.5,3,0)(3,-1.5,0)
+	 \end{pspicture}
+	\end{center}
+	\begin{center}
+	 projektive Gerade $\equiv$ Ebene durch den Ursprung
+	\end{center}
+
+\item \emph{Kugelmodell der projektiven Ebene}
+	entsteht durch Schnitt des räumlichen Modells mit der Einheitskugel $S^2 =
+		\left\{\left.\vthree{x}{y}{z}\right| x^2 + y^2 + z^2 = 1\right\}$
+	
+	\begin{center}
+	 \begin{pspicture}(-5,-3)(5,3)
+	  \psset{arrows=-}
+	  \psellipticarc[linestyle=dashed]{-}(0,0)(2,1){0}{180}
+	  \pstThreeDCoor[xMin=-4,yMin=-4,zMin=-3]
+	  \pstThreeDLine{-}(-4,2,0)(4,-2,0)
+	  \pstThreeDLine{-}(-2,-4,0)(2,4,0)
+	  
+	  \pstThreeDLine{-}(4,2,0)(-4,-2,0)
+	  \pstThreeDDot(1.8,0.9,0)
+	  \pstThreeDDot(-1.8,-0.9,0)
+
+	  \pstThreeDCircle[Alpha=55,Beta=10](1.153,1.153,-1.153)(-.2,.2,0)(.231,.231,.231)
+	  
+	  \pscircle(0,0){2}
+	  \psellipticarc{-}(0,0)(2,1){180}{0}
+
+	  \pstThreeDNode(0,-2,0){GK}
+	  \rput[tl](-3,2){\rnode{GK_label}{Großkreis}}
+	  \ncline{->}{GK_label}{GK}
+	  \pnode(1.4,1.4){EK}
+	  \rput[tl](3,3){\rnode{EK_label}{Einheitskugel}}
+	  \ncline{->}{EK_label}{EK}
+
+	  \pstThreeDNode[Alpha=55,Beta=10](1.153,1.153,-1.153){kGK}
+	  \rput[tl](3,-2){\Rnode[href=-0.9]{kGK_label}{kein Großkreis}}
+	  \ncline[nodesepB=5px]{->}{kGK_label}{kGK}
+	 \end{pspicture}
+	\end{center}
+	\begin{align*}
+	 \text{projektiver Punkt} &\equiv \text{Paar gegenüberliegender Punkte auf der Einheitskugel}\\
+	 \text{projektive Gerade} &\equiv \text{Großkreise}
+	\end{align*}
+\end{enumerate}
+
+
+\subsection{Projektive Punkte zu karthesische Koordinaten}
+\begin{center}
+	 \begin{pspicture}(-5,-2)(5,4)
+	  \psset{arrows=-}
+	  \psellipticarc[linestyle=dashed]{-}(0,0)(2,1){0}{180}
+	  \pstThreeDCoor[xMin=-4,yMin=-4,zMin=-3]
+
+	  \pstThreeDSquare(-2,-2,2)(6,0,0)(0,6,0)
+
+	  \pstThreeDLine(0.2,1,-2)(-0.4,-2,4)
+	  \pstThreeDLine(-3,-9,-6)(3,9,6)
+	  
+	  \pstThreeDDot(0,0,2)
+	  \pstThreeDDot[drawCoor=true](-0.2,-1,2)
+	  \pstThreeDDot[drawCoor=true](1,3,2)
+
+	  \pstThreeDPut(-3,2,2){$\vthree{\frac{x}{z}}{\frac{y}{z}}{1}$}
+	  
+	  \pscircle(0,0){2}
+	  \psellipticarc{-}(0,0)(2,1){180}{0}
+
+	  \pstThreeDNode[Alpha=75](1.4,1.4,0){aq}
+	  \rput[tl](3,-2){\Rnode[href=-0.9]{aq_label}{Äquator = Ferngerade}}
+	  \ncline[nodesepB=5px]{->}{aq_label}{aq}
+	 \end{pspicture}
+\end{center}
+Schnitt der Geraden $\vthree{x}{y}{z} \cdot \lambda$ im $\mathbb{R}^3$ mit Ebene $z = 1$:
+$z \cdot \lambda = 1 \Rightarrow \lambda = \dfrac{1}{z}$\\
+$\rightarrow \vthree{x \cdot \frac{1}{z}}{y \cdot \frac{1}{z}}{1}$
+
+\Satz Die Punkte $\vthree{x}{y}{z}$ mit $z = 0$ haben \emph{keine} Entsprechung in der euklidischen Ebene:
+Jede projektive Gerade hat als Bild in der euklidischen Ebene eine Gerade, mit einer Ausnahme: die Gerade
+$\vthree{0}{0}{1}$
+
+\Defi Die Punkte des projektiven Raumes, die keine euklidische Entsprechung haben, heißen \textbf{Fernpunkte}.
+	Die Gerade $\vthree{0}{0}{1}$ \textbf{Ferngerade}.
+
+\Satz Zwei Geraden der euklidischen Ebene sind genau dann \emph{parallel}, wenn ihr Schnittpunkt ein Fernpunk ist.
+
+\Satz Die Punkte, die auf der Ferngeraden liegen, sind genau die Fernpunkte
+
+\Satz Es gibt zu jeder Schaar paralleler Geraden genau einen Fernpunkt.
+\begin{center}
+ \begin{pspicture}(0,0)(5,4)
+	\psset{arrows=-}
+	\rput[lb](0.5,1.75){\psline(0,0)(2.25,2.25)}
+	\rput[lb](1,1.5){\psline(0,0)(2.25,2.25)}
+	\rput[lb](1.5,1.25){\psline(0,0)(2.25,2.25)}
+	\rput[lb](2,1){\psline(0,0)(2.25,2.25)}
+	\rput[lb](2.5,0.75){\psline(0,0)(2.25,2.25)}
+	\psline(0.25,1.75)(1.15,0.9)(2.75,0.5)
+	\psdot(1,0.75)
+ \end{pspicture}
+\end{center}
+
+Anschaulich ist ein Fernpunkt äquivalent zu perspektivischen Sammelpunkten:
+\begin{center}
+ \begin{pspicture}(-3,-2)(0,0)
+	\psset{arrows=-}
+	\psdot(0,0)
+	\rput[bl](0.1,0){Fernpunkt}
+	\psline[linestyle=dotted](0,0)(-2,-2)
+	\psline[linestyle=dotted](0,0)(-3,-2)
+	\pspolygon(-2,-2)(-0.5,-0.5)(-0.75,-0.5)(-3,-2)
+ \end{pspicture}
+\end{center}
+
+\subsection{Allgemeine projektive Transformationen}
+$\xyz \mapsto M \cdot \xyz$ mit $M = \mathbb{R}^{3 \times 3}, \det M \neq 0$\\
+(Punkte bleiben Punkte, Geraden bleiben Geraden, Inzidenz bleibt erhalten)
+
+\Defi Affine Transformationen sind jene Transformationen, bei denen die Fernpunkte Fernpunkte bleiben.
+\[ \vthree{x}{y}{z} \mapsto M \vthree{x}{y}{0} = \vthree{x'}{y'}{z'} \stackrel{!}= \vthree{x'}{y'}{0}\]
+\[M = \begin{pmatrix}
+       m_{11} & m_{12} & m_{13} \\
+       m_{21} & m_{22} & m_{23} \\
+       \cancel{m_{31}}{0} & \cancel{m_{32}}{0} & m_{33}
+      \end{pmatrix}
+\]
+\begin{align*}
+ \forall x, y: m_{31} x + m_{32} y + m_{33} \cdot 0 = 0 &\Rightarrow m_{31} = m_{32} = 0
+\end{align*}
+
+\begin{align*}
+ \det M &\neq 0\\
+ \det M &= \underbrace{m_{33}}_{\neq 0} \cdot \underbrace{\begin{vmatrix}m_{11}&m_{12}\\m_{21}&m_{22}\end{vmatrix}}_{0}
+	&\Rightarrow \text{o. B. d. A. $m_33 = 1$}
+\end{align*}
+
+\[\vtwo{x}{y} \mapsto \overbrace{\begin{pmatrix}m_{11}&m_{12}\\m_{21}&m_{22}\end{pmatrix}
+	\vtwo{x}{y}}^{\text{lineare Transformation}} + \overbrace{\vtwo{m_{13}}{m_{23}}}^{\text{+ Translation}}\]
+
+Affine Transformation:
+\begin{itemize}
+ \item parallele Geraden bleiben parallel
+	\begin{center}
+	 \begin{pspicture}(0,-0.5)(12,3.5)
+	  \psframe[fillstyle=hlines,linestyle=none](0,1)(1,2)
+	  \psframe[fillstyle=hlines,linestyle=none](2,0)(3,1)
+	  \psellipse[fillstyle=hlines](4,0.5)(0.5,0.5)
+	  \psline{-}(0.5,1.8)(0.5,2.2)
+	  \psline{-}(0,-0.2)(0,3.2)
+	  \psline{-}(1,-0.2)(1,3.2)
+	  \psline{-}(2,-0.2)(2,3.2)
+	  \psline{-}(3,-0.2)(3,3.2)
+	  \psline{-}(-0.2,0)(3.2,0)
+	  \psline{-}(-0.2,1)(3.2,1)
+	  \psline{-}(-0.2,2)(3.2,2)
+	  \psline{-}(-0.2,3)(3.2,3)
+
+	  \psline[linewidth=2px]{-}(1,3)(2,3)
+	  \psline[linewidth=2px]{-}(0,0)(1,0)
+	  
+	  \psline[linewidth=3px](5,1.5)(7,1.5)
+
+	  \pspolygon[fillstyle=hlines,linestyle=none,hatchangle=71.57](7.5,0.25)(7.5,1.25)(8.5,1.75)(8.5,0.75)
+	  \pspolygon[fillstyle=hlines,linestyle=none,hatchangle=71.57](9.5,0.25)(9.5,1.25)(10.5,1.75)(10.5,0.75)
+	  \rput{26.57}(11.5,1.75){\psellipse[fillstyle=hlines](0,0)(0.559,0.5)}
+	  \psline{-}(8,1.3)(8,1.7)
+	  \psline{-}(7.5,-0.95)(7.5,2.45)
+	  \psline{-}(8.5,-0.45)(8.5,2.95)
+	  \psline{-}(9.5,0.05)(9.5,3.45)
+	  \psline{-}(10.5,0.55)(10.5,3.95)
+	  \psline{-}(7.3,-0.85)(10.7,0.85)
+	  \psline{-}(7.3,0.15)(10.7,1.85)
+	  \psline{-}(7.3,1.15)(10.7,2.85)
+	  \psline{-}(7.3,2.15)(10.7,3.85)
+
+	  \psline[linewidth=2px]{-}(8.5,2.75)(9.5,3.25)
+	  \psline[linewidth=2px]{-}(7.5,-0.75)(8.5,-0.25)
+	 \end{pspicture}
+	\end{center}
+\psset{arrows=-}
+ \item erhalten das Teilverhältnis auf parallelen Geraden
+	\begin{center}
+	 \begin{pspicture}(0,-0.5)(6,0.3)
+	 \psline(0,0)(6,0)
+	 \psline(1,-0.2)(1,0.2)\rput[t](1,-0.2){$A$}
+	 \psline(3.2,-0.2)(3.2,0.2)\rput[t](3.2,-0.2){$B$}
+	 \psline(5.6,-0.2)(5.6,0.2)\rput[t](5.6,-0.2){$C$}
+	 \end{pspicture}
+	\end{center}
+	\[\frac{\overrightarrow{AB}}{\overrightarrow{AC}}\]
+\end{itemize}
+Starre Bewegungen (Isometrien, euklidische Transformationen):
+
+$M = \begin{pmatrix}m_{11}&m_{12}\\m_{21}&m_{22}\end{pmatrix}$ ist orthogonal $M^T = M^{-1}$ erhalten Längen, Winkel und
+	Flächen
+
+\psset{arrows=-}
+\paragraph*{Doppelverhältnis}
+\begin{center}
+ \begin{pspicture}(0,-0.5)(12,3.5)
+	\pspolygon(0,0)(4,0)(4,3)(0,3)
+	\psline(0,1)(4,1)\psline(0,2)(4,2)
+	\psline(1,0)(1,3)\psline(2,0)(2,3)\psline(3,0)(3,3)\psline(4,0)(4,3)
+
+	\psline(-0.5,-0.5)(3.5,3.5)
+
+	\psdot(4,0)\uput{3pt}[r]{0}(4,0){$A$}
+	\psdot(4,2)\uput{3pt}[r]{0}(4,2){$B$}
+	\psdot(4,1)\uput{3pt}[r]{0}(4,1){$C$}
+	\psdot(4,3)\uput{3pt}[r]{0}(4,3){$D$}
+
+	\rput[bl]{-50}(7.5,0){
+	\pstilt{100}{
+	\rput[bl]{50}(0,0){
+	\pstilt{60}{
+	\pspolygon(0,0)(4,0)(4,3)(0,3)
+	\psline(0,1)(4,1)\psline(0,2)(4,2)
+	\psline(1,0)(1,3)\psline(2,0)(2,3)\psline(3,0)(3,3)\psline(4,0)(4,3)
+
+	\psline(-0.5,-0.5)(3.5,3.5)
+
+	\psdot(4,0)\uput{3pt}[r]{0}(4,0){$A$}
+	\psdot(4,2)\uput{3pt}[r]{0}(4,2){$B$}
+	\psdot(4,1)\uput{3pt}[r]{0}(4,1){$C$}
+	\psdot(4,3)\uput{3pt}[r]{0}(4,3){$D$}
+	}}}}
+ \end{pspicture}
+\end{center}
+\[\boxed{\dfrac{\dfrac{\overrightarrow{AC}}{\overrightarrow{BC}}}{\dfrac{\overrightarrow{AD}}{\overrightarrow{BD}}}}
+	= \text{Doppelverhältnis}\]
+
+
+\paragraph*{Bemerkung} projektive Transformationen erhalten das sogenannte Doppelverhältnis
+\begin{center}
+% 2.9 
+\end{center}
+
+\paragraph*{Ausblick} projektiver Raum; wird beschrieben durch homogene Koordinaten $\vfour{x}{y}{z}{u}
+	\neq \vfour{0}{0}{0}{0}$. Karthesische Koordinaten $\vthree{x}{y}{z}$ entsprechen homogenen
+	Koordinaten $\vfour{x}{y}{z}{1}$ oder $\vfour{\lambda x}{\lambda y}{\lambda z}{\lambda}$ ($\lambda \neq 0$, bel.).
+
+

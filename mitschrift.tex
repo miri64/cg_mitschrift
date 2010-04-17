@@ -10,6 +10,7 @@
 \usepackage[utf8]{inputenc}
 \usepackage{amsmath, amsthm, amssymb}
 \usepackage{color}
+\usepackage{cancel}
 
 % Zeichensatz
 \usepackage[colorlinks,%
@@ -28,6 +29,7 @@
 \usepackage{pstricks}
 \usepackage{pst-node}
 \usepackage{pst-plot}
+\usepackage{pst-3d}
 \usepackage{pst-3dplot}
 \usepackage{pst-tree}
 \usepackage{pst-func}
@@ -95,8 +97,11 @@
 
 % Neudefinitionen
 \renewcommand{\thepart}{\Alph{part}}
+\newcommand{\rg}{\operatorname{rg}}
 \newcommand{\vtwo}[2]{\begin{pmatrix}#1\\#2\end{pmatrix}}
 \newcommand{\vthree}[3]{\begin{pmatrix}#1\\#2\\#3\end{pmatrix}}
+\newcommand{\xyz}{\vthree{x}{y}{z}}
+\newcommand{\vfour}[4]{\begin{pmatrix}#1\\#2\\#3\\#4\end{pmatrix}}
 
 \title{Mitschrift\\{\LARGE Computergrafik}}
 \author{Martin Lenders}
