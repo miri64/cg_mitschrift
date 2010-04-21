@@ -441,6 +441,10 @@ $M = \begin{pmatrix}m_{11}&m_{12}\\m_{21}&m_{22}\end{pmatrix}$ ist orthogonal $M
 
 \psset{arrows=-}
 \paragraph*{Doppelverhältnis}
+\[\boxed{\dfrac{\dfrac{\overrightarrow{AC}}{\overrightarrow{BC}}}{\dfrac{\overrightarrow{AD}}{\overrightarrow{BD}}}}
+	= \text{Doppelverhältnis}\]
+
+\paragraph*{Bemerkung} projektive Transformationen erhalten das sogenannte Doppelverhältnis
 \begin{center}
  \begin{pspicture}(0,-0.5)(12,3.5)
 	\pspolygon(0,0)(4,0)(4,3)(0,3)
@@ -458,30 +462,309 @@ $M = \begin{pmatrix}m_{11}&m_{12}\\m_{21}&m_{22}\end{pmatrix}$ ist orthogonal $M
 	\pstilt{100}{
 	\rput[bl]{50}(0,0){
 	\pstilt{60}{
-	\pspolygon(0,0)(4,0)(4,3)(0,3)
-	\psline(0,1)(4,1)\psline(0,2)(4,2)
-	\psline(1,0)(1,3)\psline(2,0)(2,3)\psline(3,0)(3,3)\psline(4,0)(4,3)
+	\pspolygon(0,0)(4,0.5)(4,2.5)(0,3)
+	\psline(0,1)(4,1.167)\psline(0,2)(4,1.833)
+	\psline(1,0.125)(1,2.875)\psline(2,0.25)(2,2.75)\psline(3,0.375)(3,2.625)\psline(4,0.5)(4,2.5)
 
-	\psline(-0.5,-0.5)(3.5,3.5)
+	\psline(-0.5,-0.5)(3.5,3.0625)
 
-	\psdot(4,0)\uput{3pt}[r]{0}(4,0){$A$}
-	\psdot(4,2)\uput{3pt}[r]{0}(4,2){$B$}
-	\psdot(4,1)\uput{3pt}[r]{0}(4,1){$C$}
-	\psdot(4,3)\uput{3pt}[r]{0}(4,3){$D$}
+	\psdot(4,0.5)\uput{3pt}[r]{0}(4,0.5){$A$}
+	\psdot(4,1.833)\uput{3pt}[r]{0}(4,1.833){$B$}
+	\psdot(4,1.167)\uput{3pt}[r]{0}(4,1.167){$C$}
+	\psdot(4,2.5)\uput{3pt}[r]{0}(4,2.5){$D$}
 	}}}}
  \end{pspicture}
 \end{center}
-\[\boxed{\dfrac{\dfrac{\overrightarrow{AC}}{\overrightarrow{BC}}}{\dfrac{\overrightarrow{AD}}{\overrightarrow{BD}}}}
-	= \text{Doppelverhältnis}\]
-
-
-\paragraph*{Bemerkung} projektive Transformationen erhalten das sogenannte Doppelverhältnis
-\begin{center}
-% 2.9 
-\end{center}
 
 \paragraph*{Ausblick} projektiver Raum; wird beschrieben durch homogene Koordinaten $\vfour{x}{y}{z}{u}
-	\neq \vfour{0}{0}{0}{0}$. Karthesische Koordinaten $\vthree{x}{y}{z}$ entsprechen homogenen
+	\neq \vfour{0}{0}{0}{0}$. Karthesische Koordinaten $\vthree{x}{y}{z}$ entsprechen homogenen	
 	Koordinaten $\vfour{x}{y}{z}{1}$ oder $\vfour{\lambda x}{\lambda y}{\lambda z}{\lambda}$ ($\lambda \neq 0$, bel.).
 
+\paragraph*{Bemerkung 1} Transformation $x \mapsto Mx$ kann man auf zwei Arten interbretieren:
+\begin{enumerate}
+ \renewcommand{\labelenumi}{\alph{enumi})}
+ \item Wende die transformation $M$ auf Objekte an. Objekte werden bewegt, Standpunkt/Koordinatensystem bleibt fest.
+ \item Drücke die unveränderte Lage eine Objektes in einem neuen Koordinatensystem aus.
+\end{enumerate}
+\begin{center}
+\vspace{1em}
+\begin{psmatrix}
+ \begin{pspicture}(-2,-1.5)(3,3)
+  \psgrid
+  \psaxes[labels=none,ticks=none]{->}(0,0)(0,0)(3,3)
+  \pspolygon[fillstyle=vlines](0,0)(1,0)(1,1)(0.5,1.5)(0,1)
+ \end{pspicture}&
+ $x \mapsto M x$&
+ \begin{pspicture}(-2,-1.5)(3,3)
+  \psgrid
+  \psaxes[labels=none,ticks=none]{->}(0,0)(0,0)(3,3)
+  \rput[bl]{45}(2,1){
+  \pspolygon[fillstyle=vlines](0,0)(1,0)(1,1)(0.5,1.5)(0,1)}
+ \end{pspicture}\\&
+ $x \mapsto M x$&
+ \begin{pspicture}(-2,-1.5)(3,3)
+  \psgrid
+  \rput[bl]{-45}(-2.1,0.7){
+  \psaxes[labels=none,ticks=none]{->}(0,0)(0,0)(3,3)
+  \rput[bl]{45}(2,1){
+  \pspolygon[fillstyle=vlines](0,0)(1,0)(1,1)(0.5,1.5)(0,1)}
+  }
+ \end{pspicture}
+ \end{psmatrix}
+ \vspace{1em}
+\end{center}
+Rechnerisch macht dies keinen Unterschied.
+
+\paragraph*{Bemerkung 2} geometrische Transformationen können verknüpft; Reihenfolge ist wichtig!
+\begin{align*}
+ y &= M_1 x	& z &= M_2 y
+		& z &= \underbrace{M_2 M_1}_{\text{Matrizenmultiplikation}} x
+\end{align*}
+Inverse Transformation wird dur die inverse Matrix ausgedrückt:
+\[ x = M_1^{-1} y\]
+
+\paragraph*{Bemerkung 3} \emph{Bei uns} stehen Koordinaten in \emph{Spaltenvektoren}
+		$\vthree{x}{y}{z} \qquad \vfour{x}{y}{z}{w}$\\
+		$\Rightarrow$ Transformation $\equiv$ Multiplikation mit einer Matrix \emph{von links}
+		\[M x = y\]
+Alternative: Zeilenvektoren\\
+		$\Rightarrow$ Transformation $\equiv$ Multiplikation mit einer \emph{von rechts} mit der
+		\emph{transponierten Matriz}
+		\[y^t = x^t M^t = (M x)^t\]
+Diese Schreibweise ist an sich intuitiver (da die Rechnung in der Reihenfolge der Anwendung aufgeschrieben wird),
+aber mathematisch unüblich:
+	\[M_2 M_1 x = z \Longleftrightarrow x^t M_1^t M_2^t = z^t \]
+
+
+\section{Transformation im dreidimensionalen Raum}
+\subsection{Affine Transformation im dreidimensionalen Raum}
+\begin{itemize}
+ \item allgemeine affine Transformationen:
+	\[
+		\begin{pmatrix}
+		 m_{11} & m_{12} & m_{13} & m_{14} \\
+		 m_{21} & m_{22} & m_{23} & m_{24} \\
+		 m_{31} & m_{32} & m_{33} & m_{34} \\
+		 0 & 0 & 0 & 1
+		\end{pmatrix}
+		\text{mit}
+		\begin{vmatrix}
+		 m_{11} & m_{12} & m_{13} \\
+		 m_{21} & m_{22} & m_{23} \\
+		 m_{31} & m_{32} & m_{33} 
+		\end{vmatrix} \neq 0
+	\]
+\item Isometrien (starre Bewegungen):
+	\[
+	 \begin{pmatrix}
+		 m_{11} & m_{12} & m_{13} \\
+		 m_{21} & m_{22} & m_{23} \\
+		 m_{31} & m_{32} & m_{33}
+	 \end{pmatrix} \text{ist eine orthogonale Matrix}
+	\]
+	\begin{enumerate}
+	 \renewcommand{\labelenumi}{\alph{enumi})}
+	 \item orientierungserhaltende $\det M = +1$ [Rotation um eine Achse (+ Translation)]
+	 \item orientierungsumkehrende $\det M = -1$ [Spiegelung an einer Ebene, Spiegelung an einem Punkt,
+				Drehspiegelung ...]
+	\end{enumerate}
+\end{itemize}
+\subsubsection{Beispiele}
+\begin{itemize}
+ \item Drehung um die $z$-Achse:
+	\[M = \begin{pmatrix}
+		 \cos \varphi & -\sin \varphi & 0 & 0 \\
+		 \sin \varphi & \cos \varphi & 0 & 0 \\
+		 0 & 0 & 1 & 0 \\
+		 0 & 0 & 0 & 1
+		\end{pmatrix}\]
+	\begin{center}
+	 \begin{pspicture}(2,-2)(2,4)
+	  \pstThreeDCoor[linecolor=black]
+	  \psellipticarc{->}(0,2)(0.5,.25){12}{8}
+	 \end{pspicture}
+
+	\end{center}
+
+ \item Spiegelung an der $xy$-Ebene:
+	\[M = \begin{pmatrix}
+		 1 & 0 & 0 & 0 \\
+		 0 & 1 & 0 & 0 \\
+		 0 & 0 & -1 & 0 \\
+		 0 & 0 & 0 & 1
+		\end{pmatrix}\]
+ \item Spiegelung am Nullpunkt:
+	\[M = \begin{pmatrix}
+		 -1 & 0 & 0 & 0 \\
+		 0 & -1 & 0 & 0 \\
+		 0 & 0 & -1 & 0 \\
+		 0 & 0 & 0 & 1
+		\end{pmatrix}\]
+\end{itemize}
+
+\subsection{projektive Transformationen im dreidimensionalen Raum}
+$x \mapsto Mx, \qquad M \in \mathbb{R}^{4 \times 4}, \det M \neq 0$
+
+\section{Projektionen und Perspektive}
+\begin{itemize}
+ \item Sehen mit dem menschlichen Auge
+	\begin{center}
+	\begin{pspicture}(0,0)(12,3)
+	 \rput[b](1,0){\includegraphics[height=3cm]{Broccoli-tree.eps}}
+	 \rput[b]{180}(8.6,2.5){\includegraphics[height=2cm]{Broccoli-tree.eps}}
+
+	 \pscurve[linecolor=red](8.6,2.5)(9,2.3)(10,1.2)(10.5,1)
+	 \pscurve[linecolor=red](8.6,0.5)(8.9,0.7)(9.8,0.6)(10.5,0.5)
+	 \pscurve[linecolor=red](9,1.5)(9.2,1.5)(9.5,1)(10.3,0.75)
+	 \psline[linecolor=red](10.5,1)(12,1)
+	 \psline[linecolor=red](10.5,0.5)(12,0.5)
+	 \psline{->}(11,0.75)(11.8,0.75)\rput[l](11.9,0.75){Gehirn}
+	 
+	 \pscircle(7.5,1.5){1.5}
+	 \psarc(6,1.5){0.4}{-80}{80}
+	 \psarc(6,1.5){0.2}{-85}{85}
+	 \psarc(6,0.5){1.5}{41}{87}
+	 \psarc(6,2.5){1.5}{-87}{-41}
+
+	 \psline[linecolor=gray,linewidth=0.75pt](1,0)(6,1.3)(8.6,2.5)
+	 \psline[linecolor=gray,linewidth=0.75pt](1,0)(6,1.7)(8.6,2.5)
+	 \psline[linecolor=gray,linewidth=0.75pt](1,3)(6,1.3)(8.6,0.5)
+	 \psline[linecolor=gray,linewidth=0.75pt](1,3)(6,1.7)(8.6,0.5)
+	 \pnode(6,1.5){L}
+	 \rput(5,0.5){\rnode{L_l}{Linse}}
+	 \ncline{->}{L_l}{L}
+
+	 \pnode(8.6,1.5){N}
+	 \rput(10,2.7){\rnode{N_l}{Netzhaut}}
+	 \ncline[linecolor=gray]{->}{N_l}{N}
+	 
+	 \rput(10,0.25){Nerven}
+	\end{pspicture}
+	\end{center}
+ \item Lochkamera
+	\begin{center}
+	\begin{pspicture}(0,0)(12,3)
+	 \rput[b](1,0){\includegraphics[height=3cm]{Broccoli-tree.eps}}
+	 \rput[b]{180}(9,2.5){\includegraphics[height=2cm]{Broccoli-tree.eps}}
+
+	 \psline{*-*}(6,1.6)(6,3)(9,3)(9,0)(6,0)(6,1.4)
+
+	 \psline[linecolor=gray,linewidth=0.75pt](1,0)(6,1.4)(9,2.5)
+	 \psline[linecolor=gray,linewidth=0.75pt](1,0)(6,1.6)(9,2.5)
+	 \psline[linecolor=gray,linewidth=0.75pt](1,3)(6,1.4)(9,0.5)
+	 \psline[linecolor=gray,linewidth=0.75pt](1,3)(6,1.6)(9,0.5)
+	\end{pspicture}
+	\end{center}
+ \item Projektionen
+
+	\begin{center}
+	\begin{pspicture}(0,-1)(10,4)
+	 \rput[b](1,0){\includegraphics[height=3cm]{Broccoli-tree.eps}}
+
+	 \psline[linestyle=dashed,linewidth=0.75pt](1,0)(9,1.5)
+	 \psline[linestyle=dashed,linewidth=0.75pt](1,3)(9,1.5)
+	\rput{-90}(5.55,1.05){
+	\pstilt{-45}{
+	\rput{90}(0,0){
+		\psframe(0,0)(3,3)
+		\rput(1.5,1.5){\includegraphics[height=1.7cm,width=1.3cm]{Broccoli-tree.eps}}
+		\psline(0,1.5)(3,1.5)
+	}
+	}
+	}
+
+	\psline{*-}(0,1.5)(9,1.5)
+	\psline(4.5,2.35)(9,1.5)
+	\psline(4.5,0.65)(9,1.5)
+	\psdot(4.5,1.5)
+	\uput{5pt}[-45]{0}(4.5,1.5){$H$}
+
+	\rput[l](5.7,2.5){Horizont (s. u.)}
+
+	\rput[l](9,1.5){
+	\psset{unit=0.5cm}
+	\psarc(1.5,0){1.5}{160}{-160}
+	\psarc(0,0){0.4}{-80}{80}
+	\psarc(0,0){0.2}{-85}{85}
+	\psarc(0,-1){1.5}{41}{87}
+	\psarc(0,1){1.5}{-87}{-41}
+	}
+
+	\uput{10pt}[90]{0}(9,1.5){Augpunkt}
+	\end{pspicture}
+	$H$ = Hauptpunkt (s. u.)
+	\end{center}
+\end{itemize}
+
+\paragraph*{Projektionen} Vebinde gegebene Punkte mit einem festen \textit{Projektionszentrum} (kann auch ein Fernpunkt sein)
+	und schneide die Strahlen mit einer Ebene (= \textit{Projektionsebene})
+
+\begin{enumerate}
+ \item Projektionszentrum im Endlichen: Zentralprojektion
+ \item Projektionszentrum ein Fernpunkt: Parallelprojektion\\
+	(Parallele Geraden bleiben parallel)\pagebreak
+	\begin{enumerate}
+	 \item Wenn die Projektion senkrecht auf den Projektionsstrahlen steht, spricht man von
+		\emph{orthographischer Projektion}
+		\begin{center}
+		 \begin{pspicture}(0,0)(2,2)
+		  \psline{->}(0,0)(0,2)
+		  \psline{->}(0,0)(2,0)
+		  \psframe(0,0)(1,1)
+		 \end{pspicture}
+		\end{center}
+	 \item andernfalls von \emph{schiefer Projektion}
+		\begin{center}
+		 \begin{pspicture}(-1,-1)(2,2)
+		  \psline{->}(0,0)(0,2)
+		  \psline{->}(0,0)(2,0)
+		  \psline{->}(0,0)(-1,-1)
+		  \psframe(0,0)(1,1)
+		  \psframe(-.5,-.5)(.5,.5)
+		  \psline(-.5,-.5)(0,0)
+		  \psline(.5,-.5)(1,0)
+		  \psline(-.5,.5)(0,1)
+		  \psline(.5,.5)(1,1)
+		 \end{pspicture}
+		\end{center}
+	\end{enumerate}
+\end{enumerate}
+
+\paragraph*{zu 1. Zentralprojektion}
+	Der \emph{Hauptpunkt} ist der Punkt der Projektionsebene, der dem Auge am nächsten liegt.
+	Ein projeziertes Bild vermittelt den exakten wirklichkeitsgetreuen Eindruck genau dann, wenn man sich so
+	davor stellt, das das Auge direkt vor dem Hauptpunkt $H$ liegt und den richtigen Abstand $d$ und im richtigen
+	Abstand zum Bild, mit dem das Bild berechnet wurde
+
+\begin{itemize}
+ \item Parallele Geraden können in der Projektion zu schneidenden Geraden werden
+ \item Das Bild des entsprechenden Fernpunktes heißt \emph{Fluchtpunkt} (vanishing point)
+ \item Die Fluchtpunkte der horizontalen Gerade liegen auf dem \emph{Horizont} (die Fluchtgerade durch die alle
+	horizontalen Ebenen gehen).
+ \item Wenn die Projektionsgerade senkrecht ist, dann liegt der Hauptpunkt auf dem Horizont\\
+	$\Rightarrow$ Senkrechte Geraden bleiben dann parallel (und senkrecht)
+\end{itemize}
+\begin{center}
+ \begin{pspicture}(0,0)(10,4)
+	\psline(0,3.5)(10,3.5)\rput[b](5,3.75){Horizont}
+	\psdot(5,3.5)
+	\uput{3pt}[-90]{0}(5,3.5){$H$}
+	\psdot(2,3.5)
+	\uput{3pt}[-90]{0}(2,3.5){$F_1$}
+	\psdot(7.5,3.5)
+	\uput{3pt}[-90]{0}(7.5,3.5){$F_2$}
+
+	\psline[linestyle=dashed](2,3.5)(5,0.5)(7.5,3.5)
+	\psline[linestyle=dashed](2,3.5)(5,0)(7.5,3.5)
+	\psline[linestyle=dashed](4,1.5)(7.5,3.5)
+	\psline[linestyle=dashed](2,3.5)(5.83333,1.5)
+	\psline(4,1.5)(5,0.5)(5.83333,1.5)
+	\psline(4,1.16667)(5,0)(5.83333,1.16667)
+	\psline(4,1.5)(4,1.16667)
+	\psline(5,0.5)(5,0)
+	\psline(5.83333,1.5)(5.83333,1.16667)
+
+	\psline(4,1.5)(4.87,2)(5.83333,1.5)
+ \end{pspicture}
+\end{center}
 
