@@ -1,0 +1,61 @@
+\section{"`rendering pipeline"' -- vom geometrichen Modell zum Rasterbild}
+\begin{psmatrix}
+ % Kästen mit Pfeilen verbinden
+ \frame{
+	\begin{minipage}{3cm}
+		Durchlaufen des geometrischen Modells (Menge der Fläche)
+	\end{minipage}
+ } &
+ \frame{
+	\begin{minipage}{3cm}
+		Transformation in Weltkoordinaten
+	\end{minipage}
+ } &
+ \frame{
+	\begin{minipage}{3cm}
+		Beleuchtung (Licht und Schatten)
+	\end{minipage}
+ } & % Pfeillabel: Kameraposition
+ \frame{
+	\begin{minipage}{3cm}
+		Transformation in normalisierte Gerätekoordinaten
+	\end{minipage}
+ } \\
+ \frame{
+	\begin{minipage}{3cm}
+		Abschneiden von Ob"-jekten, die außer"-halb des sicht"-baren Kegel"-stumpfes lie"-gen (clipping)
+	\end{minipage}
+ } &
+ \frame{
+	\begin{minipage}{3cm}
+		Sichtbarkeit (Elimination verdeckter Objekte)
+	\end{minipage}
+ } & %<- vertauschbar ->
+ \frame{
+	\begin{minipage}{3cm}
+		Rastern
+	\end{minipage}
+ } &
+ \begin{minipage}{3cm}
+	Rasterbild
+	\begin{center}
+	 \psset{unit=0.1cm}
+	 \begin{pspicture}(25,25)
+	  \psgrid[gridlabels=0pt,gridcolor=gray]
+	  \psdot(24,24)
+	 \end{pspicture}
+	\end{center}
+ \end{minipage}
+ \ncline{->}{1,1}{1,2}
+ \ncline{->}{1,2}{1,3}
+ \ncline{->}{1,3}{1,4}\naput[nrot=90]{
+	 \begin{minipage}{1.5cm}
+	  Ka"-me"-ra"-po"-sit"-ion
+	 \end{minipage}}
+ \nccurve[angleA=-90,angleB=90,ncurvA=0.2,ncurvB=0.2]{->}{1,4}{2,1}
+ \ncline{->}{2,1}{2,2}
+ \ncline{->}{2,2}{2,3}
+ \ncline{->}{2,3}{2,4}
+ \nccurve[angleA=40,angleB=100,linestyle=dashed]{<->}{2,2}{2,3}
+\end{psmatrix}\\
+nur \emph{eine} mögliche Organisation; andere Reihenfolgen sind möglich

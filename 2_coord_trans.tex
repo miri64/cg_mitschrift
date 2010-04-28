@@ -1090,5 +1090,64 @@ $x \mapsto Mx, \qquad M \in \mathbb{R}^{4 \times 4}, \det M \neq 0$
 	           \frac{1}{2n_{\mathrm{fern}}}+\frac{1}{2n_{\mathrm{nah}}}
 	          \end{pmatrix}
 	\end{align*}
-	% Inverse  s. Handy Foto 75
+\item	\textbf{Rasterkoordinaten} - Koordinaten auf dem Bildschirm\\
+	von normalisierten Gerätekoordinaten (NDC) zu Rasterkoordinaten:\\
+	\paragraph*{zur Erinnerung}  NDC Linkssystem
+	\begin{center}
+	 \begin{pspicture}(-2,-2)(2,2)
+	  \psset{Alpha=20,xMax=-2,xMin=2,yMax=2,yMin=-2,zMax=2,zMin=-2}
+	  \pstThreeDCoor
+	  \pstThreeDBox(-1,-1,-1)(2,0,0)(0,2,0)(0,0,2)
+	  \pstThreeDPut(0,0,1){hinten}
+	  \pstThreeDPut(0,0,-1){vorne}
+	  \pstThreeDPut(-5,1,0){$[-1,1]\times[-1,1]\times[-1,1]$}
+	 \end{pspicture}
+	\end{center}
+	\begin{enumerate}
+	 \item Projektion: $z$-Koordinaten weglassen. ($z$ gibt Informationen über die Tiefe, größerer $z$-Wert
+		ist weiter hindent)
+	 \item Skalierung des $x$-$y$-Quadrates und Runden auf $W$x$H$-Gitter\\[0.5cm]
+		\begin{center}
+		\begin{pspicture}(-1.5,-1.5)(1.5,1.5)
+		 \psaxes{->}(0,0)(-1.5,-1.5)(1.5,1.5)
+		 \psframe(-1,-1)(1,1)
+		\end{pspicture}
+		\hspace{1cm}
+		\psset{unit=0.5cm}
+		\begin{pspicture}(6,6)
+		\psgrid[gridcolor=gray]
+		\psframe[fillstyle=solid,fillcolor=white,linecolor=white](2.5,-0.1)(6.5,-0.5)
+		\psframe[fillstyle=solid,fillcolor=white,linecolor=white](-0.1,2.5)(-0.5,6.5)
+		\psline{|<->|}(0,6.5)(6,6.5)\rput*(3,6.5){$W$}
+		\psline{|<->|}(6.5,0)(6.5,6)\rput*(6.5,3){$H$}
+		\rput[r](-0.2,5.2){\tiny$\mathsf{H-1}$}
+		\rput[tl](5.2,-0.2){\tiny$\mathsf{W-1}$}
+		\psframe[fillstyle=vlines](4,3)(5,4)
+		\end{pspicture}
+		\end{center}
+		Pixelkoordinaten: $\vtwo{\left\lfloor(x+1)\cdot\frac{W}{2}\right\rfloor}
+					{\left\lfloor(y+1)\cdot\frac{H}{2}\right\rfloor}$
+	\end{enumerate}
+	Berechnung des Augkoordinatensystems \hspace{1cm}
+	\begin{pspicture}(0,0)(2,2)
+	 \psset{unit=1.5cm}
+	 \rput[r]{20}(0,0){
+			\psline[linecolor=red]{->}(0,0)(0.5,0.5)
+			\uput{3pt}[45]{-20}(0.5,0.5){$\vec u$}
+			\psline[linecolor=red]{->}(0,0)(1,0)
+			\uput{3pt}[90]{-20}(1,0){$\vec n$}
+			\psline[linecolor=red]{->}(0,0)(0,1)
+			\uput{3pt}[0]{-20}(0,1){$\vec v$}
+		}
+		\psline[linecolor=red]{->}(0,0)(0,1)
+		\uput{3pt}[90]{0}(0,1){$\vec z $}
+	\end{pspicture}\\
+	\hrulefill
+	Gegeben ist der Einheitsvektor $\vec n$ (und der Augpunkt)
+	\begin{align*}
+	 \text{Setze } \vec u_0 &:= \vec z \times \vec n & \vec z &= \vthree{0}{0}{1} \text{senkrecht nach oben}\\
+		\vec u &:= \frac{\vec u_0}{||\vec u_0||}\\
+		\vec v &:= \vec n \times \vec u
+	\end{align*}
+
 \end{itemize}
