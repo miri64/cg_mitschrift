@@ -1,0 +1,241 @@
+\chapter{Rasterung von Strecken und Kreisen}
+\section{Strecken}
+\begin{itemize}
+ \item Rendering pipeline wurde durchlaufen
+ \item Koordinaten sind ganzzahlige Pixelkoordinaten
+ \begin{center}
+ \psset{unit=5mm}
+ \begin{pspicture}(0,0)(6,8)
+  \psgrid[gridlabels=0pt]
+  \psframe*(1,1)(2,2)
+  \psframe*(2,2)(3,3)
+  \psframe*(3,3)(4,4)
+  \psframe*(4,4)(5,5)
+ \end{pspicture}
+ \end{center}
+\end{itemize}
+ \paragraph*{Problemstellung} Gegeben sind zwei Punkte $p_1 = (x_1,y_1)$ und $p_2 = (x_2,y_2)$. Zeichne Strecke
+	zwischen $p_1$ und $p_2$. $x_1, y_1, x_2, y_2$ sind ganzzahlig.
+ \paragraph*{Vereinfachung} Strecken die durch den Nullpunkt gehen $(0,0), p_1 = (x_1, y_1)$
+	\begin{itemize}
+	\item Beschränkung auf Strecken im ersten Quadranten des Koordinatensystems. Alle anderen Strecken (im Quadranten
+	II, III, IV) können durch Speigelung an $x$- oder $y$-Achse erzeugt werden
+	\item Beschränkung aufersten Oktanten, alle anderen Strecken erhält man wie oben durch Vertauschen von $x$-
+	 und $y$-Koordinate
+	\end{itemize}
+ \paragraph*{Vereinfachte Problemstellung}
+	Gegeben ist ein Punkt $p_1 = (x_1,y_1)$ mit ganzzahligen Koordinaten. $x_1 \ge y_1, x_1 \ge 0, y_1 \ge 0$.
+	Zeichne Strecke zwischen $(0,0)$ und $(x,y)$.
+	\begin{align*}
+	 \text{Geradengleichung: } g(x) &= \frac{y_1}{x_1} x & \text{Steigung: } m = \frac{y_1}{x_1}, 0 \le m \le 1
+	\end{align*}
+	 \begin{center}
+	\psset{unit=5mm}
+	\begin{pspicture}(-1,-1)(6,8)
+		\psgrid[gridlabels=0pt]
+		\psline[linecolor=red]{-}(0,0)(4,3)
+		\psdot(0,0)
+		\psdot(1,1)
+		\psdot[dotstyle=o](2,1)
+		\psdot(2,2)
+		\psdot(3,2)
+		\psdot[dotstyle=o](3,3)
+		\psdot(4,3)
+	\end{pspicture}
+	\end{center}
+\paragraph*{Idee} Werte für jeden Wert $i$ zwischen 0 und $x_1$ die Funktion $g$ aus. Runde das Ergebnis $g(i)$ und nimm
+	diesen Wer als $j$-Wert
+\begin{lstlisting}[mathescape=true]
+double m = $y_1$/$x_1$;
+for (i = 0; i <= $x_1$, i++) {
+	j = round(i*m);	// auf- bzw. abrunden
+	setPixel(i,j);
+}
+	\end{lstlisting}
+	\begin{itemize}
+	 \item erstetze \lstinline!j= round(i * m);! durch \lstinline!y=y+m_j; j = round(y);!
+	 \item im $i$-ten Schritt $y_i = m \cdot i$
+	 \item im $(i+1)$-ten Schritt $y_{i+1} = m \cdot (i+1)$
+	 \item $y_{i+1} - y_i = m(i+1-1) = m$
+	 \item $0 \le m \le 1 \Rightarrow y_{i+1} \le y_{i} + 1$
+	 \item Wert von $j$ steigt pro Schleifendurchlauf um höchstens 1.
+	\end{itemize}
+	\begin{align*}
+	 y_{i+1} &= y_i + m	& m &= \frac{y_1}{x_1}\\
+	 j &= round(y_i)\\
+	 y_i &= j + r_i & \text{Rest: } & -\frac{1}{2} \le r_i \le \frac{1}{2}\\
+	 y_{i+1} &= y_i + m = j + \underbrace{r_i + m}_{r_{i+1}}
+	\end{align*}
+	\paragraph*{Algortithmus ohne Runden}
+	\begin{lstlisting}[mathescape=true]
+double m = $y_1$/$x_1$;
+double r = 0;
+int j = 0;
+for (i = 0; i <= $x_1$; i+1) {
+	r = r + m;	// y = y + m;
+	if (r >= 1/2) {	// j = round(y)
+		j = j+1,
+		r = r - 1;
+	}
+	setPixel(i,j);
+}
+	\end{lstlisting}
+z. B:
+\begin{align*}
+ y &= 0.6 & r_{alt} &= 0.6 \\
+ y &= j_{alt} + r_{alt} & j_{neu} &= j_{alt} + 1\\
+ y &= j_{neu} + r_{neu} & r_{neu} &= r_{alt} + 1 
+\end{align*}
+Immer noch ein Problem: \textbf{double}-Werte sind zu ungenau\\
+Wir wissen, dass $x_1$ und $y_1$ ganzzahlig sind.\\
+$\Rightarrow$ Multiplikation mit 2$x_1$ liefert \textbf{int}-Werte
+\begin{lstlisting}[mathescape=true]
+int m = 2*$y_i$;
+int r = 0;
+int j = 0;
+setPixel(0,0);
+for(int i = 1; i <= $x_1$; i++) {
+	r = r + m;
+	if (r >= $x_1$) {
+		j = j+1;
+		r = r - 2*$x_1$;
+	}
+	setPixel(i,j);
+}
+\end{lstlisting}
+\[r_{i+1} + 2y_1 \ge x_1 \Leftrightarrow r \ge x_1 - 2 y_1\]
+\begin{lstlisting}[mathescape=true]
+int j = 0;
+int m = 2*$y_1$;
+int r = 2*$y_1$ - $x_1$;
+int $c_1$ = m - 2*$x_1$;
+int $c_2$ = m;
+for (int i = 1; i <= $x_1$; i++) {
+	if (r >= 0) {
+		j++;
+		r = r + $c_1$;
+	} else {
+		r = r + $c_2$;
+	}
+	setPixel(i,j);
+}
+\end{lstlisting}
+
+\subsection{Bresenham-Algorithmus}
+\begin{center}
+ \psset{unit=3cm,arrows=-}
+ % 6.1
+ \begin{pspicture}(-0.5,-0,6)(1.5,1.5)
+  \uput{2pt}[180](-0.5,0){$j_i$}
+  \psline(-0.5,0)(1.5,0)
+  \uput{2pt}[180](-0.5,1){$j_{i+1}$}
+  \psline(-0.5,1)(1.5,1)
+  \uput{2pt}[-90](0,-.5){$i$}
+  \psline(0,-0.5)(0,1.5)
+  \uput{2pt}[-90](1,-.5){$i+1$}
+  \psline(1,-0.5)(1,1.5)
+  \psframe[fillstyle=vlines](-0.1,-0.1)(0.1,0.1)
+  \psline(-0.5,-0.25)(1.5,0.5)
+  \psline[linecolor=red](-0.5,-0.375)(1.5,-0.1)
+  \psline[linecolor=green](-0.5,0.25)(0.9,1.5)
+  \psline(0.95,0.315)(1.05,0.315)
+  \uput{3pt}[0](1.05,0.315){$q_{i+1}$}
+  \psbrace[rot=180,ref=r,braceWidth=1pt](1,1)(1,0.315){$d_{i+1}''$}
+  \psbrace[ref=l,braceWidth=1pt](1,0)(1,0.315){$d_{i+1}'$}
+ \end{pspicture}
+\end{center}
+Wähle eine Spalte $i+1$ das Pixel, das am nächsten an $q_{i+1}$ liegt, also
+\begin{align*}
+ d_{i+1}' \le d_{i+1}'' &\Leftrightarrow \text{ wähle } j_{i+1} = j_i \\
+ d_{i+1}'' < d_{i+1}' &\Leftrightarrow \text{ wähle } j_{i+1} = j_i + 1
+\end{align*}
+oder äquivalent
+\begin{align*}
+ d_{i+1}' - d_{i+1}''\le 0 &\Leftrightarrow j_{i+1} = j_i \\
+ d_{i+1}' - d_{i+1}'' > 0 &\Leftrightarrow j_{i+1} = j_i + 1
+\end{align*}
+$y$-Koordinaten von $q_{i+1} \qquad \frac{y_1}{x_1} (i+1)$
+\begin{align*}
+ d_{i+1}' &= \frac{y_1}{x_1} (i+1)-j_i & d_{i+1}'' &= j_i + 1 - \frac{y_1}{x_1} (i+1)\\
+ d_{i+1}' - d_{i+1}'' &= 2 \frac{y_1}{x_1} (i+1) - 2 j_i - 1 &&| \text{ multipliziere mit $x_1$}
+\end{align*}
+(ändert nichts an der Bedingung $\overset{<}{\underset{<}{=}}0$)\\
+\hrulefill
+Wir erhalten eine Fehler-/Entscheidungsvariable für $(i+1)$-te Spalte
+\begin{align*}
+ e_{i+1} &= x_i (d_{i+1}' - d_{i+1}'') = 2y_1(i+1) - 2 j_i x_1 - x_1\\
+ e_{i+1} &\le 0\Leftrightarrow  j_{i+1}= j_i\\
+ e_{i+1} &> 0 \Leftrightarrow  j_{i+1} = j_i +1
+\end{align*}
+Betrachte Differenz zwischen aufeinanderfolgenden Entscheidungsvariablen
+\begin{align*}
+ e_{i+1} - e_i &= \underline{2y_1(i+1)} - 2 j_i x_1 - \underline{x_1} - \underline{2y_1}i + 2j_{i-1}x_1
+			+ \underline{x_1}\\
+ e_{i+1} - e_i &= 2 y_1 - 2 x_1 \underbrace{(j_i - j_{i-1})}_{= \begin{cases}
+                                                                 0, &\text{falls $e_i \le 0$}\\
+								 1, & \text{falls $e_i > 0$}
+                                                                \end{cases}
+								}
+\end{align*}
+Also
+\begin{align*}
+ e_i > 0, j_i = j_{i-1} + 1 &\text{ und } e_{i+1} = e_i + 2y_1 - 2x_1 \\
+ e_i \le 0, j_i = j_{i-1} &\text{ und } e_{i+1} = e_i + 2y_1
+\end{align*}
+Anfangswerte: $i=0, j_0 = 0,  e_1 = 2y_1 - x_1$
+
+\pagebreak
+\subsection{Midpoint Line Algorithmus}
+\begin{center}
+ \psset{unit=3cm,arrows=-}
+ % 6.2
+ \begin{pspicture}(-0.5,-0,6)(1.5,1.5)
+  \uput{2pt}[180](-0.5,0){$j_i$}
+  \psline(-0.5,0)(1.5,0)
+  \uput{2pt}[180](-0.5,1){$j_{i+1}$}
+  \psline(-0.5,1)(1.5,1)
+  \uput{2pt}[-90](0,-.5){$i$}
+  \psline(0,-0.5)(0,1.5)
+  \uput{2pt}[-90](1,-.5){$i+1$}
+  \psline(1,-0.5)(1,1.5)
+  \psframe[fillstyle=vlines](-0.1,-0.1)(0.1,0.1)
+  \psline(-0.5,-0.25)(1.5,0.5)
+  \psline(0.95,0.5)(1.05,0.5)
+  \uput{3pt}[180](0.95,0.5){$M_{i+1}$}
+  \rput[l](2,0.5){$M_{i+1} = \vtwo{i+1}{j_i + \frac{1}{2}}$}
+ \end{pspicture}
+\end{center}
+Wenn $M_{i+1}$ über der Strecke liegt $\Rightarrow$ wähle $j_{i+1} = j_i$
+Wenn $M_{i+1}$ unter der Strecke liegt $\Rightarrow$ wähle $j_{i+1} = j_i +1$
+\begin{align*}
+ \text{Geradengleichung: } y = \frac{y_1}{x_1} x &\Leftrightarrow y_1x - x_1 y = 0 \\
+ \text{$(x,y)$ liegt über der Geraden } \Leftrightarrow y > \frac{y_1}{x_1} x &\Leftrightarrow y_1x - x_1 y < 0 \\
+ \text{$(x,y)$ liegt unter der Geraden } \Leftrightarrow  y < \frac{y_1}{x_1} x &\Leftrightarrow y_1x - x_1 y > 0 \\
+\end{align*}
+Setze $F(x,y) = x y_1 - x_1 y$, dann gilt also:
+\begin{itemize}
+ \item $(x,y)$ über Geraden $\Leftrightarrow F(x,y) < 0$
+ \item $(x,y)$ auf Geraden $\Leftrightarrow F(x,y) = 0$
+ \item $(x,y)$ unter Geraden $\Leftrightarrow F(x,y) > 0$
+\end{itemize}
+Entscheidungsvariable
+\begin{align*}
+ d_{i+1} = F(M_{i+1}) = (i+1)y_1-x_i\left(j_i + \frac{1}{2}\right) \le 0 &\Leftrightarrow j_{i+1} = j_i \\
+ d_{i+1} = F(M_{i+1}) = (i+1)y_1-x_i\left(j_i + \frac{1}{2}\right) = 0 &\Leftrightarrow j_{i+1} = j_i + 1
+\end{align*}
+\begin{align*}
+ d_{i+1} - d_i	&= y_1(i+1) - x_1\left(j_i + \frac{1}{2}\right)-y_1 i + x_1\left(j_{i+1}+\frac{1}{2}\right)\\
+		&= y_1 - x_1 \underbrace{(j_i - j_{i-1})}_{= \begin{cases}
+                                                                 0, &\text{falls $d_i \le 0$}\\
+								 1, & \text{falls $d_i > 0$}
+                                                                \end{cases}
+								}\\
+	d_1 &= y_1 - \frac{x_1}{2}
+\end{align*}
+Für Ganzzahligkeit multiplitziere mit 2
+\begin{align*}
+e_i = 2 d_i \Rightarrow e_{i+1} - e_i &= 2y_1 - 2x_1(j_i - j_{i-1})\\
+		e_1 &= 2y_1 - x_1
+\end{align*}
+
+%% Rest s. Handybilder

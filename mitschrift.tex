@@ -21,8 +21,8 @@
 	    pdftitle = {Mitschrift - CG},%
 	    pdfauthor = {Martin Lenders}%
 	]{hyperref}
-\usepackage{listings}
 \usepackage{multicol}
+\usepackage{listings}
 
 % Grafik
 \usepackage{graphicx}
@@ -37,7 +37,7 @@
 
 % Color definitions
 \definecolor{lgray}{gray}{0.95}
-\definecolor{save}{rgb}{0.498,0,0.3333}
+\definecolor{save}{rgb}{0.498,0,0}
 \definecolor{identifier}{rgb}{0,0,0.1}
 \definecolor{string}{rgb}{0.192,0,1}
 \definecolor{comment}{rgb}{0.25,0.5,0.37}
@@ -51,24 +51,24 @@
 \definecolor{azure}{rgb}{.75,.75,1}
 
 % Einstellungen für Pakete
-\lstset{%
-	tabsize=4,%
-	frame=,%
-	basicstyle=\footnotesize\changefont{pcr}{m}{n},%
-	emphstyle=\textit,%
-	language=Java,%
-	numberstyle=\tiny\textsf,%
-	numbersep=5pt,%
-	numbers=none,%
-	keywordstyle=\color{save}\textbf,%
-	identifierstyle=\color{identifier},%
-	stringstyle=\color{string},%
-	backgroundcolor=\color{lgray},%
-	showstringspaces=false,%
-	commentstyle=\color{comment},%
-	extendedchars=true,%
-	xleftmargin=1em,%
-	inputencoding=utf8%
+\lstset{
+	tabsize=8,
+	frame=,
+	basicstyle=\footnotesize\changefont{pcr}{m}{n},
+	emphstyle=\textit,
+	language=Java,
+	numberstyle=\tiny\textsf,
+	numbersep=5pt,
+	numbers=none,
+	keywordstyle=\color{save}\textbf,
+	identifierstyle=\color{identifier},
+	stringstyle=\color{string},
+	backgroundcolor=\color{lgray},
+	showstringspaces=false,
+	commentstyle=\color{comment},
+	extendedchars=true,
+	xleftmargin=1em,
+	inputencoding=utf8
 }
 
 \psset{%
@@ -91,18 +91,21 @@
 \fancyhead[RO]{\footnotesize\sffamily\rightmark} 
 
 % Eigene Befehle
+\newcommand{\changefont}[3]{\fontfamily{#1} \fontseries{#2} \fontshape{#3} \selectfont}
 \newcommand{\Defi}{\paragraph*{Definition}}
 \newcommand{\Lemma}{\paragraph*{Lemma}}
 \newcommand{\Satz}{\paragraph*{Satz}}
 \newcommand{\Bew}{\paragraph*{Beweis}}
-
-% Neudefinitionen
-\renewcommand{\thepart}{\Alph{part}}
 \newcommand{\rg}{\operatorname{rg}}
 \newcommand{\vtwo}[2]{\begin{pmatrix}#1\\#2\end{pmatrix}}
 \newcommand{\vthree}[3]{\begin{pmatrix}#1\\#2\\#3\end{pmatrix}}
 \newcommand{\xyz}{\vthree{x}{y}{z}}
 \newcommand{\vfour}[4]{\begin{pmatrix}#1\\#2\\#3\\#4\end{pmatrix}}
+
+% Neudefinitionen
+\renewcommand{\texttt}{\changefont{pcr}{m}{n}}
+\renewcommand{\thepart}{\Alph{part}}
+\renewcommand{\sectionmark}[1]{\markright{\thesection\ #1}}
 
 \title{Mitschrift\\{\LARGE Computergrafik}}
 \author{Martin Lenders}
@@ -110,9 +113,13 @@
 \begin{document}
 \maketitle
 \tableofcontents
+\begin{lstlisting}[mathescape=true]
+ bla
+\end{lstlisting}
 
-\input{1_intro.tex}
-\input{2_coord_trans.tex}
-\input{3_renderpipeline.tex}
-\input{4_light.tex}
+\input{1_intro}
+\input{2_coord_trans}
+\input{3_renderpipeline}
+\input{4_light}
+\input{6_20100430}
 \end{document}

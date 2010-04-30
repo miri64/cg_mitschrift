@@ -199,11 +199,11 @@ $\vthree{x_0}{y_0}{z_0}$ kann als $\vthree{a_1}{b_1}{c_1} \times \vthree{a_2}{b_
 		\begin{vmatrix}
 		 b_1 & b_2 \\
 		 c_1 & c_2
-		\end{vmatrix}}{
+		\end{vmatrix}\\}{
 		\begin{vmatrix}
 		 c_1 & c_2 \\
 		 a_1 & a_2
-		\end{vmatrix}}{
+		\end{vmatrix}\\}{
 		\begin{vmatrix}
 		 a_1 & a_2 \\
 		 b_1 & b_2
@@ -211,25 +211,27 @@ $\vthree{x_0}{y_0}{z_0}$ kann als $\vthree{a_1}{b_1}{c_1} \times \vthree{a_2}{b_
 $ berechnet werden (Kreuzprodukt)
 
 \begin{center}
-	\begin{pspicture}(-1,0)(3,3.5)
-		\pstThreeDLine[fillstyle=hlines,hatchcolor=gray,linecolor=gray]{-}(0,0,0)(-2,1,0.5)(-4,0,1.5)(-2,-1,1)
-		\pstThreeDSquare(0,0,0)(-0.4,0.2,0.1)(0.363,0.242,0.968)
-		\pstThreeDDot[dotsize=1pt](-0.0185,0.221,0.534)
-		\pstThreeDSquare(0,0,0)(-0.4,-0.2,0.2)(0.363,0.242,0.968)
-		\pstThreeDDot[dotsize=1pt](-0.0185,0.021,0.584)
-		\pstThreeDDot(-0.0185,0.221,0.534)
-		\pstThreeDLine(0,0,0)(-2.2,1.1,0.55)\pstThreeDPut(-2.4,1.2,0.6){$\vec u$}
-		\pstThreeDLine(0,0,0)(-2.2,-1.1,1.1)\pstThreeDPut(-2.4,-1.2,1.2){$\vec v$}
-		\pstThreeDLine(1.815,1.21,4.84)\pstThreeDPut(2,1.41,5.2){$\vec u \times \vec v$}y
+	\psset{Alpha=150,Beta=20,unit=1.5cm,arrows=->}
+	\begin{pspicture}(-1,0)(3,2.8)
+		\rput[bl]{15}(0,0){
+		\pstThreeDSquare[fillstyle=hlines,hatchcolor=gray,linecolor=gray,arrows=-](0,0,0)(1.3,0,0)(0,1.8,0)
+		\pstThreeDSquare[arrows=-](0,0,0)(0.5,0,0)(0,0,0.5)
+		\pstThreeDDot(0.25,0,0.25)
+		\pstThreeDSquare[arrows=-](0,0,0)(0,0.5,0)(0,0,0.5)
+		\pstThreeDDot(0,0.25,0.25)
+		\pstThreeDLine(0,0,0)(1.5,0,0)\pstThreeDPut(1.6,0,0){$\vec u$}
+		\pstThreeDLine(0,0,0)(0,2,0)\pstThreeDPut(0,2.1,0){$\vec v$}
+		\pstThreeDLine(0,0,3)\pstThreeDPut(0,0,3.1){$\vec u \times \vec v$}
+		}
 	\end{pspicture}
 \end{center}
 
 
-\Satz Durch zwei verschiedene Punkte gint es genau eine Geraden
+\Satz Durch zwei verschiedene Punkte gibt es genau eine Geraden
 
 \Bew gleich wie oben: $\vthree{a}{b}{c}$ mit $\vthree{x}{y}{z}$ vertauschen.
 
-\paragraph*{Dualitätsprinzip} Man kann in einem Satz der projektiben Geometrie der Ebene "`Punkte"' und "`Geraden"'
+\paragraph*{Dualitätsprinzip} Man kann in einem Satz der projektiven Geometrie der Ebene "`Punkte"' und "`Geraden"'
 	vertauschen und es bleibt ein gültiger Satz.
 	
 \pagebreak
@@ -340,8 +342,7 @@ $\vthree{0}{0}{1}$
 	\rput[lb](1.5,1.25){\psline(0,0)(2.25,2.25)}
 	\rput[lb](2,1){\psline(0,0)(2.25,2.25)}
 	\rput[lb](2.5,0.75){\psline(0,0)(2.25,2.25)}
-	\psline(0.25,1.75)(1.15,0.9)(2.75,0.5)
-	\psdot(1,0.75)
+	\psbrace[nodesepB=2pt,ref=rC](0.25,1.75)(2.65,0.5){\psdot[dotsize=4pt](0,0)}
  \end{pspicture}
 \end{center}
 
@@ -611,6 +612,7 @@ $x \mapsto Mx, \qquad M \in \mathbb{R}^{4 \times 4}, \det M \neq 0$
 	\begin{center}
 	\begin{pspicture}(0,0)(12,3)
 	 \rput[b](1,0){\includegraphics[height=3cm]{Broccoli-tree.eps}}
+	 % http://commons.wikimedia.org/wiki/File:Broccoli-tree.svg
 	 \rput[b]{180}(8.6,2.5){\includegraphics[height=2cm]{Broccoli-tree.eps}}
 
 	 \pscurve[linecolor=red](8.6,2.5)(9,2.3)(10,1.2)(10.5,1)

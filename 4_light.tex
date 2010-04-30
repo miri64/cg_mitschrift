@@ -34,4 +34,11 @@ analog "`blau"': $b = \int f(\lambda) \cdot e_B(\lambda)\ \mathrm{d} y$
  \item Normalisierung auf $r+b+g=1$ führt auf einen zweidimensionalen Farbraum, bei dem die Helligkeit konstant ist.
 \end{itemize}
 In der Computergrafik tut man so, als ob es nur \emph{drei} verschiedene Wellenlängen (Grundfarben) gibt: {\color{red}R}ot, {\color{green}G}rün und {\color{blue}B}lau
-% 5.5
+\begin{center}
+\begin{pspicture}(0.5,0.5)(4,3)
+	\psline[linecolor=red]{-*}(1,0)(1,2)\uput{2pt}[-90](1,0){\color{red}R}
+	\psline[linecolor=green]{-*}(2,0)(2,2)\uput{2pt}[-90](2,0){\color{green}G}
+	\psline[linecolor=blue]{-*}(3,0)(3,2)\uput{2pt}[-90](3,0){\color{blue}B}
+	\psaxes[labels=none,ticks=none]{->}(0,0)(-0.1,-0.1)(4,2.5)
+\end{pspicture}
+\end{center}
