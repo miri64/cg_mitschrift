@@ -150,26 +150,22 @@ Die Matrizen $M'$ und $\lambda M'$ beschreiben dieselbe Transformation $(\lambda
 $\Rightarrow$ o. B. d. A. kann man auch $m_{33} = 1$ annehmen (Dann kann man die dritte Zeile auch weglassen).
 
 \section{Die projektive Ebene}
-\Defi Die (reelle) \textbf{projektive Ebene} $P^2$ besteht aus den Äquivalenzklassen vo Punkten
+\Defi Die (reelle) \textbf{projektive Ebene} $P^2$ besteht aus den Äquivalenzklassen von Punkten
 	$\vthree{x}{y}{z} \neq \vthree{0}{0}{0}$, wobei $\vthree{x}{y}{z}$ und $\vthree{\lambda x}{\lambda y}{\lambda z}$
 	denselben Punkt darstellen ($\lambda \neq 0$)
 
 \subsection{Geraden in der projektiven Ebene}
 Gerade in $\mathbb{R}^2$ (karthesische Koordinaten):
  \[y = ax + b \text{(Gerade darf nicht senkrecht sein)}\]
- \[ax + bx = -c\]
+ \[ax + by = -c\]
 
 \[\Updownarrow\]
-
 Gerade in Homogenen Koordinaten
 \[\vtwo{x}{y} \longrightarrow \vthree{x}{y}{1}\]
 \[ax + by + c = 0 \Leftrightarrow \vthree{a}{b}{c} \cdot \vthree{x}{y}{1} = 0\]
-
 Allgemeine Gleichung einer Geraden in $P^2$
 \[\vthree{a}{b}{c} \cdot \vthree{x}{y}{z} = 0 \Leftrightarrow ax + by + cz = 0 \qquad \vthree{a}{b}{c} \neq \vthree{0}{0}{0}\]
-
 Wenn $\vthree{x}{y}{z}$ die Gleichung erfüllt, dann erfüllt auch $\vthree{\lambda x}{\lambda y}{\lambda z}$ die Gleichung.
-
 $\vthree{a}{b}{c}$ und $\vthree{\lambda a}{\lambda b}{\lambda c}$ stellen dieselbe Gerade dar.
 
 \begin{description}
@@ -181,20 +177,17 @@ $\vthree{a}{b}{c}$ und $\vthree{\lambda a}{\lambda b}{\lambda c}$ stellen diesel
 
 \Satz	Zwei verschiedene Geraden schneiden sich in genau einem Punkt.
 \Bew	Gerade $\forall \lambda: \vthree{a_1}{b_1}{c_1}, \vthree{a_2}{b_2}{c_2} \neq \lambda \vthree{a_1}{b_1}{c_1}$.
-
 Schnittpunkt:
 \begin{align*}
  a_1 x + b_1 y + c_1 z &= 0\\
  a_2 x + b_2 y + c_2 z &= 0
 \end{align*}
-
 Koeffizientenmatrix $A = \begin{pmatrix}
                           a_1 & b_1 & c_1 \\
                           a_2 & b_2 & c_2
                          \end{pmatrix}, \rg A = 2$\\
 $\Rightarrow$ Lösungsmenge ist eindimensional
-\[ L = \left\{\left.\lambda \vthree{x_0}{y_0}{z_0} \right| y \in \mathbb{R}\right\} \text{ist ein projektiver Punkt}\]
-
+\[ L = \left\{\left.\lambda \vthree{x_0}{y_0}{z_0} \right| \lambda \in \mathbb{R}\right\} \text{ist ein projektiver Punkt}\]
 $\vthree{x_0}{y_0}{z_0}$ kann als $\vthree{a_1}{b_1}{c_1} \times \vthree{a_2}{b_2}{c_2} = \vthree{
 		\begin{vmatrix}
 		 b_1 & b_2 \\
@@ -329,7 +322,7 @@ $\vthree{0}{0}{1}$
 \Defi Die Punkte des projektiven Raumes, die keine euklidische Entsprechung haben, heißen \textbf{Fernpunkte}.
 	Die Gerade $\vthree{0}{0}{1}$ \textbf{Ferngerade}.
 
-\Satz Zwei Geraden der euklidischen Ebene sind genau dann \emph{parallel}, wenn ihr Schnittpunkt ein Fernpunk ist.
+\Satz Zwei Geraden der euklidischen Ebene sind genau dann \emph{parallel}, wenn ihr Schnittpunkt ein Fernpunkt ist.
 
 \Satz Die Punkte, die auf der Ferngeraden liegen, sind genau die Fernpunkte
 
