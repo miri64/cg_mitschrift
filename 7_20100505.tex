@@ -1,0 +1,225 @@
+\section{Kreise}
+\begin{center}
+	\psset{unit=0.5cm}
+	\begin{pspicture}(0,0)(10,10)
+		\psgrid[gridlabels=0pt]
+		\psline[linecolor=gray,linestyle=dashed](8.5,5.5)(8.5,9.5)
+		\psline[linecolor=gray,linestyle=dashed](7.5,6)(7.5,9.5)
+		\psline[linecolor=gray,linestyle=dashed](6.5,6)(6.5,10)
+		\psline[linecolor=gray,linestyle=dashed](6,6.5)(10,6.5)
+		\psline[linecolor=gray,linestyle=dashed](5.5,8.5)(9,8.5)
+		\psline[linecolor=gray,linestyle=dashed](5.5,7.5)(9.5,7.5)
+		\psdot[linecolor=red](6.5,9.5)
+		\psdot[linecolor=red](7.5,8.5)
+		\psdot[linecolor=red](8.5,7.5)
+		\psdot[linecolor=red](9.5,6.5)
+		\psframe*[linecolor=red](0,3)(1,4)
+		\psframe*[linecolor=red](0,4)(1,5)
+		\psframe*[linecolor=red](1,2)(2,3)
+		\psframe*[linecolor=red](2,1)(3,2)
+		\pscircle(5,5){4.5}
+		\psdot(5,5)
+	\end{pspicture}
+\end{center}
+
+\paragraph*{Annahme}
+	\begin{itemize}
+	 \item	Radius $r$ ist ganzzahlig
+	 \item	Mittelpunkt $(c_x,c_y)$ ist ein Gitterpunkt
+	\end{itemize}
+	Kreisgleichung:
+	\[(x-c_x)^2 + (y - c_y)^2 = r^2\]
+	Betrachte den Fall, wo der Mittelpunkt (0,0) ist (anschließend alles um $(c_x,c_y)$ verschieben).
+	Wir zeichnen den Bereich $x \ge 0, y \ge 0, y \ge x$ auf diesem Achtelkreis zeichnen wir auf jeder senkrechten
+	Gittergeraden \emph{einen} Punkt.
+	\begin{center}
+	%7.2
+	\end{center}
+	$x=i$ ist fest, Kreis verläuft zwischen $(i,j)$ und $(i,j+1)$.
+	\begin{center}
+	 %7.3
+	\end{center}
+	Welchgen dieser beiden Punkte soll man auswählen?
+	\begin{enumerate}
+	 \renewcommand*\theenumi{(\arabic{enumi})}
+	 \item	Wähle den Punkt, der kleineren \emph{Abstand} vom Kreis hat
+	 \item	Berechne den Schnittpunkt mit der Geraden $x=i$ und $r$ und runde zum nächsten Gitterpunkt.
+		\begin{itemize}
+		 \item (Äquivalent: vergleiche den \emph{senkrechten Abstand} zum Kreis)
+		 \item (Äquivalent: Lisegt $(i, j+\frac{1}{2})$ über oder under dem Kreisbogen?)
+		\end{itemize}
+	 \item	Wähle den Punkt der die \emph{Kreisgleichung} $x^2 + y^2 = r^2$ am besten erfüllt.
+		\[|x^2 + y^2 - r^2| \to \mathrm{MIN}\]
+	\end{enumerate}
+	Für Geraden sind alle drei Bedingungen äquivalent\\
+	Für (3). gibt es beliebig viele Varianten:
+	\[\sqrt{x^2 + y^2} = r \Rightarrow |r - \sqrt{x^2 + y^2}| \to \mathrm{MIN} \text{ führt auf (1)}\]
+	\[(x^2 + y^2)^2 = r^4 \Rightarrow |r^4 - (x^2 + y^2)^2| \to \mathrm{MIN} \text{ führt auf (1)}\]
+	\begin{center}
+	 %7.4
+	\end{center}
+\Satz	Wenn der Mittelpunkt $(c_x,c_y)$ und der Radius $r$ ganzzahlig sind, dann sind Bedingung (1),(2) und (3)
+	äquivalent.\\
+	\hrulefill
+	Algebraische Formulierung von (1), (2), (3):
+	\begin{itemize}
+	 \item Punkt $(i,j+1)$ liegt außerhalb
+		\[i^2 + (j + 1)^2 \ge r^2\]
+	 \item Punkt $(i,j)$ liegt innerhalb
+		\[i^2 + (j + 1)^2 < r^2\]
+	\end{itemize}
+	\newcommand{\glee}{\overset{>}{\underset{<}{=}}}
+	\begin{enumerate}
+	 \renewcommand*\theenumi{(\arabic{enumi})}
+	 \item	$r-\sqrt{i^2+j^2} \glee \sqrt{i^2+(j+1)^2} - r$
+	 \item	$i^2 + \left(j+\frac{1}{2}\right)^2 \glee r^2$
+	 \item	$r^2 - (i^2 + j^2) \glee i^2+(j+1)^2 - r^2$
+	\end{enumerate}
+	\begin{align*}
+	 (3) &\Longleftrightarrow 	& 2r^2	&\glee i^2 + j^2 + 2j + 1 + i^2 + j^2\\
+		&		&	&= 2i^2 + 2j^2 + 2j + \frac{1}{2}\\
+	&\Longleftrightarrow	& i^2 + j^2 + j - r^2 + \frac{1}{2} &\glee 0 &&\Rightarrow\
+		\text{"`="' kommt nicht vor für $i,j \in \mathbb{Z}$}\\
+	 (2) &\Longleftrightarrow	& i^2 + j^2 + j + \frac{1}{4} - r^2 &\glee 0
+	\end{align*}
+	Für $i, j, r \in \mathbb{Z}$ sind (2) und (3) äquivalent
+	%% folgende eirahmen
+	\begin{align*}
+		\overbrace{i^2 + j^2 + j - r^2}^{g(i,j+1), \text{s. Algorithmus}} &\ge 0 &&\Rightarrow\ \text{Zeichne $(i,j)$}\\
+		 &\le -1 &&\Rightarrow\ \text{Zeichne $(i,j+1)$}
+	\end{align*}
+	
+	\paragraph*{Behauptung}
+	\begin{enumerate}
+	 \renewcommand*\theenumi{(\alph{enumi})}
+	 \item $i^2 + \left(j + \frac{1}{2}\right)^2 \ge r^2 \Rightarrow \sqrt{i^2+(j+1)^2} - r > r - \sqrt{i^2+j^2}$
+	 \item $i^2 + j^2 + j + \frac{1}{2} \le r^2 \Rightarrow \sqrt{i^2+(j+1)^2} - r < r - \sqrt{i^2+j^2}$
+	\end{enumerate}
+	Daraus folgt, dass Regel (1) mit den beiden anderen Regeln (2), (3) konsistent ist.
+\Bew	(von (b).) Die Funktion $f(t) = \sqrt{t}$ ist fü $t > 0$ konkav
+	\begin{center}
+	 %7.5
+	 (daraus folgt: $f\left(\dfrac{u+v}{2}\right) \ge \dfrac{f(u)+f(v)}{2}$)
+	\end{center}
+	Eine differenzierbare Funktion $f$ ist konkav $\Leftrightarrow$ $f'$ monoton fallen $\Leftrightarrow$ $f'' \le 0$
+	\[f'(t) = \frac{1}{2 \sqrt{t}} \searrow\ \text{konkav}\]
+	\begin{align*}
+	 u &= i^2 + j^2\\
+	 v &= i^2 + (j+1)^2 ) = i^2 + j^2 + 2j + 1\\
+	 \frac{u+v}{2} &= i^2 + j^2 + j + \frac{1}{2}\\
+	 r &\underset{\mathrm{N.V.}}{\ge} \sqrt{i^2 + j^2 + j + \frac{1}{2}} \ge \frac{1}{2} \left[\sqrt{i^2} + \sqrt{i^2+(j+1)^2}\right]
+	 2r & \ge \sqrt{i^2+j^2} + \sqrt{i^2 + (j+1)^2}
+	\end{align*}
+\Bew	(von (a).) Funktion $h(y) = \sqrt{i^2 + y^2}$ ist \emph{konvex}
+	\begin{align*}
+	 h'(y) &= \frac{1 \cdot \cancel{2} y}{\cancel{2}\sqrt{i^2+y^2}} = \frac{1}{\sqrt{\frac{i^2}{y^2}+1}}
+			\nearrow\text{ monoton wachsend}\\
+	 g\left(\frac{u+v}{2}\right) &\le \frac{1}{2} (g(u) + g(v)) \qquad u = j, v = j+1\\
+	 r^2 &\underset{\mathrm{N.V.}}{\le} \sqrt{i^2+\left(j+\frac{1}{2}\right)^2}
+		\le \frac{1}{2}\left(\sqrt{i^2+j^2}+\sqrt{i^2 + (j+1)^2}\right)
+	\end{align*}
+\paragraph*{Algorithmus}
+	beginnt mit $(0,r)$ und zeichnet Punkte von links nach rechts.
+	\begin{itemize}
+	 \item letzter gezeichneter Punkt $= (i-1,j)$
+	 \item soll nächster $(i,j)$ oder $(i,j-1)$ gezeichnet werden?
+		\begin{align*}
+			g(i,j) &= i^2 + (j-1)^2 + (j-1) - r^2 = i^2 + j^2 - 2j \cancel{+ 1} + j \cancel{- 1} r^2\\
+			g(i,j) &:= i^2 + j^2 - j - r^2 \begin{cases}
+			                              \ge 0 &\Rightarrow\ \text{zeichne $(i, j-1)$}\\
+			                              \le -1 & \Rightarrow\ \text{zeichne $(i, j)$}
+			                             \end{cases}
+		\end{align*}
+		\begin{center}
+		 % 7.6
+		\end{center}
+		\begin{align*}
+		 g(i+1,j) - g(i,j) &= (i+1)^2 - i^2 = 2i + 1\\
+		 g(i,j-1) - g(i,j) &= (j-1)^2 - (j-1) - j^2 + j\\
+				   &= j^2 - 2j + 1 - j + 1 - j^2 + j = -2j + 2
+		\end{align*}
+		\begin{center}
+		 % 7.7
+		\end{center}
+	\end{itemize}
+	\begin{lstlisting}[language=,keywords={loop,if,then, until},mathescape=true]
+i := 0; j := r, g := -r; // Invariante: g = g(i,j)
+
+loop
+	SetPixel(i,j)
+	g := g + 2i + 1; i := i + 1
+	if g $\ge$ 0 then j := j - 1; g := g - 2j 
+until j < i
+	\end{lstlisting}
+
+	\begin{lstlisting}[language=,mathescape=true]
+SetPixel(c$_x$+i,$c_y$+j)
+SetPixel(c$_x$+j,$c_y$+i)
+SetPixel(c$_x$-i,$c_y$+j)
+SetPixel(c$_x$-j,$c_y$+i)
+SetPixel(c$_x$-i,$c_y$-j)
+SetPixel(c$_x$-j,$c_y$-i)
+SetPixel(c$_x$+i,$c_y$-j)
+SetPixel(c$_x$+j,$c_y$-i)
+	\end{lstlisting}
+	Die Pixel in de n 4 Himmelsrichtungen werden doppelt gezeichnet.
+
+\section{Schwachstellen der Rasterung (Aliasing)}
+\begin{itemize}
+ \item merkbare Sprünge bei fast achsenparallelen Geraden
+	\begin{center}
+	 \psset{unit=0.2cm}
+	 \begin{pspicture}(0,0)(22,4)
+	  \psgrid[gridlabels=0pt]
+	  \psframe*(-2,1)(11,2)
+	  \psframe*(11,2)(25,3)
+	  \psline{->}(14,0)(11,2)
+	  \rput[lt](14,0){deutlich sichtbarer Knick}
+	 \end{pspicture}
+	\end{center}
+ \item unterschiedliche Helligkeitsverteilung in Abhängigkeit von der Steigung
+	\begin{center}
+	 \psset{unit=0.2cm}
+	 \begin{pspicture}(0,0)(22,15)
+	  \psgrid[gridlabels=0pt]
+	  \psframe*(-2,13)(24,14)
+	  \multirput(12,-1)(1,1){12}{
+		\psframe*(0,0)(1,1)
+	  }
+	 \end{pspicture}
+	\end{center}
+	\begin{itemize}
+	\item	horizontale/vertikale Linie hat 1 Pixel pro Längeneinheit
+	\item	schräge Linie $(45^\circ)$ hat 1 Pixel pro $\sqrt{2}$ Längeneinheiten
+	\end{itemize}
+	$\Rightarrow$ schräge Linien erscheinen dünner
+	\item	Buchstaben könne verschieden breit werden
+	\begin{center}
+		\psset{unit=0.5cm}
+		\begin{pspicture}(0,0)(2,7)
+			\rput[b](1,0){
+				\includegraphics[width=1cm,height=3.25cm]{bigi.eps}
+			}
+			\psgrid[gridlabels=0pt]
+			\psdot(0,0)\psdot(0,4)
+			\psdot(1,0)\psdot(1,1)\psdot(1,2)\psdot(1,3)\psdot(1,4)\psdot(1,6)
+			\psdot(2,0)
+		\end{pspicture}
+		\hspace{2cm}
+		\begin{pspicture}(0,0)(3,7)
+			\rput[b](1.5,0){
+				\includegraphics[width=1cm,height=3.25cm]{bigi.eps}
+			}
+			\psgrid[gridlabels=0pt]
+			\psdot(0,0)\psdot(0,4)
+			\psdot(1,0)\psdot(1,1)\psdot(1,2)\psdot(1,3)\psdot(1,4)\psdot(1,6)
+			\psdot(2,0)\psdot(2,1)\psdot(2,2)\psdot(2,3)\psdot(2,4)\psdot(2,6)
+			\psdot(3,0)
+		\end{pspicture}
+	\end{center}
+
+\end{itemize}
+\paragraph*{Lösung (Anti-Aliasing)}
+	Verschiedene Graustufen für Pixel, statt nur schwarz und weiß
+
+
