@@ -1,0 +1,190 @@
+\section{Antialiasing}
+verschiedene Ansätze:
+\begin{enumerate}
+ \item Betrachte den Bildpunkt als quadratische Fläche und nicht als Punkt, betrachte eine Kurve (1-dimensional) als Fläche (2-dimensional). z. B. Strecke als Rechtece
+	\begin{center}
+	 \psset{unit=0.5cm}
+	 \begin{pspicture}(0,0)(5,5)
+	  \psframe*(0,0)(5,5)
+	  \rput{45}(2.5,2.5){
+		\psframe*[linecolor=white](-2.5,-1.05)(2.5,-0.05)
+	  }
+	  \rput[r](-0.5,3){\rnode{49_l}{49\% weiß}}
+	  \rput[l](5.5,2){\rnode{12_l}{12\% weiß}}
+	  \psframe[fillstyle=hlines,hatchangle=60,linestyle=none,hatchsep=2pt](2,2)(3,3)
+	  \pnode(2.5,2.4){49}
+	  \psframe[fillstyle=hlines,hatchangle=60,linestyle=none,hatchsep=2pt](4,2)(5,3)
+	  \pnode(4.2,2.8){12}
+	  \psgrid[gridcolor=gray,gridlabels=0pt]
+	  \ncline[linecolor=gray]{->}{49_l}{49}
+	  \ncline[linecolor=gray]{->}{12_l}{12}
+	 \end{pspicture}
+	\end{center}
+	Pixel wird entsprechend hell- oder dunkelgrau gefärbt. (im Allgemeinen als proportionale Mischung aller Farben,
+	die im Pixelquadrat vorkommen).
+	\begin{center}
+		\psset{unit=0.5cm}
+		\begin{pspicture}(0,0)(5,5)
+			\rput{45}(2.5,2.5){
+				\psframe*(-2.5,0)(2.5,1)
+			}
+			\rput{-45}(2.5,2.5){
+				\psframe*[linecolor=red](-2.5,0)(2.5,-1)
+			}
+			\psframe[fillstyle=hlines,hatchangle=60,linestyle=none,hatchcolor=gray,hatchsep=2pt](2,2)(3,3)
+			\psgrid[gridcolor=gray,gridlabels=0pt]
+		\end{pspicture}
+	\end{center}
+	Aufwendig zu rechnen.
+ \item Supersampling: Man rechnet mit einer höheren Pixeldichte als tatsächlich vorhanden.
+	\begin{center}
+		\psset{unit=0.75cm}
+		\begin{pspicture}(0,0)(5,4)
+			\rput{30}(2.2,2.5){
+				\psframe*(-2.5,-1.1)(2.5,-0.1)
+			}
+			\psgrid[gridcolor=comment,gridlabels=0pt]
+			\multirput(0,0)(0,1){4}{
+				\multirput(0,0)(1,0){5}{
+					\multirput(0.167,0.167)(0,0.333){3}{
+						\multirput(0,0)(0.333,0){3}{
+							\psdot[dotstyle=x,linecolor=gray]
+						}
+					}
+				}
+			}
+			\pnode(3.5,1.5){1}
+			\pnode(2.5,2.5){5}
+			\rput[r](-0.5,3){\rnode{5l}{$\dfrac{5}{9}$ weiß}}
+			\rput[l](5.5,2){\rnode{1l}{$\dfrac{1}{9}$ weiß}}
+			\ncline[linecolor=gray]{->}{1l}{1}
+			\ncline[linecolor=gray]{->}{5l}{5}
+		\end{pspicture}
+	\end{center}
+	die verfeinerten Pixel werden "`binär"' zugeordnet (in Fläche und außerhalb) und entsprechend gesetzt.
+	Die Werte der tatsächlichen Pixel ergeben sich als Mittelwert der in ihnen enthaltenen verfeinerten Pixel.
+ \item Glättung:
+	\paragraph*{Idee}
+	\begin{center}
+	 \begin{pspicture}(0,0)(10,1.4)
+		\psset{linewidth=0.1mm}
+		\multirput(0,1)(0.197,-0.034){10}{
+			\pscircle(0,0){0.41}
+			\pscircle(0,0){0.25}
+			\pscircle(0,0){0.17}
+			\pscircle(0,0){0.13}
+			\pscircle(0,0){0.11}
+			\psdot[dotsize=0.2cm](0,0)
+		}
+	 \end{pspicture}
+	\end{center}
+	Helligkeitswerte "`strahlen"' auf die Nachbarn ab.
+	\begin{enumerate}
+	\item berechne die Pixelweite zunächst ohne Antialiasing.
+	\item Verteile die Helligkeit von jedem Pixel auf seinen Nachbarn nach einem festen Schema.
+	\end{enumerate}
+	\begin{center}
+		\psset{unit=0.6cm,gridlabels=0pt}
+		\begin{pspicture}(0,0)(3,3)
+			\rput[r](-2,3){z. B.}
+			\psgrid
+			\rput(0.5,2.5){$\tfrac{1}{36}$}\rput(1.5,2.5){$\tfrac{4}{36}$}\rput(2.5,2.5){$\tfrac{1}{36}$}
+			\rput(0.5,1.5){$\tfrac{4}{36}$}\rput(1.5,1.5){$\tfrac{16}{36}$}\rput(2.5,1.5){$\tfrac{4}{36}$}
+			\rput(0.5,0.5){$\tfrac{1}{36}$}\rput(1.5,0.5){$\tfrac{4}{36}$}\rput(2.5,0.5){$\tfrac{1}{36}$}
+		\end{pspicture}
+	\end{center}
+\end{enumerate}
+3. lässt sich auch mit 2. kombinieren
+
+\chapter{Helligkeit und Farbe in der Computergrafik}
+\section{Helligkeit}
+\Defi Helligkeit in der schwarz/weiß-Grafik bezeichnet einen Grauwert auf der Skala zwischen schwarz und weiß
+	\begin{align}
+	 \text{schwarz } &= 0, & \text{weiß } &= 1\\
+	 \text{oder schwarz } &= 0, & \text{weiß } &= 25 \qquad \text{(8-Bit-Integer)}
+	\end{align}
+\paragraph*{Problem} tatsächliche Mischung 50\% weiß und 50\% schwarz $\rightarrow$ sehr hellesgrau
+\paragraph*{Weber-Fechner'sches Gesetz} beschreibt die Nichtlinearität der Sinneswahrnehmungen (für Optik und
+	Akustik gleichermaßen). Vergrößerung der Energie um einen \emph{konstanten Faktor} wird als Vergrößerung des Reizes in \emph{konstanten Schritten} wahrgenommen.
+\Bsp	Eine Vergrößerung von 10 auf 12 Energieeinheiten wird genauso groß wahrgenommen wie eine Vergrößerung von
+	5000 auf 6000.
+\Bsp	Lautstärke wir in deziBel (dB) gemessen: Logarithmus aus der Schallenergie (oder Druck?). (Logarithmus aus
+	konstanten Faktoren konstante Differenzen).
+\Bsp	Eine Oktave in der Musik (z. B. Abstand zwischen tiefen C und hohen C) entspricht einer Verdoppelung der
+	Schallfrequenz.
+\begin{center}
+	\begin{pspicture}(0,0)(5,3)
+	 \psaxes{->}(0,0)(0,0)(5,3)
+	 \psplot{0}{5}{2.7*x^3/125}
+	 \rput(0,3.2){Intensität der Lichtbestrahlung}
+	 \rput[l](5.2,0){Grauwert des Pixels}
+	 \pstextpath[l](0,0){\psplot[linestyle=none]{1}{5}{2.7*x^3/125+0.1}}{Funktion der Form $y = x^\gamma$}
+	\end{pspicture}
+	% 8.7 
+\end{center}
+"`$\gamma$-Korrektur"', wird vom Bildschirm bzw. von der Grafikkarte automatisch durchgeführt.
+
+\section{Farbe}
+In der Computergrafik geht man von einem 3-Komponenten-Modell aus: Farbe ist aus 3 Grundfarben zusammengemischt
+\begin{center}
+ {\color{red}rot (R)}, {\color{green}grün (G)}, {\color{blue}blau (B)}
+\end{center}
+(In Wirklichkeit: unendlich viele Grundfarben, für jede sichtbare Wellenlänge eine)
+\begin{center}
+ \psset{unit=0.25cm}
+ \begin{pspicture}(0,0)(2.5,0.5)
+  \multirput(0.25,0)(1.5,0){2}{
+	\SpecialCoor
+	\psdot[linecolor=red](0.36;-150)
+	\psdot[linecolor=green](0.36;-30)
+	\psdot[linecolor=blue](0.36;90)
+	\pspolygon[linewidth=0.1mm](-0.75,-0.433)(0,0.866)(0.75,-0.433)
+  }
+  \multirput{180}(1,0.433)(1.5,0){2}{
+	\SpecialCoor
+	\psdot[linecolor=red](0.36;-150)
+	\psdot[linecolor=green](0.36;-30)
+	\psdot[linecolor=blue](0.36;90)
+	\pspolygon[linewidth=0.1mm](-0.75,-0.433)(0,0.866)(0.75,-0.433)
+  }
+ \end{pspicture}
+\end{center}
+Auf einem Bildschirm sind Lichtpunkte (Phosphore) in drei Farben R, G, B nahe aneinander gitterförmig angeordnet,
+Die Bildpunkte werden unabhängig von einander angesteuert.\\
+Eine Farbe in der Computergrafik ist durch 3 RGB-Werte zwischen 0 und 1 (0,1, ..., 255) charakterisiert. 24 bit pro Pixel, $2^24 \approx 16$ Millionen Farben
+\begin{center}
+ \begin{tabular}{ll}
+  \textbf{Farbe}	& $\boldsymbol{(r,g,b)}$\\
+  rot			& (1,0,0)\\
+  grün			& (0,1,0)\\
+  blau			& (0,0,1)\\
+  gelb (Y)		& (1,1,0)\\
+  magenta (M)		& (1,0,1)\\
+  cyan (C)		& (0,1,1)\\
+  schwarz (K)		& (0,0,0)\\
+  weiß			& (1,1,1)\\
+  Grauwerte		& $(x,x,x)$ alle drei Werte sind gleich
+ \end{tabular}\\
+ \psset{unit=4cm,xMin=0,xMax=1.5,yMin=0,yMax=1.5,zMin=0,zMax=1.5,Alpha=60,Beta=20,linecolor=yellow,nameX=$r$,nameY=$g$,nameZ=$b$}
+ \begin{pspicture}(-1,-0.5)(1,1.5)
+  \pstThreeDCoor[linecolor=black]
+  \pstThreeDBox(0,0,0)(1,0,0)(0,1,0)(0,0,1)
+  \pstThreeDLine(0,0,0)(1,1,1)
+  \pstThreeDPut(1,1,1){weiß}
+  \pstThreeDPut(0.5,0.5,0.5){\rput{50}(0,0){Grauachse}}
+  \pstThreeDPut(0,0,0){K}
+  \pstThreeDPut(1,0,0){R}
+  \pstThreeDPut(1,1,0){Y}
+  \pstThreeDPut(1,0,1){M}
+  \pstThreeDPut(0,1,0){G}
+  \pstThreeDPut(0,1,1){C}
+  \pstThreeDPut(0,0,1){B}
+ \end{pspicture}\\
+ Farbwürfel $[0,1]^3$
+\end{center}
+\begin{itemize}
+ \item Das RGB-System ist für die intuitive Behandlung von Farben nicht geeignet
+ \item die Grauwerte bilden die Grauachse $K$-Weiß im Farbwürfel.
+ \item die übrigen Ecken bilden das Farbsechseck RYGCBM. Auf diesem Sechseck liegen die "`reinsten"'/"`stärksten"'
+	Farben, alle anderen Farben kann man durch beimischen von Grau konstruieren.
+\end{itemize}
