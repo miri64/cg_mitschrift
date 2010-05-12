@@ -52,6 +52,17 @@
 \definecolor{blue}{rgb}{0,0,1}
 \definecolor{azure}{rgb}{.75,.75,1}
 
+\makeatletter
+\pst@addfams{pst-HSB}
+\define@key[psset]{pst-HSB}{HueBegin}{% Between 0 and 1
+  \def\PstParametricplotHSB@HueBegin{#1}}
+\define@key[psset]{pst-HSB}{HueEnd}{% Between 0 and 1
+  \def\PstParametricplotHSB@HueEnd{#1}}
+\define@boolkey[psset]{pst-HSB}[Pst@]{HSB}[true]{}
+% Default values
+\psset[pst-HSB]{HueBegin=0,HueEnd=1,HSB=true}
+\psset{dimen=outer}
+
 % Einstellungen für Pakete
 \lstset{
 	tabsize=8,
@@ -124,6 +135,6 @@
 %\input{4_light}
 %\input{6_20100430}
 %\input{7_20100505}
-%\input{8_20100507}
+\input{8_20100507}
 \input{9_20100512}
 \end{document}

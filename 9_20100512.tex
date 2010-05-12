@@ -1,11 +1,19 @@
 \begin{center}
-	\definecolor{azure}{rgb}{0.25,0.75,0.25}
- \psset{unit=4cm,xMin=0,xMax=1.5,yMin=0,yMax=1.5,zMin=0,zMax=1.5,Alpha=60,linecolor=azure,Beta=20,nameX=$r$,nameY=$g$,nameZ=$b$}
+	\definecolor{this}{rgb}{0.25,0.75,0.25}
+ \psset{unit=4cm,xMin=0,xMax=1.5,yMin=0,yMax=1.5,zMin=0,zMax=1.5,Alpha=60,linecolor=gray,Beta=20,nameX=$r$,nameY=$g$,nameZ=$b$}
  \begin{pspicture}(-1,-0.5)(1,1.5)
   \pstThreeDCoor[linecolor=black]
+  \pstThreeDPut(0.5,0.5,0.75){$\vthree{\frac{1}{2}}{\frac{1}{2}}{\frac{1}{2}}$}
+  \pstThreeDPut(0.25,0.75,0.5){$\vthree{\frac{1}{4}}{\frac{3}{4}}{\frac{1}{4}}$}
   \pstThreeDBox(0,0,0)(1,0,0)(0,1,0)(0,0,1)
   \pstThreeDLine(0,0,0)(1,1,1)
-  \pstThreeDLine[linecolor=red](1,0,0)(1,1,0)(0,1,0)(0,1,1)(0,0,1)(1,0,1)(1,0,0) % (1, g, 0), 0 \le g \le 1 usw...
+  \pstThreeDLine[linecolor=red](1,0,0)(1,1,0)(0,1,0)(0,1,1)(0,0,1)(1,0,1)(1,0,0) % HSV-Effekt?
+  \pstThreeDPut(1,0.5,0){$\vthree{1}{g}{0}$}
+  \pstThreeDPut(0,0.5,1){$\vthree{0}{g}{1}$}
+  \pstThreeDPut(0.5,1,0){$\vthree{r}{1}{0}$}
+  \pstThreeDPut(0.5,0,1){$\vthree{r}{0}{1}$}
+  \pstThreeDPut(1.1,0,0.5){$\vthree{1}{0}{b}$}
+  \pstThreeDPut(0,1.1,0.5){$\vthree{0}{1}{b}$}
   \pstThreeDPut(1,1,1){W}
   \pstThreeDPut(0,0,0){K}
   \pstThreeDPut(1,0,0){R}
@@ -16,7 +24,8 @@
   \pstThreeDPut(0,0,1){B}
   \pstThreeDDot(0.5,0.5,0.5) % mit Koord beschriften
   \pstThreeDLine(0.5,0.5,0.5)(0,1,0) % mit Koord beschriften
-  \pstThreeDDot(0.25,0.75,0.25) % mit Koord beschriften
+  \pstThreeDPut(0,1,-0.25){$\vthree{0}{1}{0}$}
+  \pstThreeDDot[linecolor=this](0.25,0.75,0.25) % mit Koord beschriften
  \end{pspicture}
 \end{center}
 Diese "`stärksten Farben"' sind die Farben din mindestens eine Komponente 0 und mindestens eine Komponente 1 haben
@@ -24,7 +33,36 @@ Diese "`stärksten Farben"' sind die Farben din mindestens eine Komponente 0 und
 
 \subsection{Farbsechseck bzw. Farbkreis}
 \begin{center}
- % 9.1
+ \begin{pspicture}(0,0)(4,4)
+  \rput(2,2){
+	\SpecialCoor
+	\psline[linecolor=red](1.85;40)(0,0)(2;90)
+	\pspolygon(2;90)(2;30)(2;-30)(2;-90)(2;-150)(2;150)
+	\psarc[linecolor=green]{<-}(0,0){1.2}{100}{80} % HSV-Effekt?
+	\psdot(2;90)\uput{0.4cm}[-90](2;90){$0^\circ$}
+	\psdot(2;30)\uput{0.4cm}[-150](2;30){$60^\circ$}
+	\psdot(2;-30)\uput{0.4cm}[150](2;-30){$120^\circ$}
+	\psdot(2;-90)\uput{0.4cm}[90](2;-90){$180^\circ$}
+	\psdot(2;-150)\uput{0.4cm}[30](2;-150){$240^\circ$}
+	\psdot(2;150)\uput{0.4cm}[-30](2;150){$300^\circ$}
+	\rput(1;65){$40^\circ$}
+  }
+ \end{pspicture}
+ \hspace{2cm}
+ \begin{pspicture}(0,0)(4,4)
+  \rput(2,2){
+	\SpecialCoor
+	\psline[linecolor=red](2;40)(0,0)(2;90)
+	\pscircle(0,0){2}	% HSV-Effekt
+	\psdot(2;90)\uput{0.2cm}[90](2;90){$0^\circ$}
+	\psdot(2;30)\uput{0.2cm}[30](2;30){$60^\circ$}
+	\psdot(2;-30)\uput{0.2cm}[-30](2;-30){$120^\circ$}
+	\psdot(2;-90)\uput{0.2cm}[-90](2;-90){$180^\circ$}
+	\psdot(2;-150)\uput{0.2cm}[-150](2;-150){$240^\circ$}
+	\psdot(2;150)\uput{0.2cm}[150](2;150){$300^\circ$}
+	\rput(1;65){$40^\circ$}
+  }
+ \end{pspicture}
 \end{center}
 \begin{itemize}
  \item Die Punkte auf diesem Sechseck werden häufig durch einen Winkel ($0^\circ-360^\circ$) parametrisiert.
@@ -153,7 +191,9 @@ $0 \le C, M, Y \le 1$
 \subsection{CMYK-System (Vierfarbdruck)}
 Zusätzlich $K = $schwarz. (Das Schwarz von $K$ wird dunkler als von $C + M + Y$ oder um Druckfarbe zu sparen.)
 \begin{center}
- % 9.8
+ \begin{pspicture}(0,0)(4,2)
+  
+ \end{pspicture}
 \end{center}
 \begin{align*}
  K' &:= \min(C, M, Y)\\
