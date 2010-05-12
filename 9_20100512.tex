@@ -1,0 +1,178 @@
+\begin{center}
+	\definecolor{azure}{rgb}{0.25,0.75,0.25}
+ \psset{unit=4cm,xMin=0,xMax=1.5,yMin=0,yMax=1.5,zMin=0,zMax=1.5,Alpha=60,linecolor=azure,Beta=20,nameX=$r$,nameY=$g$,nameZ=$b$}
+ \begin{pspicture}(-1,-0.5)(1,1.5)
+  \pstThreeDCoor[linecolor=black]
+  \pstThreeDBox(0,0,0)(1,0,0)(0,1,0)(0,0,1)
+  \pstThreeDLine(0,0,0)(1,1,1)
+  \pstThreeDLine[linecolor=red](1,0,0)(1,1,0)(0,1,0)(0,1,1)(0,0,1)(1,0,1)(1,0,0) % (1, g, 0), 0 \le g \le 1 usw...
+  \pstThreeDPut(1,1,1){W}
+  \pstThreeDPut(0,0,0){K}
+  \pstThreeDPut(1,0,0){R}
+  \pstThreeDPut(1,1,0){Y}
+  \pstThreeDPut(1,0,1){M}
+  \pstThreeDPut(0,1,0){G}
+  \pstThreeDPut(0,1,1){C}
+  \pstThreeDPut(0,0,1){B}
+  \pstThreeDDot(0.5,0.5,0.5) % mit Koord beschriften
+  \pstThreeDLine(0.5,0.5,0.5)(0,1,0) % mit Koord beschriften
+  \pstThreeDDot(0.25,0.75,0.25) % mit Koord beschriften
+ \end{pspicture}
+\end{center}
+Diese "`stärksten Farben"' sind die Farben din mindestens eine Komponente 0 und mindestens eine Komponente 1 haben
+(Farben ohne Grau/Weiß/Schwarz-Anteil).
+
+\subsection{Farbsechseck bzw. Farbkreis}
+\begin{center}
+ % 9.1
+\end{center}
+\begin{itemize}
+ \item Die Punkte auf diesem Sechseck werden häufig durch einen Winkel ($0^\circ-360^\circ$) parametrisiert.
+ \item Startpunkt willkürlich (R = $0^\circ$, Y = $60^\circ$, ...)
+ \item Dieser Parameter heißt "`Farbton"', "`Unbuntart"' (engl. \textit{hue} (H)). 
+\end{itemize}
+\begin{align*}
+ 40^\circ\ \text{entspricht dann } & \frac{1}{3} \cdot \mathrm{R} + \frac{2}{3} \cdot \mathrm{Y} \left(\frac{1}{3} \cdot 0^\circ
+	+ \frac{2}{3} \cdot 60^\circ\right)\\
+	&= \frac{1}{3} \cdot (1,0,0) + \frac{2}{3} \cdot (1,1,0) = \left(1, \frac{2}{3}, 0\right)
+\end{align*}
+Wir erhalte ein neues Farbsystem HSV
+
+\subsection{Andere Farbsysteme}
+\subsubsection{HSV-System}
+\begin{description}
+ \item[hue] (Farbton) $0^\circ \le H \le 360^\circ$
+ \item[saturation] (Sättigung) $0 \le S \le 1$
+ \item[value] ($\approx$ Helligkeit) $0 \le B \le 1$
+\end{description}
+$V = 1$ sind die Farben auf den drei Deckseiten des Würfels: mindest einer der drei Werte ist 1
+\[max(r,g,b) = 1\]
+\begin{center}
+	\definecolor{azure}{rgb}{0.25,0.75,0.25}
+ \psset{unit=4cm,xMin=0,xMax=1.5,yMin=0,yMax=1.5,zMin=0,zMax=1.5,Alpha=60,linecolor=gray,Beta=20,nameX=$r$,nameY=$g$,nameZ=$b$}
+ \begin{pspicture}(-1,-0.5)(1,1.5)
+  \pstThreeDCoor[linecolor=black]
+  \pstThreeDBox(0,0,0)(1,0,0)(0,1,0)(0,0,1)
+  \pstThreeDLine(0,0,0)(1,1,1)
+  \pstThreeDSquare[fillstyle=vlines](1,0,0)(0,0,1)(0,1,0)
+  \pstThreeDSquare[fillstyle=vlines](0,0,1)(1,0,0)(0,1,0)
+  \pstThreeDSquare[fillstyle=vlines](0,1,0)(0,0,1)(1,0,0)
+  \pstThreeDPut(1,1,1){W}
+  \pstThreeDPut(0,0,0){K}
+  \pstThreeDPut(1,0,0){R}
+  \pstThreeDPut(1,1,0){Y}
+  \pstThreeDPut(1,0,1){M}
+  \pstThreeDPut(0,1,0){G}
+  \pstThreeDPut(0,1,1){C}
+  \pstThreeDPut(0,0,1){B}
+ \end{pspicture}
+\end{center}
+Umrechnung HSV $\to$ RGB:
+\begin{align*}
+ \vthree{r''}{g''}{b''} &\text{sei die reine Farbe, die $H$ entspricht.}\\
+ \vthree{r'}{g'}{b'} &= S \vthree{r''}{g''}{b''} + (1-S) \vthree{1}{1}{1}\\
+ \text{Ergebnis } \vthree{r}{g}{b} &= V \vthree{r'}{g'}{b'}
+\end{align*}
+Umrechnung RGB $\to$ HSV
+\begin{center}
+ % 9.2
+\end{center}
+\begin{align*}
+ V &= \max(r,g,b)\\
+ \vthree{r'}{g'}{b'} = \vthree{r}{g}{b} \cdot \frac{1}{V}\\
+ S &= 1 - \min(r',g',b')\\
+ \rnode{v''}{\vthree{r''}{g''}{b''}} &= \left[\vthree{r'}{g'}{b'}-(1-S)\vthree{1}{1}{1}\right] \cdot \frac{1}{S}
+\end{align*}
+\rnode{rF}{reine Farbe} $\rightarrow$ Umwandlung in $H$ \nccurve[angleA=45]{->}{rF}{v''}
+\begin{center}
+ % 9.3
+\end{center}
+$\vthree{r''}{g''}{b''}$ ist tatsächlich eine reine Farben
+\begin{enumerate}
+ \item Wir wissen $\max(r',g',b') = 1$ z. B. $r' = 1$
+	\[r'' = [1-(1-S)1] \cdot \frac{1}{S} = S \frac{1}{S} = 1\]
+ \item Nehmen wir nun an $(r',g',b') = g' = 1-S$
+	\[g'' = [g'-(1-S)1] \cdot \frac{1}{S} = [-1 + S + 1 - S] \frac{1}{S} = 0\]
+\end{enumerate}
+Für $V = 0$ setze $S, H$ beliebig.\\
+Für $V \neq 0$, $S = 0$, setze $H$ beliebig.
+\begin{center}
+ % 9.4
+\end{center}
+Nachteil:
+\begin{description}
+ \item $\mathrm{R} = (1,0,0)$
+ \item $\mathrm{Y} = (1,1,0)$
+ \item $\mathrm{W} = (1,1,1)$
+\end{description}
+habe ndenselben $V$-Wert.
+
+\subsubsection{HSL-System}
+\begin{description}
+ \item[hue] (Farbton) $0^\circ \le H \le 360^\circ$
+ \item[saturation] (Sättigung) $0 \le S \le 1$
+ \item[lightness] (oder "`luminance"') $L = \tfrac{1}{2}$ enthält das reine Farbensechseck und den Graupunkt
+	$\left(\tfrac{1}{2},\tfrac{1}{2},\tfrac{1}{2}\right)$
+\end{description}
+\begin{center}
+ % 9.5
+\end{center}
+Umrechnung HSL $\to$ RGB:
+\begin{align*}
+ \vthree{r''}{g''}{b''} &\text{sei die reine Farbe, die $H$ entspricht.}\\
+ \vthree{r'}{g'}{b'} &= S \vthree{r''}{g''}{b''} + (1-S) \vthree{1}{1}{1}\\
+ \text{Für } 0 \le L \le \frac{1}{2}: \vthree{r}{g}{b} &= \vthree{r'}{g'}{b'} \cdot 2L\\
+ \text{Für } \frac{1}{2} \le L \le 1: \vthree{r}{g}{b} &= \vthree{r'}{g'}{b'} \cdot (2-2L) +
+			\vthree{1}{1}{1} \cdot (2L - 1)
+\end{align*}
+\begin{center}
+ % 9.6+7
+\end{center}
+$S = 1$ Farben auf allen 6 Seitenflächen des Würfels
+
+
+
+\section{Subtraktive Farbmischung (z. B. beim Drucken)}
+3 Grundfarben
+\begin{description}
+ \item $C = $ cyan, $B, G$ wird durchgelassen, $R$ wird absorbiert
+ \item $M = $ magenta, $B, R$ wird durchgelassen, $G$ wird absorbiert
+ \item $Y = $ gelb, $R, G$ wird durchgelassen, $B$ wird absorbiert
+\end{description}
+$C + M$ nur Blau bleibt übrig\\
+$C + M + Y = $ schwarz
+
+\subsection{CMY-System}
+$0 \le C, M, Y \le 1$
+\begin{align*}
+ C &:= 1 - r\\
+ M &:= 1 - g\\
+ Y &:= 1 - b
+\end{align*}
+
+\subsection{CMYK-System (Vierfarbdruck)}
+Zusätzlich $K = $schwarz. (Das Schwarz von $K$ wird dunkler als von $C + M + Y$ oder um Druckfarbe zu sparen.)
+\begin{center}
+ % 9.8
+\end{center}
+\begin{align*}
+ K' &:= \min(C, M, Y)\\
+ C' &:= C - K'\\
+ M' &:= M - K'\\
+ Y' &:= Y - K'
+\end{align*}
+(möglichst viel Farbe durch $K$ ersetzen)
+
+\section{Gängige Farbdarstellung heutzutage}
+\begin{itemize}
+ \item 8 Bit pro Farbkanal $(r,g,b)$ ... 24 Bit pro Bildpunkt\\
+	$\Rightarrow 2^{24} = 16\ \text{Mio. Farben}$ (True Color)
+ \item 4-Kanal-Darstellung $(r, g, b, \alpha)$
+	$\alpha$ ist für Transparenz:
+	\begin{itemize}
+	 \item $\alpha = 0...$ durchsichtig; Farbe wird vom Hintegrund genommen,
+	 \item $\alpha = 1...$ Farbe wird von $(r, g, b)$ bestimmt
+	 \item $0 < \alpha < 1...$ teilweise transparent
+	\end{itemize}
+	$\rightarrow$ 32 bit pro Pixel
+\end{itemize}
