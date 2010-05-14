@@ -1,0 +1,275 @@
+\subsection{Farbpaletten}
+Es wird nicht für jeden Pildpunkt eine unabhängige Farbe gespeichert (24 Bit) sonder ein Index in einer Tabelle (8 Bit,
+= Farbpaletten).
+\begin{center}
+ \psset{unit=0.75cm}
+ \begin{pspicture}(0,-0)(8,6)
+  \psgrid[gridlabels=0pt,subgriddiv=10,gridcolor=lgray,gridwidth=0.1pt,subgridwidth=0.1pt]
+  \fnode[framesize=0.1 0.1](6.25,4.35){pix}
+  \uput{3pt}[180](0,3){600}
+  \uput{3pt}[-90](4,0){800}
+ \end{pspicture}\hspace{2cm}
+ \begin{tabular}{|r|l|}
+  \hline
+  \tiny 0 & \\
+  \tiny 1 & \\
+  & \\
+  & \\
+  \hline
+  \Rnode[vref=2pt]{tab}{} & Farbe 24 Bit \\
+  \hline
+  & \\
+  & \\
+  & \\
+  & \\
+  \hline
+  \tiny 255 & \\
+  \hline
+ \end{tabular}
+ \nccurve[angleA=0,angleB=180]{->}{pix}{tab}
+ \vspace{3pt}
+\end{center}
+Animation ganz einfach und schnell möglich.
+\begin{center}
+ \begin{pspicture}(0,0)(2.25,1)
+  \psframe(0,0)(2.25,1)
+  \pspolygon(0,0)(0.25,0)(0.5,0.5)(0.25,1)(0,1)
+  \pspolygon(0.25,0)(0.5,0.5)(0.25,1)(0.75,1)(1,0.5)(0.75,0)
+  \pspolygon(0.75,0)(1,0.5)(0.75,1)(1.25,1)(1.5,0.5)(1.25,0)
+  \pspolygon(1.25,0)(1.5,0.5)(1.25,1)(1.75,1)(2,0.5)(1.75,0)
+  \pspolygon(1.75,0)(2.25,0)(2.25,1)(1.75,1)(2,0.5)
+  \rput(0.25,0.5){\small 0}
+  \rput(0.75,0.5){\small 1}
+  \rput(1.25,0.5){\small 2}
+  \rput(1.75,0.5){\small 3}
+  \rput(2.125,0.5){\small 4}
+ \end{pspicture}\\[1em]
+ \begin{tabular}{r|l|}
+	\tiny 0	& \texttt{\textcolor{red}{\#FF0000}}\\
+		& \texttt{\#000000}\\
+		& \texttt{\#000000}\\
+		& \texttt{\#000000}\\
+	\tiny 4	& \texttt{\#000000}
+ \end{tabular}
+ \hspace{2cm}
+ \begin{tabular}{r|l|}
+	\tiny 0	& \texttt{\textcolor{red}{\#FF0000}}\\
+		& \texttt{\textcolor{red}{\#FF0000}}\\
+		& \texttt{\#000000}\\
+		& \texttt{\#000000}\\
+	\tiny 4	& \texttt{\#000000}
+ \end{tabular}
+\end{center}
+Heutzutage eher historisch.
+
+\chapter{Beleuchtung}
+Standardfall:
+\begin{center}
+ \psset{Alpha=50}
+ \begin{pspicture}(-3,-0.4)(3,3)
+  % http://commons.wikimedia.org/wiki/File:Bulbgraph.svg
+  \pstThreeDPut(3,-3,3){\includegraphics[height=1cm]{bulb.eps}}
+  \pstThreeDSquare(-1,-2,0)(2,0,0)(0,3,0)
+  \pstThreeDLine[linecolor=yellow]{->}(3,-3,3)(0,0,0)
+  \pstThreeDBox[linestyle=dotted](1,-2,1)(1,0,0)(0,1,0)(0,0,1)
+  \pstThreeDPut(2.3,-2,0.5){Schatten}
+  \pstThreeDLine[linecolor=yellow]{->}(0,0,0)(-3,3,3)
+  \pstThreeDBox[linestyle=dotted](-1.5,1.5,1.5)(1,0,0)(0,1,0)(0,0,1)
+  \rput[l](3,1){Verdeckung durch Hindernis}
+  \rput[l](1.6,0){Fläche (Oberfläche eines Objekts)}
+  \pstThreeDDot(-3,3,3)
+  \pstThreeDPut(-3,3.6,3){Auge}
+ \end{pspicture}
+
+\end{center}
+
+In Wirklichkeit sehr komplex, in der Computergrafik aber eher selten angewandt:
+\begin{center}
+ \psset{Alpha=50}
+ \begin{pspicture}(-3,-0.4)(3,4)
+  % http://commons.wikimedia.org/wiki/File:Bulbgraph.svg
+  \pstThreeDPut(3,-3,3){\includegraphics[height=1cm]{bulb.eps}}
+  \pstThreeDSquare(-1,-2,0)(2,0,0)(0,3,0)
+  \pstThreeDSquare(-2,-3,0.5)(0,3,0)(0,0,2)
+  \pstThreeDLine[linecolor=yellow]{->}(3,-3,3)(0,0,0)
+  \pstThreeDLine[linecolor=yellow]{->}(3,-3,3)(-2,-1.5,1.5)
+  \pstThreeDLine[linecolor=yellow]{->}(3,-3,3)(2,-1.5,1.5)
+  \pstThreeDLine[linecolor=yellow]{->}(2,-1.4,1.5)(-2,-1.4,1.5)
+  \pstThreeDLine[linecolor=yellow]{->}(-2,-1.6,1.5)(2,-1.6,1.5)
+  \pstThreeDLine[linecolor=yellow]{->}(0,0,0)(-3,3,3)
+  \pstThreeDLine[linecolor=yellow]{->}(-2,-1.5,1.5)(0,0,0)
+  \pstThreeDLine[linecolor=yellow]{->}(0,0,0)(2,-1.5,1.5)
+  \pstThreeDSquare(2,-3,0.5)(0,3,0)(0,0,2)
+  \pstThreeDDot(-3,3,3)
+  \pstThreeDPut(-3,3.6,3){Auge}
+ \end{pspicture}
+\end{center}
+
+Beleuchtung ist wichtig um einen räumlichen Eindruck zu erzeugen
+\begin{center}
+ \definecolor{darkgreen}{rgb}{0,0.75,0}
+ \definecolor{darkergreen}{rgb}{0,0.5,0}
+ \begin{pspicture}(7,3)
+  \pspolygon[fillstyle=solid, fillcolor=green,linestyle=none](0,0.5)(1.5,0)(1.5,2)(0,2.5)
+  \psline[fillstyle=solid, fillcolor=darkergreen,linestyle=none](1.5,0)(3,0.5)(3,2.5)(1.5,2)
+  \psline[fillstyle=solid, fillcolor=darkgreen,linestyle=none](1.5,3)(0,2.5)(1.5,2)(3,2.5)
+
+  \rput[bl](4,0){
+	\pspolygon[fillstyle=solid, fillcolor=green,linestyle=none](0,0.5)(1.5,0)(3,0.5)(3,2.5)(1.5,3)(0,2.5)
+  }
+ \end{pspicture}
+\end{center}
+Flächenbeschaffenheit:\\
+\begin{tabular}{rlr}
+ a) & diffuse Reflexion; "`sieht aus allen Richtungen gleich aus"' &\Rnode[vref=10pt]{dR}{}\\
+ \\
+ b) & spiegelndes Reflexion;&\pnode{sR}
+\end{tabular}
+\psbrace(sR)(dR){treten auch kombiniert auf}
+
+\begin{enumerate}[a)]
+ \item diffuse Reflexion:\\
+	$L, N, A$ sind Einheitsvektoren:
+	\begin{align*}
+	 N... &\text{Normalvektor der Fläche}\\
+	 L... &\text{Vektor zur Lichtquelle}\\
+	 A... &\text{Vektor zum Auge}\\
+	 \theta... &\text{Einfallswinkel (zwischen $L$ und $N$)}
+	\end{align*}
+	\begin{center}
+	 \psset{Alpha=50,unit=2,Beta=10}
+	 \begin{pspicture}(-2,-0.5)(2,1.2)
+	  \pstThreeDSquare(-1,-1,0)(2,0,0)(0,2,0)
+	  \pstThreeDSquare(-0.15,-0.15,0)(0.3,0,0)(0,0.3,0)
+	  \pstThreeDLine{->}(0,0,0)(0,0,1)
+	  \pstThreeDPut(0,0,1.11){$N$}
+	  \pstThreeDLine{->}(0,0,0)(0,-0.707,0.707)
+	  \pstThreeDPut(0,-0.8,0.8){$L$}
+	  \pstThreeDLine{->}(0,0,0)(0,0.707,0.707)
+	  \pstThreeDPut(0,0.8,0.8){$A$}
+	  \pstThreeDCircle[beginAngle=0,endAngle=-45,arrows=<->](0,0,0)(0,0,0.5)(0,0.5,0)
+	  \pstThreeDPut(0,-0.17,0.34){$\theta$}
+	 \end{pspicture}
+	\end{center}
+	Wie erscheint ein Punkt (Flächenstück) für das Auge?
+	\[I = \text{Intensität}\]
+	zusätzliche Daten:
+	\begin{align*}
+	 r_L... &\text{Abstand zur Lichtquelle}\\
+	 I_L... &\text{Intensiät der Lichtquelle}\\
+	 K_D... &\text{diffuser Reflexionskoeffizient der Fläche}
+	\end{align*}
+	\begin{center}
+	\begin{minipage}{0.95\linewidth}
+	Abhängigkeit von $\theta$ (\textbf{Lampert'sches Gesetz})
+	\[I = \cos \theta \cdot (\dots) \qquad \cos \theta \langle N, L \rangle\]
+	\begin{center}
+		\psset{unit=2}
+		 \begin{pspicture}(0,0.5)(2,4)
+		 \psdot(0.75,4)
+		 \psline[linecolor=yellow](0.25,2.5)(0.75,4)(1.25,2.5)
+		 \psline(0,2.7)(1.5,2.7)
+		 \psdot(0.75,2.7)
+		 \psline{->}(0.75,2.7)(1.2,2.7)
+		 \uput{3pt}[-90](0.975,2.7){$r$}
+		 \psframe(0,0.5)(1.5,2)
+		 \pscircle[linecolor=yellow](0.75,1.25){0.45}
+		 \psline{->}(0.75,1.25)(1.2,1.25)
+		 \uput{3pt}[-90](0.975,1.25){$r$}
+		 \psdot(0.75,1.25)
+		 \end{pspicture}
+		 \hspace{2cm}
+		 \begin{pspicture}(0,0.5)(2,4)
+		 \psdot(0.75,4)
+		 \psline[linecolor=yellow](0.25,2.5)(0.75,4)(1.25,2.5)
+		 \psline(0,2.5)(1.5,3)
+		 \psdot(0.75,2.75)
+		 \psline[linestyle=dotted](0.75,2.75)(1.15,2.75)
+		 \psline{->}(0.75,2.75)(1.135,2.875)
+		 \uput{3pt}[-90](0.975,2.7){$r$}
+		 \psframe(0,0.5)(1.5,2)
+		 \psellipse[linecolor=yellow](0.75,1.25)(0.55,0.45)
+		 \psline{->}(0.75,1.25)(0.75,1.7)
+		 \uput{3pt}[180](0.75,1.475){$r$}
+		 \psline{->}(0.75,1.25)(1.3,1.25)
+		 \uput{3pt}[-90](1.025,1.25){$\frac{r}{\cos \theta}$}
+		 \psdot(0.75,1.25)
+		 \end{pspicture}
+		 \hspace{1cm}
+		 \psset{unit=0.4}
+		 \begin{pspicture}(0,0)(4,3)
+		  \rput[bl](0,6){
+			\psline(0,0)(4,3)(4,0)
+			\uput{4pt}[126.87](2,1.5){$\dfrac{r}{\cos \theta}$}
+			\psline[linestyle=dotted](0,0)(4,0)
+			\uput{4pt}[-90](2,0){$r$}
+			\psline(3.5,0)(3.5,0.5)(4,0.5)
+			\dotnode[dotsize=2px](3.75,0.25){T}
+			\psarc(0,0){1.5}{0}{36.87}
+			\SpecialCoor
+			\rput(1;18.435){$\theta$}
+			\rput[r](4,-0.75){\rnode{S}{annähernd $90^\circ$}}
+			\ncline{->}{S}{T}
+		  }
+		 \end{pspicture}
+	\end{center}
+	\textbf{Begründung:}
+	Die Menge an Lichtenergie, die auf eine Fläche auftrifft, hängt vom räumlichen Winkel ab, unter dem die Fläche von der
+	Lichtquelle aus erscheint.
+	\begin{center}
+	 \psset{unit=2cm}
+	 \begin{pspicture}(0,-0.4)(1.570796327,1)
+	  \psaxes[xunit=1.570796327,trigLabels,showorigin=false,labels=y](0,0)(0,0)(1.2,1)
+	  \psplot{0}{1.570796327}{cos(x)}
+	  \rput[t](1.570796327,-0.12){$\dfrac{\pi}{2}$}
+	 \end{pspicture}
+	\end{center}
+	Die gleiche Menge an Licht, die vorher auf eine Fläche von $r^2 \pi$ gefallen ist, fällt jetzt auf eine
+	Fläche von $r \cdot r \dfrac{1}{\cos \theta} \cdot \pi ...$, pro Flächeneinheit kommt um den Faktor
+	$\cos \theta$ beim Auge weniger an.
+	\end{minipage}
+	\end{center}
+	$\Rightarrow$ $I$ hängt \emph{nicht von $A$} ab. (Das ist spezifisch für die diffuse Reflexion)\\
+	Abstand zur Lichquelle: Physikalisch $\dfrac{1}{r_L^2}$ (liefert in der Praxis zo starke
+	Kontraste)
+	\begin{center}
+		\psset{Alpha=50}
+		\begin{pspicture}(-3,-0.4)(1,4)
+			% http://commons.wikimedia.org/wiki/File:Bulbgraph.svg
+			\pstThreeDSquare(2,-4.5,4.5)(2,0,0)(0,0,-2)
+			\pstThreeDPut(3,-3,3){\includegraphics[height=1cm]{bulb.eps}}
+			\pstThreeDSquare(-1,-2,0)(2,0,0)(0,3,0)
+			\pstThreeDLine[linecolor=yellow]{->}(3,-3,3)(0,0,0)
+			\pstThreeDLine[linecolor=yellow]{->}(3,-3,3)(3,-4.5,3.5)
+			\pstThreeDPut(3,-3.75,3.25){5 cm}
+			\pstThreeDPut(1.5,-1.5,1.5){2 m}
+		\end{pspicture}
+	\end{center}
+	Mit der Formel $\dfrac{1}{r_L^2}$ würde das einen Faktor 400 bedeuten.
+	Man nimmt stattdessen eine Formel der Gestalt:
+	\[\frac{1}{C_1 + C_2 r_L^2 + C_3 r_L^2} \qquad \text{für passende Konstanten $C_1, C_2, C_3$}\]
+	\begin{itemize}
+	 \item Formel für diffuse Reflexion
+		\[\boxed{I = I_L \frac{1}{C_1 + C_2 r_L^2 + C_3 r_L^2} \cos \theta \cdot K_D} \qquad \left(0 \le \theta \le \frac{\pi}{2}\right)\]
+	 \item Diese Formel wird für jede Farbkomponente {\color{red}R}, {\color{green}G}, {\color{blue}B} angewandt
+		\begin{align*}
+		I^{\color{red}R} &= I^{\color{red}R}_L \frac{1}{C_1 + C_2 r_L^2 + C_3 r_L^2} \cos \theta \cdot K^{\color{red}R}_D\\
+		I^{\color{green}G} &= I^{\color{green}G}_L \frac{1}{C_1 + C_2 r_L^2 + C_3 r_L^2} \cos \theta \cdot K^{\color{green}G}_D\\
+		I^{\color{blue}B} &= I^{\color{blue}B}_L \frac{1}{C_1 + C_2 r_L^2 + C_3 r_L^2} \cos \theta \cdot K^{\color{blue}B}_D
+		\end{align*}
+	 \item In Wirklichkeit müsste man das für jede Wellenlänge $\lambda$ getrennt ausrechnen.
+		\[\cos \theta \text{ durch } \max(0,\langle N, L \rangle)\]
+	 \item Für unendlich ferne \emph{Lichtquellen} lässt man den Term $\dfrac{1}{C_1 + C_2 r_L^2 + C_3 r_L^2}$ weg.
+		$I_L$ hat eine andere Bedeutung. $L$ ist dann konstant.
+
+	 \item Man betrachtet auch "`diffuses Licht"'. Es kommt aus allen Richtungen gleich stark.
+		\[ I = I_{L,D} \cdot K_D \qquad \text{für $R,G,B$ getrennt}\]
+	 \item Um die Helligkeit eines Flächenstücks (in $R$, $G$, $B$) zu berechnen, werden die Ergebnisse der verschiedenen
+		Lichtquellen und der diffusen Beleuchtung aufsummiert.
+	\end{itemize}
+\item	
+\end{enumerate}
+
+
+
+

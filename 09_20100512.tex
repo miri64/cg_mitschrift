@@ -301,7 +301,37 @@ Umrechnung HSL $\to$ RGB:
 \end{center}
 $S = 1$ Farben auf allen 6 Seitenflächen des Würfels
 
-
+\subsection{YCrCb/YPrPb-Farbsystem}
+Einsatz beim Farbfernsehen
+\begin{align*}
+ Y &= 0{,}299 \cdot R + 0{,}587 \cdot G + 0{,}114 \cdot B \qquad \text{(Helligkeit)}\\[1em]
+ Cr &= \Rnode[vref=10pt,href=1.1]{Cr}{...} \\[1em]
+ Cb &= \Rnode[vref=-2pt,href=1.1]{Cb}{...}
+\end{align*}
+\psbrace(Cb)(Cr){lineare Ausdrücke in $R$, $G$, $B$ (Chromanz, Farbigkeit)}
+\begin{align*}
+ 0 &\le R, G, B \le 1\\
+ 0 &\le Y \le 1
+ -\frac{1}{2} \le Cr, Cb \le +\frac{1}{2}
+\end{align*}
+\begin{center}
+	% 10.1
+	\psset{unit=3cm,xMin=-0.4,xMax=1.3,yMin=-0.9,yMax=1.3,zMin=-0.1,zMax=1.1,Alpha=70,Beta=15,
+		nameX=$r$,nameY=$g$,nameZ=$b$}
+	\begin{pspicture}(-0.2,-0.2)(1,1.4)
+	\pstThreeDCoor[linecolor=black]
+	\pstThreeDBox(0,0,0)(1,0,0)(0,1,0)(0,0,1)
+	\pstThreeDLine{->}(0,0,0)(0.611,1.2,0.233)
+	\pstThreeDLine{->}(0,0,0)(-0.327,-0.662,1)
+	\pstThreeDLine{->}(0,0,0)(1,-0.827,-0.083)
+	\pstThreeDPut(0.611,1.3,0.233){$Y$}
+	\pstThreeDPut(1.15,-0.827,-0.083){$Cr$}
+	\pstThreeDPut(-0.327,-0.662,1.1){$Cb$}
+	\pstThreeDDot[drawCoor=true](0.509,1,0.194)
+	\pstThreeDDot[drawCoor=true,dotstyle=none](-0.327,-0.662,1)
+	\pstThreeDDot[drawCoor=true,dotstyle=none](1,-0.827,-0.083)
+	\end{pspicture}
+\end{center}
 
 \section{Subtraktive Farbmischung (z. B. beim Drucken)}
 3 Grundfarben
@@ -353,7 +383,8 @@ Zusätzlich $K = $schwarz. (Das Schwarz von $K$ wird dunkler als von $C + M + Y$
 \end{align*}
 (möglichst viel Farbe durch $K$ ersetzen)
 
-\section{Gängige Farbdarstellung heutzutage}
+\section{Digitale Farbdarstellung}
+heutzutage:
 \begin{itemize}
  \item 8 Bit pro Farbkanal $(r,g,b)$ ... 24 Bit pro Bildpunkt\\
 	$\Rightarrow 2^{24} = 16\ \text{Mio. Farben}$ (True Color)
