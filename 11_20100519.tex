@@ -1,0 +1,127 @@
+\section{Spiegelnde Reflexion}
+\begin{center}
+ %11.1
+\end{center}
+
+$L'$ ist der an $N$ gespiegelte Vektor, die der "`idealen Spiegelung"'
+\[\alpha = \measuredangle(A,L')\]
+Modell von \textsc{Bui-Tong Phong}: Intensität ist proportional zu $\cos^n \alpha$
+\begin{center}
+ %11.2
+\end{center}
+\begin{center}
+ %11.3
+\end{center}
+Formel für spiegelnde Reflexion:
+\[I^X = I^X_L \cdot \frac{1}{C_0 + C_1 r + C_2 r^2} \cdot K_S \cdot \cos^n \alpha,\qquad X = R, G, \text{ oder } B\]
+\begin{align*}
+	I_L...\ & \text{Intensität der Lichtquelle $(I_L^R, I_L^G, I_L^B)$}\\
+	\frac{1}{C_0 + C_1 r + C_2 r^2}...\ & \text{Abhängigkeit von der Entfernung der Lichtquelle}\\
+	K_S...\ & \text{spiegelnde Reflexionskoeffizient \emph{unabhängig von der Farbe!}}\\
+	n...\ & \text{Exponent: gibt an wie glatt die Spiegelung ist}\\
+	\frac{1}{C_0 + C_1 r + C_2 r^2}...\ & \text{Abhängigkeit von der Entfernung der Lichtquelle}\\
+	I^R, I^G, I^B...\ & \text{Ergebnis-Intensität aus Sicht des Auges}\\
+\end{align*}
+\begin{center}
+ % 11.4
+\end{center}
+\begin{align*}
+ L_0&...\ \text{Prokjektion von $L$ auf $N$}\\
+    &= \langle L, N \rangle \cdot N\\
+ L' &= -(L-L_0) + L_0 = 2L_0 - L, \|L'\|=1\\
+ \cos \alpha &= \langle A, L' \rangle =  \langle A, 2L_0 \rangle -  \langle A, L \rangle\\
+  &= 2  \langle L, N \rangle \langle N, A \rangle -  \langle A, L \rangle\\
+	&= \cos \alpha
+\end{align*}
+\paragraph*{Näherungsmodell} (einfacher zu rechnen)\\
+$H$ der Vektor, der symmetrisch zwischen $A$ und $L$ liegt.
+\begin{align*}
+ H_0 &= A + L & H &= \frac{H_0}{\|H_0\|} 
+\end{align*}
+\begin{center}
+ %11.5
+\end{center}
+Statt $\cos \alpha$ nimmt man $\cos \beta, \beta = \measuredangle(H,N)$
+\[\cos \beta = \langle H, B \rangle \qquad \beta = 0 \Leftrightarrow \alpha = 0\]
+\begin{center}
+ %11.6
+\end{center}
+$\beta = \frac{\alpha}{2}$, wenn $L, N, A$ in einer Ebene liegen. Im Raum ist das nicht immer der Fall.
+
+\section{Gesamtbeleuchtung}
+\begin{itemize}
+ \item mehrere Lichtquellen an bestimmten Orten (bzw. aus bestimmten Richtungen) mit Intensität $I_L^R, I_L^G, I_L^B$
+ \item eine diffuse Lichtquelle mit Intensität $I_D^R, I_D^G, I_D^B$
+\end{itemize}
+Für jede Fläche:
+\begin{itemize}
+ \item diffuse Reflexionskoeffizienten $K_D^R, K_D^G, K_D^B$
+ \item spiegelnde Reflexionskoeffizienten $K_S$, Exponent $n$
+ \item möglicherweise eine Eigenleuchtintensität $I_E^R, I_E^G, I_E^B$ (z. B. Leuchtschirm, glühendes Ofenrohr,
+									flächig leuchtende Lichtquelle)
+\end{itemize}
+Für jedes Flächenstück addiert man alle Beleuchtungskomponennten zusammen (falls die Fäche sichtbar vom Auge ist).
+\begin{align*}
+ I^R &= \sum \text{diffuse Reflexionen von allen Lichtquellen, die das Flächenstück beleuchten.} \\
+	& \qquad + I_D^R \cdot K^R \\
+	& \qquad + \text{spiegelnde Reflexionen von allen Lichtquellen, die das Flächenstück beleuchten.} \\
+	& \qquad + I_E^R
+\end{align*}
+analog für $I^G, I^B$
+\begin{center}
+ % 11.7
+\end{center}
+eigentlich liefert die Rechnung in jedem Punkt der Fläche ein anderes Ergebnis.
+\paragraph*{Problem} Die Intensität kan in einzelnen Punkten des Bildes $> 1$ werden.
+2 Möglichkeiten
+\begin{enumerate}
+ \item herunterskalieren aller Werte\\
+	z. B. $(r;g;b) = (3;1;0{,}5) \to \left(1,\frac{1}{3},\frac{1}{6}\right)$
+ \item zu große Werte werden auf 1 gesetzt (dadurch können auch Farben verfälscht werden)\\
+	z. B. $(r;g;b) = \underset{\text{(sehr rotes orange)}}{(3;1;0{,}5)} \to \underset{\text{(helles gelb)}}{(1,1,0{,}5)}$
+\end{enumerate}
+
+\section{Schattierung (Shading)}
+\Defi Unter \emph{Shading} versteht man die Anwendung der Beleuchtungsregeln auf jeden Punkt einer Fläche, sodass
+	sich eine abgestufte Farbverteilung ergibt, die realistisch aussieht.
+	\begin{center}
+	\begin{pspicture}(0,0)(8,3)
+	\rput(1.5,1.5){\includegraphics[height=3cm]{polysphere.eps}}
+	%http://web.gin.cz/trahern/glTest-wire.gif
+	\rput(4,1.5){$\stackrel{?}\Longrightarrow$}
+	\rput(6.5,1.5){\includegraphics[height=3cm]{sphere.eps}}
+	% http://www.keetee.com/downloads/sphere.jpg
+	\end{pspicture}
+	\end{center}
+	\begin{itemize}
+	 \item Gekrümmte Flächen können durch ein genügend feines \emph{Dreiecks}netz (oder Vierecksnetz) approximiert werden.
+	 \item Große flache Flächen können in kleinere Dreicke zerlegt werden. 
+	\end{itemize}
+	\textsc{Gouraud}-Schattierung für ein Dreiecksnetz:
+	\begin{itemize}
+	 \item Berechne die Beleuchtung für jede Ecke eines Dreiecks , mit einem Normalvektor, der für jede Ecke fest
+		ist (unabhängig von dem Dreieck zu dem es gehört). z. B. der Normalvektor der glatten Fläche, die durch
+		das Dreiecksnetz approximiert wird.
+		\begin{center}
+		 %11.8
+		\end{center}
+	 \item Interpoliere die Beleuchtung linear auf jedem Dreieck
+		\begin{center}
+		 %11.9
+		\end{center}
+	\end{itemize}
+	Die Gouraud-Schattierung, versagt z. B. bei Glanzlichtern (können verschwinden oder unnatürlich vergrößert
+	werden) und sehr großen Flächen:
+	\begin{center}
+	 %11.10
+	\end{center}
+	\textsc{Phong}-Schattierung:
+	\begin{itemize}
+	 \item Es wird nich die Intensität interpoliert, sondern der Normalvektor. Für jeden Punkt wird die
+		Beleuchtungsrichtung neu ausgeführt.
+	\end{itemize}
+
+
+
+
+
