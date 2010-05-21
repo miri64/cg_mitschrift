@@ -82,6 +82,7 @@ eigentlich liefert die Rechnung in jedem Punkt der Fläche ein anderes Ergebnis.
 \end{enumerate}
 
 \section{Schattierung (Shading)}
+Alle folgenden Rechnungen in Weltkoordinaten
 \Defi Unter \emph{Shading} versteht man die Anwendung der Beleuchtungsregeln auf jeden Punkt einer Fläche, sodass
 	sich eine abgestufte Farbverteilung ergibt, die realistisch aussieht.
 	\begin{center}
@@ -115,11 +116,9 @@ eigentlich liefert die Rechnung in jedem Punkt der Fläche ein anderes Ergebnis.
 	\begin{center}
 	 %11.10
 	\end{center}
-	\textsc{Phong}-Schattierung:
-	\begin{itemize}
-	 \item Es wird nich die Intensität interpoliert, sondern der Normalvektor. Für jeden Punkt wird die
-		Beleuchtungsrichtung neu ausgeführt.
-	\end{itemize}
+	\textsc{Phong}-Schattierung:\\
+	$\cancel{\text{diffuse Lichtquelle}}$ \emph{Umgebungslicht} (ambient light)
+
 
 
 
