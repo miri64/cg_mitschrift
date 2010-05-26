@@ -1,0 +1,191 @@
+\section{Darstellung einer Szene durch Überstreichen (Scanline-Algorithmus)}
+\paragraph*{Vereinfachte Annahme} Szene besteht auzs Dreiecken.
+\begin{itemize}
+ \item Der Algorithums beruht auf der gleichen Idee wie der Algorithmus zum Ausfüllen gerasterter Flächen
+	(s. Abschnitt \ref{sec:fill})
+	\begin{itemize}
+	 \item Überstreiche Szenee mit horizontalen Geraden (von unten nach oben, mit steigendem $y$)
+		\begin{itemize}
+		 \item Für jede Rasterzeile gehe Pixel von links nach rechts durch (mit steigendem $x$)
+		\end{itemize}
+	\end{itemize}
+ \item Prinzip: Der Algorithmus aus Abschnitt \ref{sec:fill} wird für alle Dreiecke parallel angewendet
+\end{itemize}
+\begin{center}
+ \begin{pspicture}(0,0)(5,4)
+  \psframe(0,0)(5,4)
+  \rput[l](0,0.2){\psline(0,0)(5,0)}
+  \rput[l](0,0.4){\psline(0,0)(5,0)}
+  \rput[l](0,0.6){\psline(0,0)(5,0)}
+  \rput[l](0,0.8){\psline(0,0)(5,0)}
+  \rput[l](0,2.7){\psline(0,0)(5,0)}
+  \pspolygon(3.5,0.6)(4,3)(1,1)
+  \pspolygon(0.5,1.4)(1,3.2)(4.5,0.9)
+ \end{pspicture}
+\end{center}
+\begin{description}
+\item[Vorverarbeitung] Wir erstellen eine Kantenliste (Edge List, EL), sortiert nach den Koordinaten des unteren Endpunktes der Kante,
+	zuerst nach der $y$-Koordinate sortiert, bei gleicher $y$-Koordinate nach $x$-Koordinate
+	(horizontal Kanten brauchen nicht gespeichert werden).
+\item[Bearbeitung einer Zeile] Wir benötigen zur Abarbeitung einer Zeile die Menge der von der Zeile
+	geschnittenen Dreiecke und für diese dann die nötigen Parameter, wie sie für die Fülle-Zeile-Funktion aus
+	Abschnitt \ref{sec:fill} benutzt wurden.
+
+	Wir verwalten die Daten in einer \emph{"`Aktive-Kanten-Liste"'} (AEL). Darin enthalten sind alle Kanten, die
+	die aktuelle Scanline schneiden. Sie sind sortiert nach der $x$-Koordinate des Schnittpunktes mit der Scanline.
+	Zu jeder Kante speichern wir die Informationen, die wir benötigen. Um das Dreieck für diese Zeile zu rastern und
+	die entsprechenden Werte für die Zeile auszurechnen.
+
+	z. B.
+	\begin{itemize}
+	\item zugehöriges Dreieck
+	\item linke oder rechte Begrenzung
+	\item $y$-Koordinate des oberen Endpunktes (um die Kante au der AEL entfernen zu können)
+	\item $x$-Koordinate Schnittpunktes mit der Scanline (entspricht $x_{\mathrm{links}}$ bzw. $x_{\mathrm{rechts}}$)
+	\item $\Delta x$ (entspricht $\Delta x_{\mathrm{links}}$ bzw. $\Delta x_{\mathrm{rechts}}$)
+	\end{itemize}
+	die folgenden Daten brauchen nur in einer linken Begrenzung gespeichert werden:
+	\begin{itemize}
+	 \item $z_{\mathrm{links}}, I_{\mathrm{links}}, \Delta z_{\mathrm{links}}, \Delta I_{\mathrm{links}}, \Delta z,
+		\Delta I$ (Notation s. Abschnitt \ref{sec:fill})
+	\end{itemize}
+	und entsprechende Werte für andere zu interpolierende Daten.
+\item[Änderung der AEL beim Übergang von $\boldsymbol{y}$ auf $\boldsymbol{y+1}$] wie bei der äußeren Schleife in
+	Abschnitt \ref{sec:fill}.
+	\begin{itemize}
+	 \item inkrementiere $x, z_{\mathrm{links}}, I_{\mathrm{links}}$ um $\Delta x, \Delta z_{\mathrm{links}},
+		\Delta I_{\mathrm{links}}$
+	\end{itemize}
+	Außerdem kann es nötig sein Kanten aus der Liste zu löschen (Kante endet zwischen $y$ und $y+1$),
+	neue Kanten aufzunehmen (Kante beginnt zwischen $y$ und $y+1$) oder die Reihenfolge der Kanten zu ändern
+	(Kanten schneiden sich zwischen $y$ und $y+1$)
+	\begin{enumerate}
+	 \newcommand{\bs}{\boldsymbol}
+	 \item \textbf{Kante endet zwischen $\bs y$ und $\bs{y+1}$}\\
+		Vergleiche $y$-Koordinate des oberen Endpunktes einer Kante in der AEL mit der aktuellen
+		Scanline-Koordinate
+	 \item \textbf{Kante beginnt zwischen $\bs y$ und $\bs{y+1}$}\\
+		Vergleiche $y$-Koordinate des unteren Endpunktes der ersten noch nicht verwendeten Kante in der EL
+		mit aktuellen Scanline-Koordinaten.
+	 \item \textbf{Kanten schneiden sich zwischen $\bs y$ und $\bs{y+1}$}\\
+		prinzipiell vergleiche die neuen $x$-Werte zweier Kanten die in der alten AEL benachbart waren
+		\paragraph*{Problem} Die Scanline wird nicht Kontinierlich
+		\begin{center}
+		 \begin{pspicture}(0,0)(5,1)
+		  \psline(0,0)(5,0)\uput{3pt}[180](0,0){$y$}
+		  \psline(0,1)(5,1)\uput{3pt}[180](0,1){$y+1$}
+		  \psline(1,1)(4,0)
+		  \psline(1.2,0)(2.5,1)
+		  \psline(1.4,0)(1.2,1)
+		  \psline(1.5,0)(1.8,1)
+		  \psline(2.3,0)(2,1)
+		  \psline(2.7,0)(2.3,1)
+		  \psline(2.9,0)(2.87,1)
+		  \psline(3.1,0)(3.13,1)
+		  \psline(3.2,1)(4.2,0)
+		  \psline(1.4,0)(2.7,1)
+		  \psline(1.6,0)(2.9,1)
+		  \psline(1.9,0)(2.9,1)
+		  \psline(2.1,0)(3.4,1)
+		 \end{pspicture}
+		\end{center}
+		Es können sich auch nichtbenachbarte Kanzen zwischen $y$ und $y+1$ schneiden, wenn die dazwischen
+		liegenden Kanten ebenfalls geschnitten werden. Wir müssen also nicht nur bei $y$ benachbarte Kanten
+		vergleichen, sondern auch die nache einer Kreuzung entstehenden neuen Nachbarn.
+
+		Dieser Ansatz läuft auf ein Buble-Sort- oder Insertion-Sort-Prinzip hinaus. Dann ist Neusortieren
+		mit effizienten Sortierverfahren.
+	\end{enumerate}
+\item[Füllen einer Zeile] Zeile wird von links nach rechts durchlaufen. Beachten wir dabei die Tiefeninformation
+	entspricht dies einem Überstreichen einer Ebene $y = \mathbf{const}$ mit einer Geraden $x = \mathbf{const}$
+	\begin{center}
+	 \psset{unit=1.5}
+	 \begin{pspicture}(0,-0.2)(4,2.2)
+	  \psaxes[ticks=none]{->}(0,0)(0,0)(4,2)
+	  \uput{3pt}[135](0,2){$z$}
+	  \uput{3pt}[-45](4,0){$x$}
+	  \psline{*-*}(1,1.75)(3,0.5)
+	  \uput{3pt}[90](1,1.75){Kante $AB$}
+	  \uput{3pt}[-45](3,0.5){Kante $AC$}
+	  \rput[tr](2,1.125){
+		\begin{minipage}{2.7cm}
+			Schnitt mit dem Dreieck $ABC$
+		\end{minipage}
+	   }
+	  \psline{*-*}(2.5,1.125)(3.5,2)
+	  \uput{3pt}[-45](2.5,1.125){Kante $DE$}
+	  \uput{3pt}[90](3.5,2){Kante $DF$}
+	  \rput[tl](3,1.5025){Schnitt mit dem Dreieck $DEF$}
+	 \end{pspicture}
+	\end{center}
+	in dieser Ebene haben wir Kante, die den Schnitten von Dreiecken mit der Ebene entsprechen. Der Dreiecksschnitt,
+	dessen $z$-Koordinate für ein gegebenes $x$ am kleinsten ist, bestimmt die Färbung des Pixels.
+
+	Analog zur AEL legen wir eine aktive Dreiecksliste (ATL, auch active span list) an, om der die von der aktiven
+	Geraden $x = \mathbf{const}$ geschnittenen Dreiecksschnitte nach $z$-Koordinate sortiert sind und die zugehörigen
+	Werte für die Interpolation gespeichert sind. Das sind $z, I$ und $\Delta z$, sowie $\Delta I$ und $x_{\mathrm{rechts}}$.
+
+	Modifizierung der ATL beim Übergang von $x$ auf $x+1$
+	\begin{enumerate}
+	 \item Dreieck einfügen: $x_{\mathrm{links}}$ liegt zwischen $x$ und $x+1$ für eine linke
+		Kante in der AEL
+	 \item Dreieck löschen: $x_{\mathrm{rechts}}$ liegt zwischen $x$ und $x+1$
+	 \item Zwei Dreiecke schneiden sich ($z$-Werte tauschen Reihenfolge)
+	\end{enumerate}
+	zu zeichnen ist die aktuelle Farbe des Dreiecks, das in der ATL aktuell an der ersten Stelle steht.
+\end{description}
+\subsubsection{Varianten, Sonderfälle, ...}
+\begin{enumerate}
+ \item Es ist häufig sinnvoll, sobald zwei Kanten in der AEL benachbart werden, den Schnittpunkt zu berecnhen und
+	diesen, falls er existiert, in einem \emph{Event-Schedule} einzufügen. Dieser verwaltet die "`Zeit"'-punkte,
+	an denen sich die Reihenfolge der Kanten ändert in einer Prioritätswarteschlange.
+ \item Vereinfachungen bei sich nicht schneidenden Dreiecken
+ \item Kombination mit dem Tiefenpuffer\\
+	z. B. tiefenpuffer für eine Zeile des Bildes
+	\begin{itemize}
+	 \item Überstreiche Szene zeilenweise
+	 \item Vor jedem Wechsel in eine neue Zeile leere Tiefenpuffer
+	 \item für jede Zeile: Zeichne alle Dreiecke in der aktuellen AEL (in beliebiger Reihenfolge) nach dem
+		Tiefenpuffer-Prinzip
+	\end{itemize}
+	Analog: Tiefenpuffer für ein Pixel
+	\begin{center}
+	 \begin{tabular}{p{.45\linewidth}|p{.45\linewidth}}
+	  Größe des Tiefenpuffers & Struktur des Algorithmus\\
+	  \hline\hline
+		Breite $\times$ Höhe $\times$ Genauigkeit &
+		\begin{minipage}{\linewidth}
+		 \vspace{1em}
+		 \begin{verbatim}
+Für alle Dreiecke
+    Für alle Zeilen
+        Für alle Spalten
+		 \end{verbatim}
+		\end{minipage}\\
+		\hline
+		Breite $\times$ Genauigkeit &
+		\begin{minipage}{\linewidth}
+		 \vspace{1em}
+		 \begin{verbatim}
+Für alle Zeilen
+    Für alle Dreiecke
+        Für alle Spalten
+		 \end{verbatim}
+		\end{minipage}\\
+		\hline
+		Genauigkeit &
+		\begin{minipage}{\linewidth}
+		 \vspace{1em}
+		 \begin{verbatim}
+Für alle Zeilen
+    Für alle Spalten
+        Für alle Dreiecke
+		 \end{verbatim}
+		\end{minipage}\\
+	 \end{tabular}
+	\end{center}
+\end{enumerate}
+
+
+
+
