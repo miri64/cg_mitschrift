@@ -1,6 +1,17 @@
 \section{Anzeigen von benachbarten Flächenstücken (Dreiecken)}
 \begin{center}
- % 14.1
+ \psset{unit=0.5,gridcolor=gray,gridlabels=0pt}
+ \begin{pspicture}(0,0)(7,9)
+  \psgrid
+  \pspolygon(6.6,8.7)(0.3,3.4)(5.8,5.4)
+  \pspolygon(2.3,-0.1)(0.3,3.4)(5.8,5.4)
+  \pspolygon(2.3,-0.1)(5.8,5.4)(7,2.3)
+  \psline[linewidth=0.5pt]{->}(5,4)(5.5,4)
+  \psdot(3,4)\psdot(4,4)\psdot[dotstyle=o](5,4)\uput{3pt}[-45](5,4){?}
+  \psdot(2,3)\psdot(3,3)\psdot(4,3)
+  \psline[linewidth=0.5pt]{->}(6,5)(7,5)
+  \psdot(6,5)
+ \end{pspicture}
 \end{center}
 Gehört der Rand eines Dreiecks zum Dreieck?\\
 Zu welchem Dreieck?
@@ -10,7 +21,17 @@ jeder Bildpunkt gehört.
 	Es gehört zu der Fläche, wo es dann landet. Wenn es dabei auf einer horizontalen Kante liegt, dann wird es zur
 	oberen Fläche gerechnet.
 \begin{center}
- %14.2
+ \psset{unit=0.5}
+ \begin{pspicture}(0,0)(11,7)
+  \psline[linewidth=1.7pt](1,7)(0,5)(1,3)(4,3)
+  \psline(4,3)(5,5)
+  \psline[linewidth=1.7pt](5,5)(7,3)(4,0)(9,0)
+  \psline(9,0)(9,4)(9,4)(11,7)(1,7)
+  \psline[linewidth=0.5pt]{->}(0.5,4)(1.5,4)
+  \psline[linewidth=0.5pt]{->}(4.5,4)(5.2,4)
+  \psline[linewidth=0.5pt]{->}(9,2)(10,2)
+  \psline[linewidth=0.5pt]{->}(10,5.5)(11,5.5)
+ \end{pspicture}
 \end{center}
 \paragraph*{Vorraussetzung} Exakte Arithmetik
 
@@ -113,7 +134,45 @@ $w$ und $\Delta w$ braucht man nur einmal.
 \section{Transformation von Normalvektoren bei affinen Transformationen}
 z. B. Objektkoordinaten auf Weltkoordinaten
 \begin{center}
- % 14.4
+ \psset{Alpha=170,Beta=20}
+ \begin{pspicture}(-1,-3)(7,5)
+  \rput[tl](0,3.5){
+		\pspolygon(-1,0)(1,0)(0,1)
+		\psline{*->}(0.5,0.5)(1.207,1.207)
+		\psline[linewidth=0.3pt](0,0)(0,1)
+  }
+  \rput[tl](0,0){
+	\psline[linestyle=dashed](-1.5,3)(1.5,3)
+	\pstThreeDLine(-1,-1,0)(1,-1,0)(1,1,0)(-1,1,0)(-1,-1,0)
+	\pstThreeDLine(-1,-1,0)(0,0,1)(1,1,0)
+	\pstThreeDLine[linewidth=0.3pt](0,0,0)(0,0,1)
+	\pstThreeDLine(-1,1,0)(0,0,1)(1,-1,0)
+	\pstThreeDLine{*->}(0.5,0,0.5)(1.207,0,1.207)
+	\pstThreeDPut(2.9,0,1.907){
+		\begin{minipage}{6cm}
+		\centering
+		$\left(\pm\dfrac{1}{\sqrt{2}},0,\dfrac{1}{\sqrt{2}}\right)$ bzw.
+		$\left(0, \pm\dfrac{1}{\sqrt{2}},\dfrac{1}{\sqrt{2}}\right)$ \\
+		(Normalenrichtungen)
+		\end{minipage}}
+	\pstThreeDPut(0,0,1.2){$(0,0,1)$}
+	\pstThreeDPut(2,1,0){$(\pm 1,\pm 1,0)$}
+  }
+  \rput[tl](3.5,0.2){
+	\pspolygon(0,0)(1,0)(1,-0.2)(1.5,0.3)(1,0.8)(1,0.6)(0,0.6)
+  }
+  \rput[tl](7.5,-2){
+	\pstThreeDBox(-0.5,0.5,0)(1,0,0)(0,-1,0)(0,0,2)
+	\pstThreeDLine(-0.5,-0.5,2)(0,0,4)(0.5,0.5,2)
+	\pstThreeDLine[linestyle=dashed](-0.5,0.5,2)(0,0,4)
+	\pstThreeDLine(0.5,-0.5,2)(0,0,4)
+	\pstThreeDPut(0,-1,2){$b$}
+	\pstThreeDPut(0,0,2.3){$G$}
+	\pstThreeDDot(0,0,2)
+	\pstThreeDLine{<->}(-0.65,-0.15,2)(-0.65,-0.15,4)
+	\pstThreeDPut(-0.8,-0.5,3){$h$}
+  }
+ \end{pspicture}
 \end{center}
 \[T = \begin{pmatrix}
        \nicefrac{b}{2} & 0 & 0 & g_x\\
@@ -122,12 +181,53 @@ z. B. Objektkoordinaten auf Weltkoordinaten
        0 & 0 & 0 & 1
       \end{pmatrix}
 \]
-.... (s. Foto?)\\
+\[T = \begin{pmatrix}
+       A & \vline & b\\
+       \hline
+       0 & \vline & 1
+      \end{pmatrix} \qquad
+      \vthree{x}{y}{z} \mapsto \underbrace{A \vthree{x}{y}{z} + b}
+\]
+\paragraph*{Ebene im Urbildraum}
+\begin{align*}
+ E &= \left\{\left.\vec x = \vthree{x}{y}{z}\ \right|\ \vec n^T \cdot \vec x = c\right\}
+ \qquad \vec n... \text{Normalenvektor, } c \in \mathbb{R}\\
+ T(E) &= \{\underbrace{A \cdot \vec x + b}_{= \bar x}\ |\ \vec n^T \cdot \vec x = c\}
+\end{align*}
+\[Ax + b = \bar x \qquad x = A^{-1}(\bar x - b)\]
+\begin{align*}
+ T(E) 	&= \left\{\bar x\ \left|\ n^T A^{-1} \left(\bar x - b\right) = c\right.\right\}\\
+	&= \left\{\bar x\ \left|\ n^T A^{-1} \bar x = c + n^T A^{-1} b\right.\right\}\\
+	&= \Big\{\bar x\ \Big|\ \underbrace{\left(\left(A^{-1}\right)^Tn\right)^T}_{\text{Normalvektor der Ebene} T(E)} \bar x = \bar c\Big\}
+\end{align*}
+
 Bei einer Affinen Transformation mit $3 \times 3$-Transformationsmatrix $A$ muss man Nornalvektoren nicht
 mit $A$, sondern von links nach rechts mit $(A^{-1})^T$ multiplizieren und anschließend \emph{normieren}.
 (Vektoren als Spalten betrachten)
 
-Fals $A$ orthogonal ist, dann ist $A^T = A^{-1}$, $(A^{-1})^T = A$
+Falls $A$ orthogonal ist, dann ist $A^T = A^{-1}$, $(A^{-1})^T = A$
+\begin{center}
+ \begin{pspicture}(-2,-0.4)(1,2)
+	\pspolygon(-1,0)(1,0)(0,1)
+	\psline{*->}(0.5,0.5)(1.207,1.207)
+	\psline[linewidth=0.3pt](0,-0.4)(0,1.4)
+	\uput{3pt}[45](1.207,1.207){$\vec n$}
+	\psline[linewidth=0.3pt](-2,0)(-0.5,1.5)
+	\psline[linewidth=0.3pt](-1.8,0)(-0.3,1.5)
+	\psline[linewidth=0.3pt](-1.6,0)(-0.1,1.5)
+	\psline{->}(0,1)(1,2)
+ \end{pspicture}
+ \hspace{2cm}
+ \begin{pspicture}(-2,-0.4)(1,2)
+	\pspolygon(-0.25,0)(0.25,0)(0,1)
+	\psline{->}(0.125,0.5)(0.302,1.207)
+	\uput{3pt}[75.96](0.302,1.207){$A \cdot \vec n$}
+	\psline[linewidth=0.3pt](-0.5,0)(-0.125,1.5)
+	\psline[linewidth=0.3pt](-0.45,0)(-0.075,1.5)
+	\psline[linewidth=0.3pt](-0.4,0)(-0.025,1.5)
+ \end{pspicture}
+\end{center}
+
 
 
 
