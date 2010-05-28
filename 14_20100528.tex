@@ -1,0 +1,133 @@
+\section{Anzeigen von benachbarten Flächenstücken (Dreiecken)}
+\begin{center}
+ % 14.1
+\end{center}
+Gehört der Rand eines Dreiecks zum Dreieck?\\
+Zu welchem Dreieck?
+\paragraph*{Gesucht} Eine konsistente Regel, die bei mehreren aneienanderstoßenden Flächen feslegt, zu welcher Fläche
+jeder Bildpunkt gehört.
+\paragraph*{Eine Möglichkeit} Ein Pixel, das auf dem Rand liegt wird (in Gedanken) horizontal nach rechts verschoben.
+	Es gehört zu der Fläche, wo es dann landet. Wenn es dabei auf einer horizontalen Kante liegt, dann wird es zur
+	oberen Fläche gerechnet.
+\begin{center}
+ %14.2
+\end{center}
+\paragraph*{Vorraussetzung} Exakte Arithmetik
+
+\section{Lineare Interpolation in Weltkoordinaten}
+Interpolation von Helligkeitswerden (Gouraud-Schattierung), von Normalenrichtungen (Phong-Schattierung), bei Texturen
+immer in \emph{Weltkoordinaten}! Nicht NDC.
+\paragraph{Gegeben} Eine Strecke $P_1P_2$ in NDC (oder Bildschirmkoordinaten) als Bild einer Strecke $P_1P_2$
+	in Weltkoordinaten.
+
+	An den Endpunkten sind Werte $I_1, I_2$ gegeben
+
+	(Intensitätswerte $I_1^R, I_1^G, I_1^B,...$, oder
+	Normalenrichtungen $N_1^x, N_1^y, N_1^z,...$)
+
+	Wir wollen diese Werte für die dazwischen liegenden Punkte der Strecke in Weltkoordinaten interpolieren.
+
+	\hrulefill
+
+	Wir kennen die Transformationsmatrix $M = M^{\mathrm{Welt, NDC}}$:
+	\[ M \vfour{x_{\mathrm{Welt}}}{y_{\mathrm{Welt}}}{z_{\mathrm{Welt}}}{w_{\mathrm{Welt}}}
+		= \vfour{x_{\mathrm{NDC}}}{y_{\mathrm{NDC}}}{z_{\mathrm{NDC}}}{w_{\mathrm{NDC}}}
+	\qquad\qquad P_1 = \vfour{x_1^{\mathrm{NDC}}}{y_1^{\mathrm{NDC}}}{z_1^{\mathrm{NDC}}}{1}
+	\qquad P_2 = \vfour{x_2^{\mathrm{NDC}}}{y_2^{\mathrm{NDC}}}{z_2^{\mathrm{NDC}}}{1}\]
+	\[P_1\text{ in homogenen Weltkoordinaten} = M^{-1} \vfour{x_1^{\mathrm{NDC}}}{y_1^{\mathrm{NDC}}}{z_1^{\mathrm{NDC}}}{1}
+	 = \vfour{x_1^{\mathrm{Welt}}}{y_1^{\mathrm{Welt}}}{z_1^{\mathrm{Welt}}}{w_1^{\mathrm{Welt}}}
+	 \hat = \vthree{x_1^{\mathrm{Welt}}/w_1^{\mathrm{Welt}}}{y_1^{\mathrm{Welt}}/w_1^{\mathrm{Welt}}}
+		{z_1^{\mathrm{Welt}}/w_1^{\mathrm{Welt}}}\text{ in kartesischen Weltkoordinaten}
+	\]
+\paragraph{Annahme:} $I: \mathbb{R}^3 \to \mathbb{R}$ linear $I(P_1) = I_1 \qquad I(P_2) = I_2$
+
+\hrulefill
+
+Betrachte eine "`homogene Erweiterung"': $\hat I: \mathbb{R}^4 \to \mathbb{R}$ von I
+\[\hat I\left(\vfour{\lambda x}{\lambda y}{\lambda z}{\lambda w}\right) =
+	\lambda \cdot \hat I\left(\vfour{x}{y}{z}{w}\right)
+	\qquad
+	\hat I\left(\vfour{x}{y}{z}{1}\right) = I\left(\vthree{x}{y}{z}\right)\]
+\begin{enumerate}
+ \item Die Funktion $\hat I$ ist linear;
+ \item Aus $\hat I$ kann man $I$ ausrechnen:
+	\[I\left(\text{Punkt $\vfour{x}{y}{z}{w}$ in homogenen Koordinaten}\right) = \frac{1}{w} \cdot
+		\hat I\left(\vfour{x}{y}{z}{w}\right)\]
+\end{enumerate}
+\begin{align*}
+ I\left(\text{Punkt in homogenen Koordinaten }\vfour{x}{y}{z}{w}\right) &= \\
+ I\left(\text{Punkt in homogenen Koordinaten }\vfour{x/w}{y/w}{z/w}{1}\right) &=
+	\hat I \left(\vfour{x/w}{y/w}{z/w}{1}\right) = \frac{1}{w} \cdot \hat I\left(\vfour{x}{y}{z}{w}\right)\\
+ I\left(\text{Punkt in karthesischen Koordinaten }\vthree{x/w}{y/w}{z/w}\right) &=
+\end{align*}
+
+\begin{enumerate}
+ \item Berechne $P_1$ und $P_2$ in homogenen Weltkoordinaten:
+	\[\vfour{x_1^{\mathrm{Welt}}}{y_1^{\mathrm{Welt}}}{z_1^{\mathrm{Welt}}}{w_1^{\mathrm{Welt}}}
+	= M^{-1} \cdot \vfour{x_1^{\mathrm{NDC}}}{y_1^{\mathrm{NDC}}}{z_1^{\mathrm{NDC}}}{1}
+	\text{ und } \vfour{x_2^{\mathrm{Welt}}}{y_2^{\mathrm{Welt}}}{z_2^{\mathrm{Welt}}}{w_2^{\mathrm{Welt}}}
+	= M^{-1} \cdot \vfour{x_2^{\mathrm{NDC}}}{y_2^{\mathrm{NDC}}}{z_2^{\mathrm{NDC}}}{1}\]
+ \item Berechne $\hat I_1$ und $\hat I_2$ an diesem Punkt in $\mathbb{R}^4$
+	\begin{align*}
+	 I(P_1) =\ &I_1 = \frac{1}{w} \cdot \hat I_1\\
+		&\boxed{\hat I_1 = w_1^{\mathrm{Welt}} \cdot I_1,\ \hat I_2 = w_2^{\mathrm{Welt}} \cdot I_2}
+	\end{align*}
+ \item Lineare Interpolation $P(\lambda) = \lambda_2 + (1 - \lambda) P_1$ in NDC
+	\paragraph{Gesucht} $I(\lambda) = I(P(\lambda))$
+		\[\vfour{x(\lambda)}{y(\lambda)}{z(\lambda)}{1} = \lambda \vfour{x_2}{y_2}{z_2}{1}
+			+ (1-\lambda) \vfour{x_1}{y_1}{z_1}{1} \]
+		\[\boxed{\hat I = \lambda \cdot \hat I_2 + (1-\lambda) \hat I_1}\]
+		\[\boxed{w^{\mathrm{Welt}}(\lambda) = \lambda \cdot w^{\mathrm{Welt}}_2 + (1-\lambda) w^{\mathrm{Welt}}_1}
+		\qquad I(\lambda) = \frac{\hat I(\lambda)}{w^{\mathrm{Welt}}(\lambda)}\]
+\end{enumerate}
+\paragraph*{Zusammenfassung} $w_1^{\mathrm{Welt}}, w_2^{\mathrm{Welt}} = $ letzte Komponente von $M^{-1} \vthree{\ }{\cdots}{\ }$
+	\[\boxed{I(\lambda)} = \frac{\overbrace{w_2^{\mathrm{Welt}} \cdot I_2}^{\hat I_2} \cdot \lambda
+		+ \overbrace{w_1^{\mathrm{Welt}} \cdot I_1}^{\hat I_1} \cdot (1-\lambda)}
+					{w_2^{\mathrm{Welt}} \lambda + w_1^{\mathrm{Welt}} (1 - \lambda )}\]
+
+\paragraph{Einbau in Füllalgorithmus}
+ \rnode{zus}{zusätzlich}
+
+\begin{lstlisting}[mathescape=true,backgroundcolor=\color{white}]
+FuelleGerade($x_1$, $x_2$,$y$,$z_1$,$z_2$,$\rnode{w1}{w_1}$,$\rnode{w2}{w_2}$,$I_1$,$I_2$)
+	$\hat I_1 = w_1 I_1$
+	$\hat I_2 = w_2 I_2$
+	$\Delta \hat I = ...$
+	$\Delta w = ...$
+	$\vdots$
+	while $x < x_2$
+			Setpixel($x$,$y$,...,$I$)
+			$x := x+1$
+			$z := z + \Delta z$
+			$\hat I := \hat I + \Delta I$	// Zaehler
+			$w := w + \Delta w$		// Nenner
+			$I = \tfrac{\hat I}{w}$
+\end{lstlisting}
+\ncline{->}{zus}{w1}
+\ncline{->}{zus}{w2}
+analog für mehrere Größen $I^R, I^G, I^B$ nimmt man $\hat I^R$, $\hat I^G$, $\hat I^B$, 
+$w$ und $\Delta w$ braucht man nur einmal.
+
+\paragraph{Bemerkung} Die $z$-Koordinate kann man direkt in NDC interpolieren
+
+\section{Transformation von Normalvektoren bei affinen Transformationen}
+z. B. Objektkoordinaten auf Weltkoordinaten
+\begin{center}
+ % 14.4
+\end{center}
+\[T = \begin{pmatrix}
+       \nicefrac{b}{2} & 0 & 0 & g_x\\
+       0 & \nicefrac{b}{2} & 0 & g_y\\
+       0 & 0 & h & g_z\\
+       0 & 0 & 0 & 1
+      \end{pmatrix}
+\]
+.... (s. Foto?)\\
+Bei einer Affinen Transformation mit $3 \times 3$-Transformationsmatrix $A$ muss man Nornalvektoren nicht
+mit $A$, sondern von links nach rechts mit $(A^{-1})^T$ multiplizieren und anschließend \emph{normieren}.
+(Vektoren als Spalten betrachten)
+
+Fals $A$ orthogonal ist, dann ist $A^T = A^{-1}$, $(A^{-1})^T = A$
+
+
+
