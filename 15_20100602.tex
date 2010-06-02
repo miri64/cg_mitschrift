@@ -1,0 +1,114 @@
+\chapter{Texturen}
+\emph{(Abbildungen folgen später)}\\
+Aufbringen eines Musters auf eine Fläche.
+\begin{center}
+ % 15.1
+\end{center}
+Das Muster -- die Textur -- ist als zweidimensionales \emph{Bild} gegeben (Pixelarray), und eine Abbildung
+von diesem Bild auf eine Fläche im Raum.
+\begin{center}
+ % 15.2
+\end{center}
+Die Bildfläche muss nicht unbedingt flach sein:
+\begin{enumerate}
+ \item gekrümmt
+	\begin{center}
+	 % 15.3
+	\end{center}
+ \item Dreiecksgitter
+	\begin{center}
+	 % 15.4
+	\end{center}
+	Dann muss man das Bild in ein dreicksgitter mit derselben kombinatorischen Struktur zerlegen.
+	Die Abbildung erfolgt dann durch lineare Interpolation auf jedem Dreieck.
+\end{enumerate}
+Bei beiden Lösungen existiert das Problem der Verzerrung.
+\begin{align*}
+ % 15.5
+\end{align*}
+Einfaches Modell für Architektur: Fassade wird auf die Hasuwand aufgeklebt.
+\paragraph*{Problem} Schatten sind möglicherweise nicht richtig.
+
+Bei der Darstellung benötigt man die umkehrabbildung von der Fläche in Weltkoordinaten
+(bzw. von der proyezierten Fläche in NDC) auf die Textur.
+
+Bei der linearen Interpolation von \emph{Dreiecken} verwendet man gerne \emph{baryzenztische Koordinaten}
+\begin{center}
+ % 15.6
+\end{center}
+\[(\lambda_1, \lambda_2, \lambda_3) \text{ mit } \lambda_1 + \lambda_2 + \lambda_3 = 1\]
+stellt den Punkt $\lambda_1 A_1 + \lambda_2 A_2 + \lambda_3 A_3$ dar.
+\[\lambda_1, \lambda_2, \lambda_3 \ge 0 \Leftrightarrow \text{ Punkt im Dreieck}\]
+\begin{center}
+ % 15.7
+\end{center}
+Die Ecken des Dreiecks auf dem Objekt haben barizentrische Koordinaten
+\[(\lambda_1, \lambda_2, \lambda_3) = (1,0,0), (0,1,0), (0,0,1)\]
+dazwischen wird linear \emph{interpoliert} (in Weltkoordinaten). Dann nimmt man in der Textur den Punkt an der
+Stelle $\lambda_1 B_1 + \lambda_2 B_2 + \lambda_3 B_3$.
+\begin{center}
+ % 15.8+9
+\end{center}
+Möglcihe Probleme dadurch, das Auflösung des erzeugten bilder nicht mit der Auflösung der Textur übereinstimmt.
+\begin{enumerate}[a)]
+ \item Auflösung der Textur zu klein\\
+	$\Rightarrow$ Bild wirkt grob gepixelt (mögliche Lösung: Interpolation)
+ \item Auflösung der Textur ist größer\\
+	$\Rightarrow$ Es kann zu Aliasing-Effekten kommen. (mögliche Auswege s. Abschnitt \ref{sec:antialiasing})
+\end{enumerate}
+
+\chapter{Schatten}
+\begin{center}
+ %13.10
+\end{center}
+Für die Berecnhung von chatten kann man die gleichen Methoden verwenden, wie zur Bestimmung sichtbarer Flächen:
+\begin{itemize}
+ \item von der Lichtquelle aus "`sichtbar"' $\Rightarrow$ beleuchtet.
+ \item von der Lichtquelle aus "`verdeckt"' $\Rightarrow$ Schatten.
+\end{itemize}
+\begin{enumerate}
+ \item Berechne (für jede Lichtquelle unabhängig) in einem getrennten Puffer das "`Bild"', dass von der Lichtquelle aus
+	"`gesehen"' wird.\\
+	z. B. mit dem Tiefenpuffer \lstinline[mathescape=true]!PutPixel($x$,$y$,$z$,$\rnode{I}{I}$)!
+	\begin{center}
+	 \rnode{Index}{Index} (Nummer) der Fläche, die gerade dargestellt wird.
+	 \ncangle[angleA=90,angleB=-90]{->}{Index}{I}\\
+	 % 13.11
+	\end{center}
+ \item Erzeuge das Bild, dass vom Auge aus sichtbar ist Pixel für Pixel.
+	\begin{center}
+	 % 13.12
+	\end{center}
+	$P$ sei der Punkt (in Weltkoordinaten), der gerade dargestellt wird. Er gehört zum Objekt mit Nummer $n$.
+	Bestimme das Bild von $P$ im Bildpuffer, der zur Lichtquelle gehört und vergleiche den Index, der dort
+	gespeichert ist.
+
+	Wenn $= n \Rightarrow $ Punkt $P$ ist von dieser Lichtquelle beleuchtet.
+\end{enumerate}
+\chapter{Clipping}
+Eine Strecke auf ein Rechteck zurechtstutzen.
+\begin{center}
+ % 15.13
+\end{center}
+\section{Algorithmus von Cohen-Sutherland}
+$\mathbb{R}^2 \to \{0,1\}^4 \qquad$ (4 Bits)
+\begin{align*}
+ x &< x_\mathrm{min} \\
+ x &> x_\mathrm{max} \\
+ y &< y_\mathrm{min} \\
+ y &< y_\mathrm{max} \\
+\end{align*}
+\begin{enumerate}
+ \item Wenn $A_1$ und $A_2$ ein gemeinsames 1-Bit haben.\\
+	$\Rightarrow$ Strecke $A_1A_2$ schneidet Rechteck nicht.
+ \item Wenn beide Codes 0000 sind.\\
+	$\Rightarrow$ Strecke liegt zur Gänze im Inneren.
+ \item Bestimme eine Stelle, wo sich beide Codes unterscheiden,
+ \item Schneide die Gerade mit der entsprechenden horizontalen oder vertikalen Geraden.
+ \item Ersetze den Endpunkt mit dem 1-Bit durch den Schnittpunkt.
+ \item Wiederhole
+\end{enumerate}
+
+
+
+
