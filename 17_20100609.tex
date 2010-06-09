@@ -1,0 +1,148 @@
+\section{Darstellung von geometrischen Modellen in Grafikbibliotheken}
+\begin{center}
+ % 17.1
+\end{center}
+typische Funktionsaufrufe in einer Grafikbibliothek wie OpenGL
+\begin{lstlisting}
+startPolygon();
+	setzeDiffuseFarbe($r$,$g$,$b$);
+	// ... weitere Materialeigenschaften
+	Knoten($x_1,y_1,z_1$);
+	Knoten($x_2,y_2,z_2$);
+	Knoten($x_3,y_3,z_3$);
+endPolygon();
+startPolygon();
+	Knoten($x_1,y_1,z_1$);
+	Knoten($x_6,y_6,z_6$);
+	Knoten($x_5,y_5,z_5$);
+	Knoten($x_3,y_3,z_3$);
+	Knoten($x_2,y_2,z_2$);
+endPolygon();
+// ...
+\end{lstlisting}
+\begin{center}
+Modellkoordiaten $\rnode{to}\rightarrow$ Weltkoordinaten {\color{gray}$\rightarrow ...$}\\[2em]
+\rnode{CT}{CT = "`current transformation matrix"'}\\
+aktuelle Transformationsmatrix
+\ncline{->}{CT}{to}
+\end{center}
+\paragraph*{typischer Ablauf: }
+\begin{itemize}
+\item Am Anfang wird auf CT die Identität initialisiert.
+\item eine Folge von geometrischen Transformationen; die entsprechenden Transformationen werden \emph{von rechts}
+	an CT dranmultipliziert.
+\item Dazwischen werden die aktuellen Werte von CT auf einem Stapel gespeichert (Push) bzw. wiederhergestellt (Pop)
+\end{itemize}
+\begin{center}
+ % 17.2
+\end{center}
+\begin{lstlisting}
+setze af Einheitsmatrix				// CT = $I$
+	multiply($T_3$)				// CT = $T_3$
+		multiply($T_2$)			// CT = $T_3 \cdot T_2$
+		Beschreibe Turm
+			push
+				multiply($T_1$)	// CT = $T_3 \cdot T_2 \cdot T_1$
+				beschreibe Zinne...
+			pop
+			push
+				multiply($T_1$)	// CT = $T_3 \cdot T_2 \cdot T_1'$
+				beschreibe Zinne...
+			pop
+			$\vdots$
+\end{lstlisting}
+
+\section{Constructive Solid Geometry (CSG)}
+\subsection{Grundlagen}
+Objekte werden als gefülltes Volumen betrachten, nicht als Randflächen.
+\begin{itemize}
+ \item \textbf{Grundkörper:} Würfel, Zylinder; konvexe Polyeder
+ \item \textbf{Boolesche Operationen:} $\cup$, $\cap$, $\setminus$ (eigentlich Mengenoperationen)
+	z. B:
+	\begin{center}
+	% 17.3
+	\end{center}
+	\begin{center}
+	%17.4
+	\end{center}
+	Man möchte nur reguläre Mengen betrachten. Eine Menge $K$ ist regulär, wenn sie der Abschluss ihres Inneren ist:
+	\[K = \overline{K^\circ}\]
+	\paragraph*{zur Erinnerung:} Das Innere der Menge $A$ ist definiert mit
+	\[A^\circ = \{x \in A\ |\ \exists\varepsilon > 0:\ \text{Kreis mit Radius $\varepsilon$ um $x$ $\subseteq A$}\}\]
+	\begin{center}
+	%17.5
+	\end{center}
+	Der Abschluss von $A$ ist definiert mit
+	\[\overline A = \mathbb{R}^2 \setminus (\mathbb{R}^2 - A)^\circ\]
+	(bzw. mit $\mathbb{R^3}$ im Raum)
+	\begin{center}
+	%17.6
+	\end{center}
+	Der Rand von $A$ ist definiert mit
+	\[\partial A := \overline A - A^\circ\]
+	$\Rightarrow$ regularisierte Boolesche Operationen
+	\begin{align*}
+	 A \cup^* B &:= \overline{(A \cup B)^\circ}\\
+	 A \cap^* B &:= \overline{(A \cap B)^\circ}\\
+	 A \setminus^* B &:= \overline{(A \setminus B)^\circ}
+	\end{align*}
+	\begin{center}
+	 % 17.7
+	\end{center}
+\end{itemize}
+\subsection{Darstellung in der Computergrafik}
+\[A \cup^* \left[(B \cap^* C) \setminus^* (D \cap^* E)\right]\]
+\begin{center}
+ % 17.8
+\end{center}
+Umwandlung in eine expliziete Darstellung des Randes ist aufwändig.
+
+Man mss Snitte zwischen den Grundobjekten bestimmen. Anschließend muss manberechnen, welche der ausgeschnittenen
+Oberflächenstücke den Rand des Ergebnisses bilden.
+
+\paragraph*{Schnitt mit einer Geraden} (z. B. einem Sichtstrahl beim Raytraycing) ist relativ einfach:
+\begin{itemize}
+ \item Schneide den Strahl mit allen Grundbausteinen.
+	sortiere die Schnittpunkte, bestimme den ersten Schnittpunkt, wo der Strahl in den Körper eintritt.
+\end{itemize}
+
+\chapter{Strahlverfolgung (Raytracing)}
+gut geeignet für spiegelnde und transparente Körper.
+\begin{center}
+ % 17.9
+\end{center}
+\begin{enumerate}[A)]
+ \item \textbf{"`Forward raytracing"'} Schicke Lichtstrahlen (Lichtteilchen) von der Lichtquelle aus und
+	verfolge ihren Weg.
+	
+	Die allermeisten Teilchen werden irgendwo absorbiert, bevor sie ins Auge gelangen.\\
+	$\Rightarrow$ extrem aufwändig.
+ \item \textbf{"`Backward raytracing"'}
+	\begin{enumerate}[1.]
+	\item Bestimme Helligkeit mit einem normalen Beleuchtungsmodell
+	\item Verfolge Sichtstrahlen vom auge ausgehend zurück, solange sie nur spiegelnde oder transparenter
+		Flächen treffen.
+	\end{enumerate}
+	\begin{center}
+	 % 17.10
+	\end{center}
+	Bei Spiegelung kann man entweder den Strahl vor dem Auftreffen (Auge) oder nach dem Auftreffen (Objekt)
+	an der Spiegelungseben spiegeln $\rightarrow$ aus dem geknickten Sichtstrahl wird eine Gerade.
+\end{enumerate}
+
+\section{Gesetzmäßigkeiten}
+\subsection{Reflexion}
+\begin{center}
+ % 12.11
+\end{center}
+$\alpha = \beta$: Einfallswinkel = Ausfallswinkel
+
+\subsection{Brechung}
+\begin{center}
+ % 12.12
+\end{center}
+Übergang zwischen zwei Medien $M_1$ und $M_2$, die verschiedene optische Dichte $D_1$ bzw. $D_2$ haben.
+\[\frac{\cos \alpha}{\cos \beta} = \underbrace{\frac{D_2}{D_1}}_{\text{fest für 2 gegebene Materialien}}\]
+Die Brechung tritt fast nie in Reinform auf. Es tritt meist immer Reflexion gleichzeitig auf\\
+Wenn $D_1 > D_2$ ist, dann kann in der Formel $\cos \beta > 1$ herauskommen.\\
+$\rightarrow$ Dann wird der Strahl reflektiert (Totalreflexion)
