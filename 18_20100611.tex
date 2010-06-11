@@ -1,0 +1,123 @@
+\subsection{Zusammenfassung}
+\begin{center}
+ % 18.1
+\end{center}
+Ein Lichtstrahl trifft auf eine Fläche
+\begin{itemize}
+ \item ein Teil wird diffus reflektiert
+ \item ein Teil wird glänzend reflektiert
+ \item ein Teil wird gespiegelt
+ \item ein Teil wird (bei einem transparentem Stoff) durchgelassen und dabei gebeugt
+ \item der Rest wird absorbiert.
+\end{itemize}
+
+\subsection{Einheiten}
+In welchen Einheiten wird ein "`Lichtstrahl"' gemessen? (Die bisherige "`Intensität"' ist keine physikalische Einheit.)
+\begin{description}
+ \item[Lichtstrom] Energie an sichtbarem Licht pro Zeit
+	\begin{center}
+	 Einheit = 1 Lumen = 1 lm
+	\end{center}
+	Die analoge Einheit bei der Strahllungsmessung = 1 W, Lumen ist eingeschränkt auf sichtbares Licht, bezogen auf
+	die Helligkeitsempfindlichkeit des Auges, abhängig von der Wellenlänge.
+ \item[Lichtstärke] Wieviel Licht strahlt eine punktförmige Lichtquelle in eine bestimmte Richtung aus?
+	\[\text{Lichtstärke} = \frac{\text{Lichtstrom}}{\text{Raumwinkel}}\]
+	\begin{center}
+	 Einheit = 1 Candela = 1 cd
+	\end{center}
+	Eine Lichtquelle, die mit 1 cd in alle Richtungen strahlt, hat einen Lichtstrom von $4 \pi$ lm.
+	\begin{center}
+	 % 12.2
+	\end{center}
+	[Raumwinkel: Der Raumwinkel, unter dem man ein Objekt sieht, \emph{ist} die Fläche der Projektion auf die
+		Einheitskugel (analog zum Ebenenwinkel)]
+	\begin{center}
+	 % 12.3
+	\end{center}
+ \item[Beleuchtungsstärke] Auf eine Fläche einfallender Lichtstrom, pro Fläche
+	\begin{center}
+	 Einheit = 1 Lux = 1 lx = 1 $\dfrac{\text{lm}}{\text{m}^2}$\\[1em]
+	 % 12.4
+	\end{center}
+	Bei der Planung von Beleuchtungsanlagen wichtig
+ \item[Leuchtdichte] (engl. luminance) Wieviel Licht wird von einer ausgedehnten Lichtquelle pro Flächeneinheit
+	in eine bestimmte Richtung abgestrahlt
+	\begin{center}
+	 $\dfrac{\text{Lichtstärke}}{\text{Fläche}} = \dfrac{\text{Lichtstrom}}{\text{Raumwinkel} \cdot \text{Fläche}}
+	 = \dfrac{\text{Beleuchtungsstärke}}{\text{Raumwinkel}}$\\[1em]
+	 % 12.5
+	 Bild\\[1em]
+	 Einheit = 1 $\dfrac{\text{cd}}{\text{m}^2}$
+	\end{center}
+	\begin{itemize}
+	\item Die Leuchdichte ist für den visuellen Helligkeitseindruck maßgeblich.
+	\item Die Leuchtdichte bleibt entlang eines Sichtstrahls konstant (sofern das Licht nicht durch Rauch, etc.
+		abgeschwächt wird.)
+	\item Bei den elektromagnetischen Strahlen ist die äquivalente Einheit die Strahlungsdichte
+	\end{itemize}
+	\begin{center}
+	 % 12.6
+	\end{center}
+\end{description}
+
+\subsection{Diffuse Reflexion}
+Bei der diffusen Reflexion gilt das \textsc{Lambert}'sche Gesetz:
+\begin{center}
+ % 12.7
+\end{center}
+Die Leuchtdichte, die in eine bestimmte Richtung geschickt wird, die einen Winkel $\alpha$ mit der Normalen bildet
+ist proportional zu $\boldsymbol{\cos \alpha}$.
+\begin{center}
+ % 12.8
+\end{center}
+Bei der Betrachtung von der Seite wird der gleiche Raumwinkel aus der Sicht des Betrachters von einer größeren Fläche
+überdeckt (s. dazu auch Abschnitt \ref{sec:diffuse_refl}, S. \pageref{lambert}).
+\begin{center}
+ % 12.9
+\end{center}
+\begin{align*}
+ \alpha = 0^\circ \qquad & 2 \tan \beta\\
+	& \cos \alpha (\tan (\alpha + \beta) - \tan(\alpha - \beta))\\
+ \lim_{\beta \to 0} \frac{\cos \alpha \tan (\alpha + \beta) - \tan(\alpha - \beta))}{2 \tan \beta}
+	&= \cos \alpha  \lim_{\beta \to 0} \frac{\frac{1}{\cos (\alpha + \beta)} - \frac{-1}{\cos (\alpha - \beta)}}
+		{\frac{2}{\cos^2 \beta}}\\
+	&= \cos \alpha \frac{\frac{2}{\cos (\alpha}}
+		{\frac{2}{\cos^2 \beta}} = \cos \alpha	
+\end{align*}
+Dieser effekt gleicht sich mit dem Lambert'schen Gesetz aus. Daher erscheint eine diffuse Fläche aus allen Richtungen
+\emph{gleich hell}.\\
+\section{Einsatz der physikalischen Grundlagen beim Raytracing}
+Beim Raytracing wird der gespieglte Strahl (oder gebrochene Strahl) zurückverfolgt,
+bis er auf eine diffuse Fläche trifft.
+\begin{center}
+ %12.10
+\end{center}
+Rekursives Raytracing an jedem Punkt, wo der Stahl auftrifft, werden die verschiedenen Anteile (diffus, gespiegelt,
+gebrochen) aufgesammelt.
+\begin{lstlisting}[morekeywords=function]
+function trace(Strahl $r$; Faktor $f$; Schnitttiefe $t$)
+	// Strahl = 1 Punkt und eine Richtung $\psline[linestyle=dotted](3,-0.5)(5,0.5)\psline{*->}(3,-0.5)(4,0)$
+	berechne den Punkt $P$, wo der Stahl das Objekt trifft.
+	if $P = \emptyset$ return (Hintergrundhelligkeit)
+	$f := f \cdot e^{-l \cdot D}$	// $l$ = Laenge der Strecke bis zu P
+					// $D$ = Daempfungsfaktor (fuer Nebel / Rauch)
+					// $D = 0$ ... klare Luft, Dser Schritt ist optional
+	$sum := 0$
+	fuer jede Lichtquelle $Q$:
+		Betrachte die Strecke $PQ$
+		Wenn frei von Hindernissen;
+		berechne Helligkeit nach dem Phong-Modell
+		$sum := sum + \mathrm{Helligkeit} \cdot f$
+	spiegele den Strahl an der Oberflaeche $\rightarrow$ Strahl $r'$;
+	$sum := sum$ + trace($r'$, $\cdot f \cdot
+			\underbrace{\mathrm{Spiegelungskoeffizient}}
+			_{\footnotemark[1]}$, $t + 1$);
+	falls transparent:
+		brich den Strahl an der Flaeche $\rightarrow$ Strahl $r$
+		$sum := sum$ + trace($r'$, $\underbrace{\mathrm{Brechungskoeffizient}}_{\footnotemark[2]} \cdot f$, t+1);
+	return $sum$
+\end{lstlisting}
+\footnotetext[1]{hängt von der Geometrie und der Oberflächenbeschaffenheit von $P$ ab}
+\footnotetext[2]{Welcher Antei des Lichts, das aus Richtung $r'$ kommt wird in Richtung $r$ weitergeleitet}
+
+% Weiter s. Fotos 1-3
