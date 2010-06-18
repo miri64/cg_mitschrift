@@ -1,0 +1,152 @@
+\begin{align*}
+ x &= Ax & A &\in \mathbb{R}^{n \times n} \qquad b \in \mathbb{R}^n
+	 & x &\in \mathbb{R}^n\\
+ x^{(0)}{,}\ & x^{(1)} = A x^{(0)} + b, x^{(2)} = Ax^{(1)} + b
+\end{align*}
+\textsc{Gauß-Seidel}-Verfahren (iteratives Verfahren zur Lösung des Gleichungssystems). Konvergiert unter gewissen
+Bedingungen. z. B. wenn die Summe der Amsolutbeträge in jeder Zeile von $A < 1$ ist.
+
+Bei der Radiosity-Gleichung ist dies fast der Fall: $\le 1$.\\
+
+Falls alle $\rho_i < 1$ sind: $< 1$
+
+\subsubsection{Zusammenfassung}
+\begin{enumerate}
+ \item Flächen in kleine Stücke zerlegen
+	\begin{enumerate}[a)]
+	 \item gleichförmiges Gitter
+		\begin{center}
+		 % 20.1a
+		\end{center}
+	 \item angepasst an den erwarteten Lichtaustausch.
+		\begin{center}
+		 % 20.2
+		\end{center}
+		Wo Flächen nah an anderen Flächen sind wird die Zerlegung feiner.
+	 \item adaptiv.\\
+		Man rechnet zuerst mit einer gröberen Zerlegung und verfeinert sie dort, wo das Ergebnis
+		stark schwankt
+	\end{enumerate}
+ \item Formfaktoren bestimmen (am zeitaufwändigsten)\\
+	Können auch mit Hilfe von Grafikpuffern berechnet werden.
+	\[\int\limits_{p \in A_i} \int\limits_{q \in A_j} ...\]
+	\begin{center}
+	 %20.2
+	\end{center}
+	Für ein festes $p$ ähnelt die Berechnung des Integranden der Grafikpufferberechnung mit Kamera $p$. Diese
+	Berechnung wird von Grafik-Hardware unterstützt
+ \item Gleichungssystem lösen
+ \item mit den so bestimmten (diffusen) Helligkeiten kann man dann die Szene darstellen
+\end{enumerate}
+
+\section{Transparenz}
+\begin{center}
+ % 20.3
+\end{center}
+teildurchsichtige Medien. z. B. Glas mit einem Bild, mit Staub, Nebel, Wolken, Rauch.
+
+\subsection{RGBA-Modell bzw. $\boldsymbol{(r, g, b, \alpha)}$}
+Ein halbdurchsichtiges Bild wird durch eine vierte Größe $\alpha$ (zusätzlich zu $R, G, B$) für jeden Bildpunkt
+\begin{align*}
+ \alpha &= 1 & &\text{vollständig undurchsichtig}\\
+ \alpha &= 0 & &\text{vollständig durchsichtig}\\
+ \alpha &= 0{,3} & &\text{$30\%$ wird von diesem Bild beigesteuert, }\\
+	&	& &\text{$70\%$ kommt von dem was dahinter liegt}
+\end{align*}
+z. B. Bild eines Mauszeigers (idealisiert)
+\begin{center}
+ % 20.4
+\end{center}
+in Wirklichkeit natürlich "`pixelig"', Übergänge zwischen den kanten mit Antialiasing geglättet:
+\begin{center}
+ % 20.5
+\end{center}
+\[
+\left.
+ \begin{array}{r}
+  (r,g,b,\alpha)\\
+ (\bar r, \bar g, \bar b) \text{(Hintergrund)}
+  \end{array}\right\} \text{Ergebnis} = (\alpha \cdot r + (1 \alpha)\cdot \bar r,
+					\alpha \cdot g + (1 \alpha)\cdot \bar g,
+					\alpha \cdot b + (1 \alpha)\cdot \bar b)
+\]
+\begin{center}
+ % 12.6
+\end{center}
+\rnode{Erg}{Ergebis} $= \alpha^1\,rgb^1 + (1 - \alpha^1)\,\alpha^2rgb^2 + (1-\alpha^1)\,(1-\alpha^2)\,\alpha^3\,rgb^3
+	+ (1-\alpha^1)\,(1-\alpha^2)\,(1-\alpha^3)\,\rnode{rgb}{\underbrace{rgb}}$
+	\begin{center}
+	 \rnode{trans}{mehrere Transparente Schichten} \hspace{5cm} \rnode{vec}{Vektor aus 3 Komponenten}\\[1em]
+	 % 20.7
+	\end{center}
+	\ncline{->}{trans}{Erg}\ncline{->}{vec}{rgb}
+	\[\left(\underbrace{\frac{\alpha^1\,rgb^1 + (1 - \alpha)\,\alpha^2\,rgb^2}{\alpha^1 + (1-\alpha^1)\,\alpha^2}}_
+		{rgb^\mathrm{neu}}, \underbrace{\alpha^1 + (1-\alpha^1)\,\alpha^2}_{\alpha^\mathrm{neu}}\right)\]
+		Effekt auf eine dahinter liegende Fläche $\overline{rgb}$
+		\[\alpha^\mathrm{neu} \, rgb^\mathrm{neu} + (1-\alpha^\mathrm{neu})\,\overline{rgb}\]
+Wichtig: durchlässige Medien in der richtigen Reihenfolge kombinieren (z. B. vorne nach hintern, oder hinten nach vorne)
+
+\subsection{Kombination mit Tiefenpuffer}
+$(rgb^1, z^1, \alpha^1)\quad(rgb^2, z^2, \alpha^2)$ einer dieser Werte ist im Tiefenpuffer an einer bestimmten Stelle gespeichern,
+	der andere soll dort hingeschrieben werden
+\begin{align*}
+ z^1 < z^2 &\ \text{(o. B. d. A.)}\\
+ rgb^\mathrm{neu} &:= \frac{\alpha^1\,rgb^1 + (1-\alpha^1)\,\alpha^2\,rgb^2}{\alpha^1+(1-\alpha^1)\,\alpha^2}\\
+ \alpha^\mathrm{neu} &:= \alpha^1 + (1-\alpha^1) \alpha^2\\
+ z^\mathrm{neu} &:= \rnode{z}{z^1} 
+\end{align*}
+\rnode{not}{(eigentlich unzureichend}, aber notwendig, um wenigstens den undurchsichtigen Fall richtig zu behandeln)
+\ncangle[angleA=90,angleB=-90]{->}{not}{z}
+\\[1em]
+Diese Methode funktioniert, wenn man höchstens \emph{ein} halbdurchlässiges Pixel $(0 < \alpha < 1)$ zeichen möchte
+oder wenn \emph{alle} Objekte von vorne nach hinten oder von hinten nach vorne eingefügt werden.
+
+\chapter{Spline-Kurven und -Flächen}
+\begin{center}
+ %20.8
+\end{center}
+z. B. Kreis
+\begin{center}
+\begin{tabular}{ccc}
+implizite Darstellung & explizite Darstellung & Parameterdarstellung \\
+$x^2 + y^2 = 1$		& $y = \sqrt{1 - x^2}$	& $y = \cos \alpha$  \\
+			& $y = \sqrt{1 - x^2}$	& $x = \sin \alpha$ \\
+		 \hline
+			& \emph{Spezialfall}	& \emph{Alternative (rationale Darstellung)} \\
+			& $x = t$		& $x = \dfrac{2t}{1+t^2} \qquad t = \tan \frac{\alpha}{2}$\\
+			& $y = \sqrt{1 - t^2}$	& $y = \dfrac{1-t^2}{1+t^2} \qquad -\infty < t < \infty$
+\end{tabular}
+\end{center}
+\begin{center}
+ % 20.9
+\end{center}
+\begin{itemize}
+ \item Paramterdarstellung ist gut für das Nachfahren der Kurve; Darstellung als Folge von Punkten
+ \item implizite Darstellung ist gut für Raytracing
+\end{itemize}
+\Defi	\textbf{Spline-Kurven} sund parametrische Kurven, wo siw Parameterfunktionen Polynome sind (es gibt auch
+	rationale Splines). Die Kurven sind durch Leitpunkte (Kontrollpunkte) festgelegt. Dadurch sind sie einigermaßen
+	intuitiv manipulierbar.
+
+\begin{enumerate}
+\item \textbf{Bézier-Splines}
+	\begin{center}
+	% 20.10
+	\end{center}
+	$k+1$ Kontrollpunkte definieren einen Bézier-Spline der Ordnung $k$ (Polynome vom Grad $\le k$)
+\item \textbf{$\boldsymbol{B}$-Splines}
+	\begin{center}
+	 % 20.11
+	\end{center}
+	Ordnung $k$: stückweise Polynome der Ordnung $k$, Kontrollpunkte $< \infty$
+\item \textbf{Hermite-Splines}
+	\begin{center}
+	 % 20.12
+	\end{center}
+	interpolieren zwischen 2 Endpunkten mit vorgegebenen Tangetenrichtungen und Geschwindigkeiten\\
+	$...$ kubische Splines
+	\begin{center}
+	 % 20.13
+	\end{center}
+
+\end{enumerate}
