@@ -1,0 +1,273 @@
+	\begin{itemize}
+	 \item An den Ecken werden die Normalen genommen. Dazwischen werden die Normalenrichtungen angenähert
+		interpoliert und mit diesen Normalen in jedem Punkt die Beleuchtungsrechnung durchgeführt
+	\end{itemize}
+	\begin{center}
+	 \begin{pspicture}(0,0)(5,2.5)
+		\psline(0,0)(1.25,1.25)(3.75,1.25)(5,0)
+		\psdot(1.25,1.25)\uput{3pt}[-45](1.25,1.25){$P_1$}
+		\rput(1.25,1.25){
+			\psline{->}(0,0)(-0.5,0.866)\uput{3pt}[120](-0.5,0.866){$N_1$}
+		}
+		\psdot(3.75,1.25)\uput{3pt}[-135](3.75,1.25){$P_2$}
+		\rput(3.75,1.25){
+			\psline{->}(0,0)(0.5,0.866)\uput{3pt}[60](0.5,0.866){$N_2$}
+		}
+		\pnode(1.875,1.25){P2d}
+		\rput(1.875,1.25){
+			\psline[linecolor=gray]{->}(0,0)(-0.277358, 0.960767)
+			\psline{->}(0,0)(-0.25,0.866)
+		}
+		\psline[linestyle=dashed](0.75,2.116)(4.25,2.116)
+	 \end{pspicture}
+	 \hspace{2cm}
+	 \begin{pspicture}(0,0)(2,2.5)
+		\rput(1,0.5){
+			\psset{unit=1.5}
+			\psdot(0,0)
+			\psline{->}(0,0)(0.5,0.866)\uput{3pt}[60](0.5,0.866){$N_2$}
+			\psline{->}(0,0)(-0.5,0.866)\uput{3pt}[120](-0.5,0.866){$N_1$}
+			\psline[linestyle=dashed](-0.5,0.866)(0.5,0.866)
+			\psline[linecolor=gray]{->}(0,0)(-0.277358, 0.960767)
+			\psline{->}(0,0)(-0.25,0.866)
+		}
+	 \end{pspicture}
+	\end{center}
+	Am Punkt $\rnode{P2dformel}{P} = \lambda P_2 + (1-\lambda)P_1$ wird der folgende Normalvektor genommen:
+	\nccurve[angleA=20,angleB=-90]{->}{P2dformel}{P2d}
+	\[N = \frac{\lambda N_2 + (1-\lambda)N_1}{\|\lambda N_2 + (1-\lambda)N_1\|}\]
+	\begin{center}
+	 \psset{Alpha=190,Beta=70}
+	 \begin{pspicture}(0,-0.4)(3,3.4)
+	  \pstThreeDLine(2,0,0)(0,1,0)(1.5,2,0)(2,0,0)
+	  \pstThreeDPut(2,0,0){
+		 \pstThreeDDot(0,0,0)
+		 \pstThreeDLine{->}(0,0,0)(0.416025, -0.27735, 0.866)
+		 \pstThreeDPut(0.6, -0.37, 1){$N_2$}
+	  }
+	  \pstThreeDPut(0,1,0){
+		 \pstThreeDDot(0,0,0)
+		 \pstThreeDLine{->}(0,0,0)(-0.485063, -0.1213, 0.866)
+		  \pstThreeDPut(-0.7, -0.2, 1){$N_1$}
+	  }
+	  \pstThreeDPut(1.5,2,0){
+		 \pstThreeDDot(0,0,0)
+		 \pstThreeDLine{->}(0,0,0)(0.223645, 0.447194, 0.866)
+		 \pstThreeDPut(0.4, 0.54, 1){$N_3$}
+	  }
+	  \pstThreeDPut(1.16667, 1, 0){
+		 \pstThreeDNode(0,0,0){P3d}
+		 \pstThreeDDot(0,0,0)
+		 \pstThreeDLine{->}(0,0,0)(0.0595448, 0.0188238, 0.998048)
+		 \pstThreeDPut(0.16, 0.12, 1.2){$N$}
+	  }
+	 \end{pspicture}
+	\end{center}
+	\[\rnode{P3dformel}{P} = \lambda_1 P_1 + \lambda_2 P_2 + \lambda_3 P_3
+		\rightarrow N = \frac{\lambda_1 N_1 + \lambda_2 N_2 + \lambda_3 N_3}
+			{\|\lambda_1 N_1 + \lambda_2 N_2 + \lambda_3 N_3\|},
+			\qquad (\lambda_1+\lambda_2+\lambda_3 = 1)
+	\]\nccurve[angleA=20,angleB=-90]{->}{P3dformel}{P3d}
+	Aufwendiger zu rechnen als Gouraud-Schattierung
+
+	\subsection{Ausfüllen einer gerasterten Fläche}\label{sec:fill}
+	\paragraph*{Annahme} Fläche ist ein Dreieck
+		\[y_1 \le y_2 \le y_3\]
+		$P_2$ links von $P_1P_3$
+		\begin{center}
+		 \vspace{5mm}
+		 \begin{pspicture}(0,0)(4,5)
+		  \psgrid[gridlabels=0pt,subgriddiv=2,griddots=0,gridcolor=lgray,subgridcolor=lgray,gridwidth=0.5pt,subgridwidth=0.5pt]
+		  \pspolygon(0.25,3.75)(3.8,4.3)(1.73,0.2)
+		  \psdot(0.25,3.75)\uput{3pt}[160](0.25,3.75){$P_2(x_2,y_2)$}
+		  \psdot(3.8,4.3)\uput{3pt}[20](3.8,4.3){$P_3(x_3,y_3)$}
+		  \psdot(1.73,0.2)\uput{3pt}[-90](1.73,0.2){$P_1(x_1,y_1)$}
+		  \psdot[dotsize=2pt,unit=0.5](3,2)
+		  \psdot[dotsize=2pt,unit=0.5](4,2)
+		  \psdot[dotsize=2pt,unit=0.5](3,3)
+		  \psdot[dotsize=2pt,unit=0.5](4,3)
+		  \psdot[dotsize=2pt,unit=0.5](2,4)
+		  \psdot[dotsize=2pt,unit=0.5](3,4)
+		  \psdot[dotsize=2pt,unit=0.5](4,4)
+		  \psdot[dotsize=2pt,unit=0.5](5,4)
+		  \dotnode[dotsize=2pt,unit=0.5](2,5){25}
+		  \dotnode[dotsize=2pt,unit=0.5](3,5){35}
+		  \dotnode[dotsize=2pt,unit=0.5](4,5){45}
+		  \dotnode[dotsize=2pt,unit=0.5](5,5){55}
+		  \psdot[dotsize=2pt,unit=0.5](2,6)
+		  \psdot[dotsize=2pt,unit=0.5](3,6)
+		  \psdot[dotsize=2pt,unit=0.5](4,6)
+		  \psdot[dotsize=2pt,unit=0.5](5,6)
+		  \psdot[dotsize=2pt,unit=0.5](6,6)
+		  \psdot[dotsize=2pt,unit=0.5](1,7)
+		  \psdot[dotsize=2pt,unit=0.5](2,7)
+		  \psdot[dotsize=2pt,unit=0.5](3,7)
+		  \psdot[dotsize=2pt,unit=0.5](4,7)
+		  \psdot[dotsize=2pt,unit=0.5](5,7)
+		  \psdot[dotsize=2pt,unit=0.5](6,7)
+		  \psdot[dotsize=2pt,unit=0.5](4,8)
+		  \psdot[dotsize=2pt,unit=0.5](5,8)
+		  \psdot[dotsize=2pt,unit=0.5](6,8)
+		  \psdot[dotsize=2pt,unit=0.5](7,8)
+		  \psset{unit=0.5}
+		  \dotnode[dotstyle=x](1.55,5){x_l}\uput{3pt}[-160](1.55,5){$x_{\mathrm{links}}$}
+		  \dotnode[dotstyle=x](5.8,5){x_r}\uput{3pt}[-20](5.8,5){$x_{\mathrm{rechts}}$}
+		  \psset{angleA=40,angleB=140}
+		  \nccurve{->}{x_l}{25}
+		  \nccurve{->}{25}{35}
+		  \nccurve{->}{35}{45}
+		  \nccurve{->}{45}{55}
+		  \nccurve{->}{55}{x_r}
+		 \end{pspicture}
+		 \vspace{5mm}
+		\end{center}
+		in $P_1, P_2, P_3$ sind Intensitätswerte $I_1, I_2, I_3$ berechnet worden, diese sollen linear
+		interpoliert werden. (z. B. bei Gouraud-Schattierung) eigentlich sollte man die Interpolation
+		in Weltkoordinten machen, und für $R, G, B$ getrennt.
+		\begin{center}
+		\texttt{Setpixel(\rnode{x}{$x$},\rnode{$y$}{y},$I$)}\\[1em]
+		\rnode{gz}{\textrm{ganzzahlig}}
+		\ncline{->}{gz}{x}
+		\ncline{->}{gz}{y}
+		\end{center}
+		Wir füllen das Dreieck zeilenweise
+		\begin{lstlisting}[mathescape=true]
+FuelleZeile($x_{\mathrm{links}}$, $x_{\mathrm{rechts}}$,$y$,$I_{\mathrm{links}}$,$\Delta I$)
+				// $\Delta I = I(x+1,y) - I(x,y)$ = unabhaengig von $x$ und $y$,
+				// weil $I$ eine lineare Funktion ist
+	$x := \lceil x_{\mathrm{links}}\rceil$
+	$I := I_{\mathrm{links}} + \Delta I \cdot (x-x_{\mathrm{links}})$
+	while $x \le x_{\mathrm{rechts}}$
+			Setpixel($x$,$y$,$I$)
+			$x := x+1$
+			$I := I + \Delta I$
+		\end{lstlisting}
+		äußere Schleife:
+		\begin{enumerate}
+		 \item untere Hälfte
+			\begin{align*}
+			 \Delta x_{\mathrm{links}} &= \frac{x_2-x_1}{y_2-y_1} &
+				\text{Ziel: auf der Geraden $P_1P_2$ gilt $x = y_1 + (y-y_1)\cdot \Delta x_{\mathrm{links}}$}\\
+			 \Delta x_{\mathrm{links}} &= \frac{x_3-x_1}{y_3-y_1}\\
+			 \Delta I_{\mathrm{links}} &= \frac{I_2-I_1}{y_2-y_1} &
+				\text{Ziel: auf der Geraden $P_1P_2$ gilt $I = I_1 + (y-y_1)\cdot \Delta I_{\mathrm{links}}$}\\
+			 \Delta I &= \frac{
+					(I_1 + \Delta I_{\mathrm{rechts}})-(I_1 + \Delta I_{\mathrm{links}})
+					}{
+					(x_1 + \Delta x_{\mathrm{rechts}})-(x_1 + \Delta x_{\mathrm{links}})
+					}\\
+				  &= \boxed{\frac{\Delta I_{\mathrm{rechts}}-\Delta I_{\mathrm{links}}}
+					{\Delta x_{\mathrm{rechts}}-\Delta x_{\mathrm{links}}}} &
+						\text{mit $\Delta I_{\mathrm{rechts}} = \frac{I_3 - I_1}{y_3 - y_1}$}
+			\end{align*}
+			\begin{lstlisting}[mathescape=true]
+$y = \lceil y_1 \rceil$;	$x_{\mathrm{links}}$	$:= x_1 + (y-y_1) \cdot \Delta x_{\mathrm{links}}$
+	 $x_{\mathrm{rechts}}$	$:= x_1 + (y-y_1) \cdot \Delta x_{\mathrm{rechts}}$
+	 $I_{\mathrm{links}}$	$:= I_1 + (y-y_1) \cdot \Delta I_{\mathrm{links}}$
+while $y \le y_2$
+	FuelleZeile($x_{\mathrm{links}}$, $x_{\mathrm{rechts}}$, $y$, $I_{\mathrm{links}}$, $\Delta I$)
+	$y := y + 1$
+	$x_{\mathrm{links}} := x_{\mathrm{links}} + \Delta x_{\mathrm{links}}$
+	$x_{\mathrm{rechts}} := x_{\mathrm{rechts}} + \Delta x_{\mathrm{rechts}}$
+	$I_{\mathrm{links}} := I_{\mathrm{links}} + \Delta I_{\mathrm{links}}$
+			\end{lstlisting}
+		 \item obere Hälfte
+			\begin{lstlisting}[mathescape=true]
+$\Delta x_{\mathrm{links}} := \frac{x_3 - x_2}{y_3 - y_2}$; $\Delta I_{\mathrm{links}} := \frac{I_3 - I_2}{y_3 - y_2}$
+$y := y + 1$; $x_{\mathrm{rechts}} := x_{\mathrm{rechts}} + \Delta_{\mathrm{links}}$
+$x_{\mathrm{links}} := x_2 + (y-y_2) \cdot \Delta x_{\mathrm{links}}$
+$I_{\mathrm{links}} := I_2 + (y-y_2) \cdot \Delta I_{\mathrm{links}}$
+
+while $y \le y_3$
+	FuelleZeile($x_{\mathrm{links}}$, $x_{\mathrm{rechts}}$, $y$, $I_{\mathrm{links}}$, $\Delta I$)
+	$y := y + 1$
+	$x_{\mathrm{links}} := x_{\mathrm{links}} + \Delta x_{\mathrm{links}}$
+	$x_{\mathrm{rechts}} := x_{\mathrm{rechts}} + \Delta x_{\mathrm{rechts}}$
+	$I_{\mathrm{links}} := I_{\mathrm{links}} + \Delta I_{\mathrm{links}}$
+			\end{lstlisting}
+		\end{enumerate}
+	\section{Entfernen verdeckter und teilweise verdeckter Flächen}
+	\begin{enumerate}
+	 \item Painter's Algorithmus
+	 \item Tiefenpuffer
+	 \item Überstreichen (swap)
+	\end{enumerate}
+	\begin{center}
+	\begin{pspicture}(-2,-1)(2.5,2)
+	 \rput{-30}{
+		\psframe[fillstyle=solid](-2,0)(2,0.5)
+	 }
+	 \rput(2,-1){1.}
+	 \rput{-5}{
+		\psframe[fillstyle=solid](-1,0)(2.5,1.2)
+	 }
+	 \rput(3,0){2.}
+	 \rput{45}(-0.5,-0.5){
+		\psframe[fillstyle=solid](-1,0)(2.5,1.2)
+	 }
+	 \rput(1,2){3.}
+	\end{pspicture}
+	\end{center}
+
+	\subsection{Painter's Algorithmus}
+	Finde eine Reihenfolge der Flächen nach vorn, "`male"' die Flächen in dieser Reihenfolge.
+	\paragraph*{Problem} zyklische Abhängigkeiten:
+	\begin{center}
+	 \begin{pspicture}(0,0)(4,3)
+	 \rput{-5}(2,0.2){
+		\psline[fillstyle=solid](0,0.5)(2,0.5)(2,0)(0,0)
+	 }
+	 \rput{-70}(2.5,1.5){
+		\psframe[fillstyle=solid](-2,0)(2,1)
+	 }
+	 \rput{45}(1.5,1.5){
+		\psframe[fillstyle=solid](-2,0)(2,0.4)
+	 }
+	 \rput{-5}(2,0.2){
+		\psline[fillstyle=solid](0,0.5)(-2,0.5)(-2,0)(0,0)
+	 }
+	 \rput(5,1.5){
+		\LARGE ?
+	 }
+	\end{pspicture}
+	\end{center}
+	\paragraph{Lösung} Flächen in kleinere Flächen zerlegen
+	\begin{center}
+	 \begin{pspicture}(0,0)(4,3)
+	 \rput{-5}(2,0.2){
+		\psline[fillstyle=solid](0,0.5)(2,0.5)(2,0)(0,0)
+	 }
+	 \rput{-70}(2.5,1.5){
+		\psframe[fillstyle=solid](-2,0)(2,1)
+	 }
+	 \rput{45}(1.5,1.5){
+		\psframe[fillstyle=solid](-2,0)(2,0.4)
+	 }
+	 \rput{-5}(2,0.2){
+		\psline[fillstyle=solid](0,0.5)(-2,0.5)(-2,0)(0,0)
+	 }
+	 \rput{-5}(2,0.2){
+		\psline[linestyle=dashed](0,1)(0,-0.5)
+	 }
+	 \rput(4.3,0.25){1.}
+	 \rput(2.8,2){2.}
+	 \rput(1,1.8){3.}
+	 \rput(1,0){4.}
+	\end{pspicture}
+	\end{center}
+
+	\subsection{Tiefenpuffer (z-Puffer)}
+	Jeder Bildpunkt speichert zusätzlich einen $z$-Wert (größere Werte sind weiter hinten)
+	\begin{center}
+		\texttt{Setpixel($x$,$y$,$z$,$I$)} bzw. \texttt{Setpixel($x$,$y$,$z$,$I^R$,$I^G$,$I^B$)}
+	\end{center}
+	Vergleiche $z$ mit dem für $(x,y)$ gespeicherten $z$-Wert, wenn kleiner, dann überschreibe $z, I$, andernfalls
+	ignoriere.
+	
+	Beim Zeichnen eines ebenen Flächenstückes ist $z$ linear von $x$ und $y$ abhängig. $z$ interpoliert zwischen
+	den 3 Ecken $P_i(x_i,y_i,z_i), i = 1, 2, 3$
+	\paragraph{Nachteil} (von beiden Verfahren) Aufwand ist proportional zu gezeichneten Gesamtfläche und nicht
+ 	zur sichtbaren Fläche (nicht sichtbare Flächen werden auch gezeichnet bzw. zu zeichnen versucht).
+
+
+

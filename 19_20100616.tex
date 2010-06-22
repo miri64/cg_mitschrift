@@ -1,0 +1,118 @@
+\section{Globale Beleuchtung}
+\begin{center}
+ %19.1
+\end{center}
+\subsection{Rendering-Gleichung}
+Die \textbf{Rendering-Gleichung} bildet die tatsächlichen Verhältnisse bei der Beleuchtung am genauesten ab.
+\begin{center}
+ %19.2
+\end{center}
+\paragraph*{Variablen}
+\begin{itemize}
+ \item $p, p', p'', p'''...$ Punkte auf den Oberflächen der Objekte
+ \item $\overline{pp'}...$ Sehstrahlen.
+ \item $f(p',p'')...$ Leuchtdichte auf dem Strahl $p'p''$
+\end{itemize}
+\paragraph*{Gegeben}
+\begin{itemize}
+ \item $\rho(p',p'',p''')...$ Welchen Anteil des Lichtes auf $p'p''$ wird in Richtung $p''p'''$ zurückgeworfen?
+\end{itemize}
+\paragraph{Beispiel} perfekter Spiegel:
+	\[
+		\rho(p',p'',p''') = \begin{cases}
+		                     1,& \text{wenn die Winkehalbierende von $p'p''p'''$ senkrecht auf der Fläche steht}\\
+		                     0,& \text{sonst}
+		                    \end{cases}
+	\]
+\paragraph{Rendering-Gleichung}
+\[\boxed{f(p'',p''') = \int\limits_{p'{:}\ \text{$p'p''$ ist sichtbar}} f(p',p'') \rho(p',p'',p''')
+	\underbrace{\mathrm{d}p'}_{\text{Flächenintegral}}
+	+ \underbrace{e(p'',p''')}_{
+		\text{\begin{minipage}{2.5cm}
+			Wass wird von $p''$ als Lichtquelle in Richtung $p'''$ ausgestrahlt?
+		\end{minipage}}}}
+\]
+Integralgleichung. $f$ ist eine Funktion von 4 Variablen
+\[f(p'',p''',\lambda) = \int ... \rho(p',p'',p''',\lambda) ..., \lambda \in \mathbb{R} \text{ bzw. } \lambda \in \{R,G,B\}\]
+$\Rightarrow$ In wirklichkeit auch von $\lambda$ abhängig.
+\subsection{Radiosity-Verfahren}
+Vereinfachung der Rendering-Gleichung
+\begin{itemize}
+ \item Betrachtet alle Wechselwirkungen zwischen Flächen
+ \item nur diffuse Flächen
+ \item Die Flächen werden in kleine Flächenstücke zerlegt; auf die Art wird das Problem diskreditiert\\
+	$\rightarrow$ großes lineares Gleichungssystem
+\end{itemize}
+\textbf{Formfaktor $\boldsymbol{f_{ij}}$:} Welcher Anteil des Lichtstroms, der von Fläche $A_i$ ausgesendet wird,
+	kommt bei der Fläche $A_j$ an?
+\paragraph*{Variablen}
+\begin{itemize}
+ \item $b_i...$ Beleuchtu ngsstärke der Fläche $A_i$.
+	Wieviel Lichtstrom wird pro Flächeneinheit ausgeschickt?
+ \item $\rho_i...$ Reflektionskoeffizient der Fläche $A_i$
+ \item $e_i...$ Eigenstrahlungslichtstärke von $A_i$, wenn $A_i$ eine Lichtquelle ist.
+\end{itemize}
+Summe des eintreffenden Lichtes auf $A_i$:
+	\[\sum\limits_j b_j \cdot |A_j| \cdot f_{ji}\]
+Ausgeschicktes Licht auf $A_i$:
+	\[\boxed{b_i \cdot |A_i| = \rho_i \cdot \sum\limits_j b_j \cdot |A_j| \cdot f_{ji} + e_i \cdot |A_i|}\]
+Dies muss man für $R, G, B$ bzw. für jede Wellenlänge $\lambda$ seperat lösen.
+
+\subsubsection{Formfaktoren}
+Hängen von der Geometrie ab.
+\begin{center}
+ %14.3, noch nicht fertig
+ \psset{Alpha=170,Beta=20}
+ \begin{pspicture}(-2,0)(2,3)
+  \pstThreeDSquare(-1,-1,0)(2,0,0)(0,2,0)
+  \pstThreeDSquare(2,2,1)(2,-2,0)(0,0,2)
+  \pstThreeDLine{*-*}(0,0,0)(3,1,2)
+  \pstThreeDLine[linestyle=dashed](0,0,0)(0,0,2)
+  \pstThreeDLine[linestyle=dashed](3,1,2)(1,0,2)
+ \end{pspicture}
+\end{center}
+$p \in A_i, q \in A_j$\\
+$\alpha, \beta$ Winkel zu den Flächennormalen\\
+$r = \| p - q \|$
+\paragraph*{Annahme} $A_i$ und $A_j$ relativ klein, Sicht ist nicht unzterbrochen $... r, \alpha, \beta$ schwanken nur wenig.
+\paragraph*{Näherungsformel} (Fehler gering wenn $p$ und $q$ weit aus einander)
+\[f_{ij} \approx \cos \alpha \cdot \cos \beta \cdot \frac{1}{r^2} \cdot |A_j| \cdot \frac{1}{\pi} \]
+\paragraph*{Exakte Formel}
+\begin{align*}
+f_{ij} &= \int\limits_{p \in A_i} \int\limits_{q \in A_j} \frac{\cos \alpha (p,q) \cdot \cos \beta (p,q) \cdot s(p,q)}{\|p - q\|^2} \mathrm{d}q\ \mathrm{d}p
+	\cdot \frac{1}{|A_i|} \cdot \frac{1}{\pi}\\
+s(p,q) &= \begin{cases}
+		1, & \text{$p$ und $q$ sehen sich}\\
+		0, &  \text{sonst}
+          \end{cases}
+\end{align*}
+\[\boxed{f_{ij} \cdot |A_i| = f_{ji} \cdot |A_j|}\]
+\begin{align*}
+b_i \cdot |A_i| &= \rho_i \cdot \sum\limits_j b_j \cdot |A_j| \cdot f_{ji} + e_i \cdot |A_i|\\
+b_i \cdot \cancel{|A_i|} &= \rho_i \cdot \sum\limits_j b_j \cdot \cancel{|A_i|} \cdot f_{ij} + e_i \cdot \cancel{|A_i|}\\
+	&\Rightarrow \boxed{b_i = \rho_i \sum\limits_j b_j \cdot f_{ij} + e_i} \qquad \text{Radiosity-Gleichungssystem}
+\end{align*}
+lineares Gleichungssysmte in $n$ Variablen $b_1, ..., b_n$ ($n =$ \#Flächenstücke), $O(n^2)$ Koeffizienten $f_{ij} \qquad 0 \le \rho_i \le 1$
+
+\subsubsection{Geometrische "`Berechnung"' von $\boldsymbol{f_{ij}}$}
+$A_i$ ist ein kleines Flächenstück
+\begin{center}
+ %19.4
+\end{center}
+Projektion auf die obere Einheitshalbkugel um $A_i$\\
+$\hat =$ Multiplikation mit $\cos \beta \cdot \frac{1}{r^2}$\\
+$\hat =$ scheinbare Größe von $A_j$ aus Sicht von $A_i$\\
+Anschließende Projektion senkrecht auf die Ebene durch $A_i\ \hat =$ Multiplikation mit $\cos \alpha$\\
+gesamter Fläche des Kreises $=\ \pi$
+\[\sum\limits_i f_{ij} \stackrel{\mathbf{!}}= 1\]
+Wahl des Konstanten Faktors $\frac{1}{\pi}$ wird durch die physikalische Forderung $\sum\limits_{j} = 1$ erzwungen.
+
+Das Gleichungssystem löst man am besten iterativ:
+\begin{itemize}
+ \item Beginne mit einer beliebigen Ausgangslösung $\vec b^{(0)}$ z. B. durch Phong-Beleuchtung berechnet. oder
+	\[\vec b^{(0)} = \vthree{b_1^{(0)}}{\vdots}{b_n^{(0)}} \cdot \vthree{0}{\vdots}{0}\]
+ \item Setze $b^{(k)}$ rechts ein und erhalte die nöchste Näherungslösung
+	\[\boxed{b_i^{(k+1)} = \sum\limits_{i}{j=1} b_j^{(k)} \cdot f_{ij} + e_i}, \qquad i = 1, ..., n\]
+\end{itemize}
+Das konvergiert umso schneller, je kleiner die $\rho_i$-Werte sind.
+
