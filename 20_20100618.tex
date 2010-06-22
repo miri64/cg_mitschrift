@@ -39,13 +39,13 @@ Falls alle $\rho_i < 1$ sind: $< 1$
  \item mit den so bestimmten (diffusen) Helligkeiten kann man dann die Szene darstellen
 \end{enumerate}
 
-\section{Transparenz}
+\chapter{Transparenz}
 \begin{center}
  % 20.3
 \end{center}
 teildurchsichtige Medien. z. B. Glas mit einem Bild, mit Staub, Nebel, Wolken, Rauch.
 
-\subsection{RGBA-Modell bzw. $\boldsymbol{(r, g, b, \alpha)}$}
+\section{RGBA-Modell bzw. $\boldsymbol{(r, g, b, \alpha)}$}
 Ein halbdurchsichtiges Bild wird durch eine vierte Größe $\alpha$ (zusätzlich zu $R, G, B$) für jeden Bildpunkt
 \begin{align*}
  \alpha &= 1 & &\text{vollständig undurchsichtig}\\
@@ -86,7 +86,7 @@ in Wirklichkeit natürlich "`pixelig"', Übergänge zwischen den kanten mit Anti
 		\[\alpha^\mathrm{neu} \, rgb^\mathrm{neu} + (1-\alpha^\mathrm{neu})\,\overline{rgb}\]
 Wichtig: durchlässige Medien in der richtigen Reihenfolge kombinieren (z. B. vorne nach hintern, oder hinten nach vorne)
 
-\subsection{Kombination mit Tiefenpuffer}
+\section{Kombination mit Tiefenpuffer}
 $(rgb^1, z^1, \alpha^1)\quad(rgb^2, z^2, \alpha^2)$ einer dieser Werte ist im Tiefenpuffer an einer bestimmten Stelle gespeichern,
 	der andere soll dort hingeschrieben werden
 \begin{align*}
