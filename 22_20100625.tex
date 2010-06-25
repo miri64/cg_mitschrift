@@ -1,0 +1,117 @@
+\section{B-Splines}
+B = Basis (nicht Bézier)
+\begin{center}
+ % 22.1
+\end{center}
+Der B-Spline ist bei Ordnung 1 das Kontrollpolygon selbst.\\[1em]
+Knoten $u_1 < u_2 < u_3 < ... < u_n \in \mathbb{R}$
+\[
+ X(t) = \frac{u_{i+1}-t}{u_{i+1}-u_i} P_{i+1} + \frac{t-u_i}{u_{i+1}-u_i} P_i \qquad u_i \le t \le u_{i+1}
+\]
+Notation:
+\begin{center}
+ % 22.2
+\end{center}
+$P$ interpoliert zwischen $A$ und $B$, wenn $t$ von $r$ bis $s$ variiert
+\[P(t) = \frac{s-t}{s-r} A + \frac{t-r}{s-r} B \qquad r \le t \le s\]
+Wie hängt $X$ von den Punkten ab?
+\[X(t) = \sum\limits_{i=0}^{n-1} \rnode{C}{C^2_i(t)} \cdot P_i\]
+\begin{center}
+\framebox[3cm]{\rnode{Basis}{Basisfunktionen}} \ncangle[angleA=90,angleB=-90]{->}{Basis}{C} (stückweise lineare Funktionen von $t$ hängen von
+	$u_1, u_2, ...$ ab) \\[1em]
+ % 22.3
+\end{center}
+\begin{center}
+ % 22.4
+\end{center}
+Die Kurve existiert im Intervall $t \in [u_2, u_n]$
+\begin{itemize}
+ \item $n$ Punkte $P_0, P_1, ..., P_{n-1} \equiv P_0^3, ..., P_{n-1}^3$
+ \item $n + 1$ Knoten $u_1 < u_2 < ... < u_{n+1}$
+\end{itemize}
+\paragraph*{Beispiel} $n = 5$
+ \[
+	\begin{array}{cccccc}
+	 u_1 & u_2 & u_3 & u_4 & u_5 & u_6 \\
+	 -1  & 0   & 1   & 2   & 3   & 4
+	\end{array}
+ \]
+\begin{center}
+ % 22.5\\[1em]
+ % 22.6
+\end{center}
+
+\paragraph*{Basisfunktionen}
+\begin{center}
+ % 22.7
+\end{center}
+
+\paragraph*{kubische Splines}
+\begin{center}
+ % 22.8
+\end{center}
+
+\subsection{B-Splines vom Grad $\boldsymbol{d}$}
+\begin{itemize}
+ \item $n+d-1$ Knoten $u_1 < u_2 < ... < u_{n+d-1}$
+ \item $n$ Kontrollpunkte $P_0, ..., P_{n-1}$. Diese werden als $P_i^{\boldsymbol{d+1}}$ deklariert
+ \item die B-Spline-Kurve existiert für $t \in [u_d, u_n]$
+	\begin{center}
+	 % 22.9
+	\end{center}
+\end{itemize}
+\[\boxed{P_i^k(t) = \frac{u_{d+k}-t}{u_{i+k}-u_i} \cdot P_{i-1}^{k+1} + \frac{t-u_i}{u_{i+k}-u_i} \cdot P_i^{k+1}},
+	\qquad u_i \le t \le u_{i+k}\]
+Die Punkte $P^1_i(t)$ bilden die Spline-Kurve für $t \in [u_i, u_{i+1}]$
+\paragraph*{allgemeine Formel}
+\[X(t) = \sum\limits_{i=0}^{n-1} C_i^k(t) P_i^k\]
+Diese Formel gilt für alle $k = 1, 2, ..., d+1$. Für $k = d+1$ sind die Punkte $P_i^k$ die Kontrollpunkte und
+$C_i^k(t)$ sind die Basisfunktionen
+
+\subsection{Basisfunktion}
+\begin{center}
+ % 22.9
+\end{center}
+\[\boxed{C_i^1 = \begin{cases}
+           1, & u_i \le t \le u_{i+1}\\
+           0, & \text{sonst}
+          \end{cases}}
+\]
+$k = 1$:
+\[X(t) = \sum\limits_{i=0}^{n-1} C^1_i(t) P^1_i(t) \quad \checkmark\]
+\begin{align*}
+ X(t) &= \sum\limits_{i=0}^{n-1} C_i^k(t) \cdot P_i^k\\
+	&= \sum\limits_{i=0}^{n-1} C_{i+1}^k(t) \cdot \frac{u_{i+k+1} - t}{u_{i+k+1} - u_{i+1}} P_{i}^{k+1}
+		+ \sum\limits_{i=0}^{n-1} C_{i}^k(t) \cdot \frac{t-u_{i}}{u_{i+k} - u_i} P_{i}^{k+1}\\
+	&= \sum\limits_{i=0}^{n-1} \underbrace{\left(C_{i+1}^k(t) \cdot \frac{u_{i+k+1} - t}{u_{i+k+1} - u_{i+1}}
+		+ C_{i}^k(t) \cdot \frac{t-u_{i}}{u_{i+k} - u_i} \right)}_{C_i^{k+1}(t)} P_i^k+1
+\end{align*}
+Rekursionsformel für die Basisfunktionen $k > 1$ ($k = 1$ s. oben)
+\[\boxed{C_i^k(t) = \frac{t-u_{i}}{u_{i+k-1} - u_i} C_i^{k-1}(t) + \frac{u_{i+k}-t}{u_{i+k} - u_i} C_{i+1}^{k-1}(t)}\]
+$C_i^d+1(t)$ sind die Basisfunktionen for B-Splines der Ordnung $d$.
+
+\subsection{Wahl der Knotenpunkte}
+$d = 3$, kubische Splines
+\begin{align*}
+ u_1, u_2, u_3, ... &= 0\quad1\quad2\quad3\quad4\quad... & (\text{\footnotesize uniforme, gleichförmige B-Splines})\\
+		& -2\quad-1\quad0\quad1\quad3\quad3\quad4\quad...\\
+		& 0\quad0\quad0\quad1\quad2\quad3\quad4\quad...k-1\quad k\quad k \quad k &
+			(\text{\footnotesize Die Kurve beginnt dann mit $P_9$ und hört in $P_{n-1}$ auf})\\
+		& 0\quad0\quad0\quad1\quad1\quad1 &(\text{\footnotesize $n=4$, Bézier-Splines})
+\end{align*}
+\begin{center}
+ % 22.10
+\end{center}
+Für lauter verschiedene Knotenpunkte ist ein B-Spline der Ordnung $d$ $(d-1)$-mal stetig differenzierbar (von der
+Klasse $C^d-1$)\\[1em]
+Durch Wiederholen der gleihen Werte in der Knotenfolge kann man die Kurve näher an das Kontrollpolygon zwingen,
+es geht aber Glattheit verloren!!
+\begin{itemize}
+ \item 2 gleiche Werte: $3 \quad 4 \quad 5 \quad 5 \quad 6 \quad 7 \quad ...$ Kurve berührt eine \emph{Strecke} des
+	Kontrollpolygons, nur mehr $C^1$-stetig
+	\begin{center}
+	 % 22.11
+	\end{center}
+ \item 3 gleiche Werte: Kurve geht ddurch einen Kontrollpunkt, nur mehr $C^0$-stetig (stetig)
+ \item 4 oder mehr gleiche Werte $\rightarrow$ unstetig
+\end{itemize}

@@ -100,12 +100,12 @@ $O(d^2)$ Operationen
 \Bew des Casteljau-Algorithmus:
 \begin{align*}
  \mathcal B^d(t)(P_0,...,P_d) &\stackrel{?}= (1-t) \mathcal B^{d-1}(P_0, ..., P_{d-1})
-	+ t \mathcal B^{d-1}(P_1, ..., P_d)\\
-	&= (1-t) \sum\limits_{i=0}^{d-1} B_i^{d-1}(t) P_i +
+	+ t \cdot \mathcal B^{d-1}(P_1, ..., P_d)\\
+	&= (1-t) \sum\limits_{i=0}^{d-1} B_i^{d-1}(t) P_i + t \cdot % <-- ?
 		 \underbrace{\sum\limits_{i=0}^{d-1} B_i^{d-1}(t) P_{i+1}}_
 			{=\sum\limits_{j=1}^{d} B_{j-1}^{d-1}(t) P_j}\\
-	&= (1-t) \sum\limits_{j=0}^{d-1} B_j^{d-1}(t) P_{j} + \sum\limits_{j=1}^{d} B_{j-1}^{d-1}(t) P_j
-	&= \text{(*) verwenden}\\
+	&= (1-t) \sum\limits_{j=0}^{d-1} B_j^{d-1}(t) P_{j} + t \cdot \sum\limits_{j=1}^{d} B_{j-1}^{d-1}(t) P_j\\
+	&= \text{(*) verwenden}
 \end{align*}
 \subsubsection{Algorithmus}
 \begin{description}
