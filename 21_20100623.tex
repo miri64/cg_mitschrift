@@ -38,13 +38,13 @@
 	\begin{enumerate}
 	 \item $B_i^d(t) \ge 0$ für $0 \le t \le 1$
 	 \item $\boxed{\sum\limits_{i=0}^{d} B_i^d(t) = 1}$
-		\Bew	\[\sum \binom{d}{i} t^i (1-t)^{d-i} = [t + (1-t)]^d = 1^d = 1\]
+		\Bew	\[\sum\limits_{i=0}^{d} \binom{d}{i} t^i (1-t)^{d-i} = [t + (1-t)]^d = 1^d = 1\]
 	 \item Rekursion:
-		\begin{align}
+		\begin{align*}
 		\rnode{left}{B_i^d(t)} &= \rnode{right}{t \cdot B_{i-1}^{d-1}(t) + (1-t)B_i^{d-1}(t)} \qquad 1 \le i \le d - 1\\
-		 B_d^d(t) &= t \cdot B_{d-1}^{d-1}(t)	= t^d
+		 B_d^d(t) &= t \cdot B_{d-1}^{d-1}(t)	= t^d \\
 		 B_0^d(t) &= t \cdot B_{d-1}^{d-1}(t) + (1-t) B_0^{d-1}(t) = (1-t)
-		\end{align}
+		\end{align*}
 		\ncbox{left}{right}
 		\Bew (von (1))
 			\begin{align*}
@@ -55,7 +55,7 @@
 			\end{align*}
 	\end{enumerate}
 	\paragraph*{Bemerkung} $(B_0^d(t), ..., B_d^d(t))$ sind die Wahrscheinlichkeiten bei der Binomialverteilung mit
-	Erfolgswahrscheinlichkeit $p = t$\\[1em]
+	Er"-folgs"-wahr"-schein"-lich"-keit $p = t$\\[1em]
 	$B_i^d(p) =$ Wahrscheinlichkeit, dass bei $d$ Wiederholungen genau $i$ Erfolge auftreten.
 \end{itemize}
 $\Rightarrow$ Splinekurve $\vec P(t)$:
