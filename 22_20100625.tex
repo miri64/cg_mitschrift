@@ -72,7 +72,7 @@ $C_i^k(t)$ sind die Basisfunktionen
 \begin{center}
  % 22.9
 \end{center}
-\[\boxed{C_i^1 = \begin{cases}
+\[\boxed{C_i^1(t) = \begin{cases}
            1, & u_i \le t \le u_{i+1}\\
            0, & \text{sonst}
           \end{cases}}
@@ -87,7 +87,7 @@ $k = 1$:
 		+ C_{i}^k(t) \cdot \frac{t-u_{i}}{u_{i+k} - u_i} \right)}_{C_i^{k+1}(t)} P_i^k+1
 \end{align*}
 Rekursionsformel für die Basisfunktionen $k > 1$ ($k = 1$ s. oben)
-\[\boxed{C_i^k(t) = \frac{t-u_{i}}{u_{i+k-1} - u_i} C_i^{k-1}(t) + \frac{u_{i+k}-t}{u_{i+k} - u_i} C_{i+1}^{k-1}(t)}\]
+\[\boxed{C_i^k(t) = \frac{t-u_{i}}{u_{i+k-1} - u_i} C_i^{k-1}(t) + \frac{u_{i+k}-t}{u_{i+k} - u_{i+1}} C_{i+1}^{k-1}(t)}\]
 $C_i^d+1(t)$ sind die Basisfunktionen for B-Splines der Ordnung $d$.
 
 \subsection{Wahl der Knotenpunkte}
