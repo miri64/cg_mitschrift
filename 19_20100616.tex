@@ -112,7 +112,7 @@ Das Gleichungssystem löst man am besten iterativ:
  \item Beginne mit einer beliebigen Ausgangslösung $\vec b^{(0)}$ z. B. durch Phong-Beleuchtung berechnet. oder
 	\[\vec b^{(0)} = \vthree{b_1^{(0)}}{\vdots}{b_n^{(0)}} \cdot \vthree{0}{\vdots}{0}\]
  \item Setze $b^{(k)}$ rechts ein und erhalte die nöchste Näherungslösung
-	\[\boxed{b_i^{(k+1)} = \sum\limits_{i}{j=1} b_j^{(k)} \cdot f_{ij} + e_i}, \qquad i = 1, ..., n\]
+	\[\boxed{b_i^{(k+1)} = \sum\limits{j=1}^i b_j^{(k)} \cdot f_{ij} + e_i}, \qquad i = 1, ..., n\]
 \end{itemize}
 Das konvergiert umso schneller, je kleiner die $\rho_i$-Werte sind.
 
