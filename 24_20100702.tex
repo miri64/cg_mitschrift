@@ -1,0 +1,134 @@
+\subsubsection{Rationale Splines und Gewichte}
+\[
+ \begin{array}{rr|l}
+      & \textbf{kartesische Koordinaten} & \textbf{Gewicht}\\
+  \hline
+  P_0 & (x_1 \quad y_1 \quad (z_1)) & w_1\\
+  P_1 & (x_2 \quad y_2 \quad (z_2)) & w_2\\
+	& \vdots & w_3
+ \end{array}
+\]
+Als Kontrollpolygon für dien rationalen Spline verwendet man
+\begin{center}
+ $(w_1x_1,w_1y_1,w_1)$\\
+ $(w_2x_2,w_2y_2,w_2)$\\
+ $\vdots$
+\end{center}
+
+\paragraph*{Beispiel} quadratische nicht rationaler B-Spline
+\begin{center}
+%  24.1
+\end{center}
+\emph{rationaler Spline} mit Gewichten
+\begin{align*}
+ X(t) &= \frac{1}{8} \vtwo{w_4 P_4}{w_4} + \frac{3}{4} \vtwo{w_5 P_5}{w_5} + \frac{1}{8} \vtwo{w_6 P_6}{w_6} \\
+      &= \left(\frac{1}{8} w_4\right) P_4 + \left(\frac{3}{4} w_5\right) P_5 + \left(\frac{1}{8} w_6\right) P_6\\
+      \hline
+      &= \frac{1}{8} w_4 + \frac{3}{4} w_5 + \frac{1}{8} w_6
+\end{align*}
+Ein gewichtetes Mittel der 3 Punkte $P_4, P_5, P_6$, Gewichte: $\frac{1}{8} w_4, \frac{3}{4} w_5, \frac{1}{8} w_6$\\
+$w_5$ größer $\Rightarrow$ $P_5$ bekommt mehr Gewicht $\Rightarrow$ Kurve wird in Richtung $P_5$ gezogen
+
+\section{Hermite-Splines}
+\begin{center}
+ % 24.2
+\end{center}
+Kurven, die zwischen zwei gegebenen Endpunkten $P_0$ und $P_3$ interpolieren und dort gegebene Ableitungen $v_0, v_3$
+haben. Mehrere solcher Kurven kann mann zusammen setzen, so dass an den Übergängen keine Knicke entstehen.\\[1em]
+\textbf{Bezierspline} vom Grad 3:
+\begin{center}
+ %24.3
+\end{center}
+\begin{align*}
+ v_0 &= X'(0) = 3 \cdot (P_1 - P_0)\\
+ v_3 &= X'(3) = 3 \cdot (P_3 - P_2)
+\end{align*}
+
+\begin{align*}
+ P_1 &= P_0 + \frac{v_0}{3}\\
+ P_2 &= P_3 - \frac{v_3}{3}
+\end{align*}
+\begin{center}
+ % 24.4
+\end{center}
+\begin{center}
+ \begin{tabular}{|p{0.98\linewidth}|}
+  \hline
+  Der Hermite-Spline ist der Bézier-Spline mit den Kontrollpunkten $P_0, P_1, P_2, P_3$\\
+  \hline
+ \end{tabular}
+\end{center}
+
+\Satz Eine Kurve oder Fläche der Klasse $C^k$ ist $k$-mal stetig (\textbf{paramtrische Stetigkeit})
+	\begin{itemize}
+	 \item $C^0 \dots$ stetig (keine Sprünge)
+	 \item $C^1 \dots$ tangentenstetig (keine Knicke)
+	 \item $C^2 \dots$ die Krümmung ändert sich stetig.
+	\end{itemize}
+\begin{center}
+ % 23.5
+\end{center}
+\Defi \textbf{Geometrische Stetigkeit}
+\begin{itemize}
+ \item $G^1 \dots$ Tangentenrichtung ist überall definiert und ändert sich stetig.
+	entsteht beim Zusammensetzen zweier Kurven, die an den Enden parallele Tangenten haben.\\
+	Wenn man eine Kurve geeignet umparametrisiert wird die Kurve an dieser Stelle $C_1$-stetig
+\end{itemize}
+geometrisch ist kein Unterschied zwischen $C_1$ und $G_1$
+
+\section{Parametrische Flächen}
+\[X(u,v) \in \mathbb{R}^3 \qquad u, v \in U \subseteq \mathbb{R}^2\]
+Kurven $X(t) \in \mathbb{R}^2$ bzw. $X(t) \in \mathbb{R}^3$, $t \in$ Intevall
+\paragraph*{Beispiel} Kugel in Kugelkoordinaten
+\begin{align*}
+ x &= \cos \varphi \cdot \cos \vartheta & \vline && 0 &\le \varphi \le 2\pi\\
+ y &= \sin \varphi \cdot \cos \vartheta & \vline && -\frac{\pi}{2} &\le \vartheta \le \frac{\pi}{2}\\
+ z &= \sin \vartheta & \vline &&
+\end{align*}
+\begin{center}
+ % 24.7
+\end{center}
+\begin{align*}
+ x(u,v) &= 2 u^2 + 3 v^2 &
+ u^2 + v^2 & \le 1 \\
+ y(u,v) &= 7uv\\
+ y(u,v) &= 3 + 5 u + - v\\
+\end{align*}
+\begin{center}
+  %24.8
+\end{center}
+
+Bestimmen der Normalen auf die Fläche im Punkt $X(u,v)$
+\begin{align*}
+	\frac{\partial X}{\partial u} &= \text{ Die Tangente der Kurve die durch $v = \mathbf{const}$ bestimmt ist}\\
+	\frac{\partial X}{\partial v} &= \text{ Die Tangente der Kurve die durch $u = \mathbf{const}$ bestimmt ist}
+\end{align*}
+$\dfrac{\partial X}{\partial u}$ und $\dfrac{\partial X}{\partial v}$ spannen die Tangetialebene auf (wenn sie nicht
+	zufällig parallel sind). Der Normalenvektor $\vec n$ ist darauf senkrecht:
+	\[\vec n = \dfrac{\partial X}{\partial u} \times \dfrac{\partial X}{\partial v}\]
+\paragraph*{Beispiel} an der Kugel
+\begin{align*}
+ \frac{\partial X}{\partial u} &= \vthree{\frac{\partial x}{\partial u}}{\frac{\partial y}{\partial u}}
+	{\frac{\partial z}{\partial u}} = \vthree{4u}{7v}{5}\\
+ \frac{\partial X}{\partial v} &= \vthree{4v}{7u}{-1}\\
+ (u,v) &= \left(\frac{1}{2}, \frac{1}{2}\right) \qquad X(u,v) = \vthree{\nicefrac{5}{4}}{\nicefrac{7}{4}}{5}\\
+ \vec n &= \vthree{2}{\nicefrac{7}{2}}{5} \times \vthree{2}{\nicefrac{7}{2}}{-1}
+\end{align*}
+
+\subsection{Spline-Flächen}
+\Defi \textbf{rechteckige $\boldsymbol{a \times b}$-Bezier-Splines}: Gegeben ist ein rechteckiges Feld von
+	Kontrollpunkgen $P_{ij}, 0 \le i \le a-1, 0 \le j \le b-1$
+	\[\boxed{X(u,v) = \sum\limits_{i=0}^{a-1}\sum\limits_{j=0}^{b-1}
+				B_i^a(u)B_j^b(v) P_{ij}}, \qquad 0 \le u \le 1, 0 \le v \le 1\]
+	\[\sum\limits_{i=0}^{a-1}\sum\limits_{j=0}^{b-1}
+				B_i^a(u)B_j^b =
+				\underbrace{\sum\limits_{i=0}^{a-1} B_i^a(u)}_{= 1} \cdot
+				\underbrace{\sum\limits_{j=0}^{b-1}B_j^b}_{= 1} = 1\]
+	\begin{align*}
+	 v = 0 &\Rightarrow \begin{cases}
+	                     B_0^b(0) = 1 \\
+	                     B_j^b(0) = 1, & j > 0
+	                    \end{cases}\\
+	 X(u,0) &= \sum\limits_{i=0}^{a-1} B_i^a(u) P_{i0}\\
+		&=\ \text{Bezier-Kurve für $P_{00}, P_{10}, ..., P_{a-1,0}$}
+	\end{align*}
