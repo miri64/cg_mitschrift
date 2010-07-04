@@ -162,9 +162,8 @@ Für jede Fläche:
 Für jedes Flächenstück addiert man alle Beleuchtungskomponennten zusammen (falls die Fäche sichtbar vom Auge ist).
 \begin{align*}
  I^R &= \sum \text{diffuse Reflexionen von allen Lichtquellen, die das Flächenstück beleuchten.} \\
-	& \qquad + I_D^R \cdot K^R \\
 	& \qquad + \text{spiegelnde Reflexionen von allen Lichtquellen, die das Flächenstück beleuchten.} \\
-	& \qquad + I_E^R
+	& \qquad + I_{L,E}^R \cdot K^R_E
 \end{align*}
 analog für $I^G, I^B$
 \begin{center}
@@ -183,7 +182,7 @@ analog für $I^G, I^B$
  \end{pspicture}
 \end{center}
 eigentlich liefert die Rechnung in jedem Punkt der Fläche ein anderes Ergebnis.
-\paragraph*{Problem} Die Intensität kan in einzelnen Punkten des Bildes $> 1$ werden.
+\paragraph*{Problem} Die Intensität kann in einzelnen Punkten des Bildes $> 1$ werden.
 2 Möglichkeiten
 \begin{enumerate}
  \item herunterskalieren aller Werte\\

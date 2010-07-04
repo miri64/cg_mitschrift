@@ -1,36 +1,24 @@
 \chapter{Texturen}
 \emph{(Abbildungen folgen später)}\\
-Aufbringen eines Musters auf eine Fläche.
-\begin{center}
- % 15.1
-\end{center}
+Aufbringen eines Musters auf eine Fläche.\\[1em]
+% 15.1
 Das Muster -- die Textur -- ist als zweidimensionales \emph{Bild} gegeben (Pixelarray), und eine Abbildung
-von diesem Bild auf eine Fläche im Raum.
-\begin{center}
- % 15.2
-\end{center}
+von diesem Bild auf eine Fläche im Raum.\\[1em]
+% 15.2
 Die Bildfläche muss nicht unbedingt flach sein:
 \begin{enumerate}
- \item gekrümmt
-	\begin{center}
-	 % 15.3
-	\end{center}
- \item Dreiecksgitter
-	\begin{center}
-	 % 15.4
-	\end{center}
-	Dann muss man das Bild in ein dreicksgitter mit derselben kombinatorischen Struktur zerlegen.
+ \item gekrümmt % 15.3
+ \item Dreiecksgitter % 15.4
+	Dann muss man das Bild in ein Dreicksgitter mit derselben kombinatorischen Struktur zerlegen.
 	Die Abbildung erfolgt dann durch lineare Interpolation auf jedem Dreieck.
 \end{enumerate}
-Bei beiden Lösungen existiert das Problem der Verzerrung.
-\begin{align*}
- % 15.5
-\end{align*}
+Bei beiden Lösungen existiert das Problem der Verzerrung.\\[1em]
 Einfaches Modell für Architektur: Fassade wird auf die Hasuwand aufgeklebt.
+% 15.5
 \paragraph*{Problem} Schatten sind möglicherweise nicht richtig.
 
-Bei der Darstellung benötigt man die umkehrabbildung von der Fläche in Weltkoordinaten
-(bzw. von der proyezierten Fläche in NDC) auf die Textur.
+Bei der Darstellung benötigt man die Umkehrabbildung von der Fläche in Weltkoordinaten
+(bzw. von der projezierten Fläche in NDC) auf die Textur.
 
 Bei der linearen Interpolation von \emph{Dreiecken} verwendet man gerne \emph{baryzenztische Koordinaten}
 \begin{center}
