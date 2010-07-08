@@ -1,4 +1,4 @@
-% Bilder im KI-Heft
+Bilder im KI-Heft
 \section{Bézierkurven (Bézier-Splines)}
 \begin{itemize}
  \item Ordnung = $d$ = Grad der Polynome
@@ -6,15 +6,15 @@
  \item \textsc{Bernstein}polynome:
 	\[\boxed{B^d_i = \binom{d}{i} \cdot t^i \cdot (1-t)^{d-i}}\qquad i = 0,1,...,d \qquad 0 \le t \le 1\]
 %	\begin{tabular}{rp{0.3\linewidth}p{0.3\linewidth}}
-%	 $d = 1$ &\begin{minipage}{\linewidth}
+	 $d = 1$ %&\begin{minipage}{\linewidth}
 		\begin{align*}
 		 B_0^1(t) &= 1 \cdot t^0 (1-t)^1 = 1-t\\
 		 B_1^1(t) &= \binom{1}{1} \cdot t^1 \cdot (1-t)^0 = t
 		\end{align*}
 %		\end{minipage}
 %		&
-%		% 21.1
-%	 $d = 2$ &\begin{minipage}{\linewidth}
+%		21.1
+	 $d = 2$ %&\begin{minipage}{\linewidth}
 		\begin{align*}
 		 B_0^2(t) &= \binom{2}{0} \cdot t^0 (1-t)^2 = (1-t)^2 = 1-2t+t^2\\
 		 B_1^2(t) &= \binom{2}{1} \cdot t^1 \cdot (1-t) = 2t(1-t) = 2t-2t^2\\
@@ -22,17 +22,17 @@
 		\end{align*}
 %		\end{minipage}
 %		&
-%		% 21.2
-%	 $d = 3$ &\begin{minipage}{\linewidth}
+		21.2
+	 $d = 3$ %&\begin{minipage}{\linewidth}
 		\begin{align*}
-		 B_0^3(t) &= (1-t)^3\\
+		B_0^3(t) &= (1-t)^3\\
 		 B_1^2(t) &= \binom{3}{1} \cdot t^1 \cdot (1-t)^2 = 3t(1-t) = 3t(1-t)^2\\
 		 B_2^2(t) &= \binom{3}{2} \cdot t^2 \cdot (1-t) = 3t^2(1-t) = 3t^2 - 3t^3\\
 		 B_3^3(t) &= t^3
 		\end{align*}
 %		\end{minipage}
 %		&
-%		% 21.3	
+		21.3	
 %	\end{tabular}
 	Eigenschaften der Bernsteinpolynome:
 	\begin{enumerate}
@@ -65,7 +65,7 @@ $\Rightarrow$ Splinekurve $\vec P(t)$:
 $d = 1$:
 \[\vec P(t) = (1-t) \cdot \vec P_0 + t \vec P_1 = \vec P_0 + t(\vec P_1 - \vec P_0)\]
 \begin{center}
- %21.4
+ 21.4
 \end{center}
 Eigenschaften:
 \begin{enumerate}
@@ -74,7 +74,7 @@ Eigenschaften:
 	$\overrightarrow{P_{d-1}P_d}$ (Beweis s. Übung, Aufgabe 29).
  \item Die Kurbe verläuft in der Konvexen Hülle der Kontrollpunkte.
 	\begin{center}
-	 % 21.5
+	 21.5
 	\end{center}
  \item Die Punkte $\vec P_0, ..., \vec P_d$ können $\in \mathbb{R}^2, \in \mathbb{R}^3, ..., \mathbb{R}^n$ sein.
 	Bézierkurven \emph{im Raum} werden auf die gleiche Art definiert.
@@ -86,13 +86,13 @@ Eigenschaften:
 	  Kontrollpolygon.\\
 	  \hline
 	 \end{tabular}\\
-	 % 21.5
+	 21.5
 	\end{center}
 \subsection{Der Algorithmus von de Casteljau}
 zur Berechnung von $P(t)$
 \begin{center}
- % 21.7\\
- % 21.8
+ 21.7\\
+ 21.8
 \end{center}
 $O(d^2)$ Operationen
 \[\mathcal B^d(t)(P_0,...,P_d) := \sum\limits_{i=0}^d B_i^d(t) \cdot P_i\]
@@ -101,7 +101,7 @@ $O(d^2)$ Operationen
 \begin{align*}
  \mathcal B^d(t)(P_0,...,P_d) &\stackrel{?}= (1-t) \mathcal B^{d-1}(P_0, ..., P_{d-1})
 	+ t \cdot \mathcal B^{d-1}(P_1, ..., P_d)\\
-	&= (1-t) \sum\limits_{i=0}^{d-1} B_i^{d-1}(t) P_i + t \cdot % <-- ?
+	&= (1-t) \sum\limits_{i=0}^{d-1} B_i^{d-1}(t) P_i + t \cdot <-- ?
 		 \underbrace{\sum\limits_{i=0}^{d-1} B_i^{d-1}(t) P_{i+1}}_
 			{=\sum\limits_{j=1}^{d} B_{j-1}^{d-1}(t) P_j}\\
 	&= (1-t) \sum\limits_{j=0}^{d-1} B_j^{d-1}(t) P_{j} + t \cdot \sum\limits_{j=1}^{d} B_{j-1}^{d-1}(t) P_j\\

@@ -1,6 +1,6 @@
 \subsection{Zusammenfassung}
 \begin{center}
- % 18.1
+ 18.1
 \end{center}
 Ein Lichtstrahl trifft auf eine Fläche
 \begin{itemize}
@@ -27,17 +27,17 @@ In welchen Einheiten wird ein "`Lichtstrahl"' gemessen? (Die bisherige "`Intensi
 	\end{center}
 	Eine Lichtquelle, die mit 1 cd in alle Richtungen strahlt, hat einen Lichtstrom von $4 \pi$ lm.
 	\begin{center}
-	 % 12.2
+	 12.2
 	\end{center}
 	[Raumwinkel: Der Raumwinkel, unter dem man ein Objekt sieht, \emph{ist} die Fläche der Projektion auf die
 		Einheitskugel (analog zum Ebenenwinkel)]
 	\begin{center}
-	 % 12.3
+	 12.3
 	\end{center}
  \item[Beleuchtungsstärke] Auf eine Fläche einfallender Lichtstrom, pro Fläche
 	\begin{center}
 	 Einheit = 1 Lux = 1 lx = 1 $\dfrac{\text{lm}}{\text{m}^2}$\\[1em]
-	 % 12.4
+	 12.4
 	\end{center}
 	Bei der Planung von Beleuchtungsanlagen wichtig
  \item[Leuchtdichte] (engl. luminance) Wieviel Licht wird von einer ausgedehnten Lichtquelle pro Flächeneinheit
@@ -45,7 +45,7 @@ In welchen Einheiten wird ein "`Lichtstrahl"' gemessen? (Die bisherige "`Intensi
 	\begin{center}
 	 $\dfrac{\text{Lichtstärke}}{\text{Fläche}} = \dfrac{\text{Lichtstrom}}{\text{Raumwinkel} \cdot \text{Fläche}}
 	 = \dfrac{\text{Beleuchtungsstärke}}{\text{Raumwinkel}}$\\[1em]
-	 % 12.5
+	 12.5
 	 Bild\\[1em]
 	 Einheit = 1 $\dfrac{\text{cd}}{\text{m}^2}$
 	\end{center}
@@ -56,24 +56,24 @@ In welchen Einheiten wird ein "`Lichtstrahl"' gemessen? (Die bisherige "`Intensi
 	\item Bei den elektromagnetischen Strahlen ist die äquivalente Einheit die Strahlungsdichte
 	\end{itemize}
 	\begin{center}
-	 % 12.6
+	 12.6
 	\end{center}
 \end{description}
 
 \subsection{Diffuse Reflexion}
 Bei der diffusen Reflexion gilt das \textsc{Lambert}'sche Gesetz:
 \begin{center}
- % 12.7
+ 12.7
 \end{center}
 Die Leuchtdichte, die in eine bestimmte Richtung geschickt wird, die einen Winkel $\alpha$ mit der Normalen bildet
 ist proportional zu $\boldsymbol{\cos \alpha}$.
 \begin{center}
- % 12.8
+ 12.8
 \end{center}
 Bei der Betrachtung von der Seite wird der gleiche Raumwinkel aus der Sicht des Betrachters von einer größeren Fläche
 überdeckt (s. dazu auch Abschnitt \ref{sec:diffuse_refl}, S. \pageref{lambert}).
 \begin{center}
- % 12.9
+ 12.9
 \end{center}
 \begin{align*}
  \alpha = 0^\circ \qquad & 2 \tan \beta\\
@@ -90,7 +90,7 @@ Dieser effekt gleicht sich mit dem Lambert'schen Gesetz aus. Daher erscheint ein
 Beim Raytracing wird der gespieglte Strahl (oder gebrochene Strahl) zurückverfolgt,
 bis er auf eine diffuse Fläche trifft.
 \begin{center}
- %12.10
+ 12.10
 \end{center}
 Rekursives Raytracing an jedem Punkt, wo der Stahl auftrifft, werden die verschiedenen Anteile (diffus, gespiegelt,
 gebrochen) aufgesammelt.
@@ -120,4 +120,4 @@ function trace(Strahl $r$; Faktor $f$; Schnitttiefe $t$)
 \footnotetext[1]{hängt von der Geometrie und der Oberflächenbeschaffenheit von $P$ ab}
 \footnotetext[2]{Welcher Antei des Lichts, das aus Richtung $r'$ kommt wird in Richtung $r$ weitergeleitet}
 
-% Weiter s. Fotos 1-3
+Weiter s. Fotos 1-3

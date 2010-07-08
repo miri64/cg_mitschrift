@@ -1,20 +1,20 @@
 \chapter{Texturen}
 \emph{(Abbildungen folgen später)}\\
 Aufbringen eines Musters auf eine Fläche.\\[1em]
-% 15.1
+15.1
 Das Muster -- die Textur -- ist als zweidimensionales \emph{Bild} gegeben (Pixelarray), und eine Abbildung
 von diesem Bild auf eine Fläche im Raum.\\[1em]
-% 15.2
+15.2
 Die Bildfläche muss nicht unbedingt flach sein:
 \begin{enumerate}
- \item gekrümmt % 15.3
- \item Dreiecksgitter % 15.4
+ \item gekrümmt 15.3
+ \item Dreiecksgitter 15.4
 	Dann muss man das Bild in ein Dreicksgitter mit derselben kombinatorischen Struktur zerlegen.
 	Die Abbildung erfolgt dann durch lineare Interpolation auf jedem Dreieck.
 \end{enumerate}
 Bei beiden Lösungen existiert das Problem der Verzerrung.\\[1em]
 Einfaches Modell für Architektur: Fassade wird auf die Hasuwand aufgeklebt.
-% 15.5
+15.5
 \paragraph*{Problem} Schatten sind möglicherweise nicht richtig.
 
 Bei der Darstellung benötigt man die Umkehrabbildung von der Fläche in Weltkoordinaten
@@ -22,20 +22,20 @@ Bei der Darstellung benötigt man die Umkehrabbildung von der Fläche in Weltkoo
 
 Bei der linearen Interpolation von \emph{Dreiecken} verwendet man gerne \emph{baryzenztische Koordinaten}
 \begin{center}
- % 15.6
+ 15.6
 \end{center}
 \[(\lambda_1, \lambda_2, \lambda_3) \text{ mit } \lambda_1 + \lambda_2 + \lambda_3 = 1\]
 stellt den Punkt $\lambda_1 A_1 + \lambda_2 A_2 + \lambda_3 A_3$ dar.
 \[\lambda_1, \lambda_2, \lambda_3 \ge 0 \Leftrightarrow \text{ Punkt im Dreieck}\]
 \begin{center}
- % 15.7
+ 15.7
 \end{center}
 Die Ecken des Dreiecks auf dem Objekt haben barizentrische Koordinaten
 \[(\lambda_1, \lambda_2, \lambda_3) = (1,0,0), (0,1,0), (0,0,1)\]
 dazwischen wird linear \emph{interpoliert} (in Weltkoordinaten). Dann nimmt man in der Textur den Punkt an der
 Stelle $\lambda_1 B_1 + \lambda_2 B_2 + \lambda_3 B_3$.
 \begin{center}
- % 15.8+9
+ 15.8+9
 \end{center}
 Möglcihe Probleme dadurch, das Auflösung des erzeugten bilder nicht mit der Auflösung der Textur übereinstimmt.
 \begin{enumerate}[a)]
@@ -47,7 +47,7 @@ Möglcihe Probleme dadurch, das Auflösung des erzeugten bilder nicht mit der Au
 
 \chapter{Schatten}
 \begin{center}
- %13.10
+ 13.10
 \end{center}
 Für die Berecnhung von chatten kann man die gleichen Methoden verwenden, wie zur Bestimmung sichtbarer Flächen:
 \begin{itemize}
@@ -61,11 +61,11 @@ Für die Berecnhung von chatten kann man die gleichen Methoden verwenden, wie zu
 	\begin{center}
 	 \rnode{Index}{Index} (Nummer) der Fläche, die gerade dargestellt wird.
 	 \ncangle[angleA=90,angleB=-90]{->}{Index}{I}\\
-	 % 13.11
+	 13.11
 	\end{center}
  \item Erzeuge das Bild, dass vom Auge aus sichtbar ist Pixel für Pixel.
 	\begin{center}
-	 % 13.12
+	 13.12
 	\end{center}
 	$P$ sei der Punkt (in Weltkoordinaten), der gerade dargestellt wird. Er gehört zum Objekt mit Nummer $n$.
 	Bestimme das Bild von $P$ im Bildpuffer, der zur Lichtquelle gehört und vergleiche den Index, der dort
@@ -76,7 +76,7 @@ Für die Berecnhung von chatten kann man die gleichen Methoden verwenden, wie zu
 \chapter{Clipping}
 Eine Strecke auf ein Rechteck zurechtstutzen.
 \begin{center}
- % 15.13
+ 15.13
 \end{center}
 \section{Algorithmus von Cohen-Sutherland}
 $\mathbb{R}^2 \to \{0,1\}^4 \qquad$ (4 Bits)

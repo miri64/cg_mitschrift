@@ -1,7 +1,7 @@
 \section{B-Splines}
 B = Basis (nicht Bézier)
 \begin{center}
- % 22.1
+ 22.1
 \end{center}
 Der B-Spline ist bei Ordnung 1 das Kontrollpolygon selbst.\\[1em]
 Knoten $u_1 < u_2 < u_3 < ... < u_n \in \mathbb{R}$
@@ -10,7 +10,7 @@ Knoten $u_1 < u_2 < u_3 < ... < u_n \in \mathbb{R}$
 \]
 Notation:
 \begin{center}
- % 22.2
+ 22.2
 \end{center}
 $P$ interpoliert zwischen $A$ und $B$, wenn $t$ von $r$ bis $s$ variiert
 \[P(t) = \frac{s-t}{s-r} A + \frac{t-r}{s-r} B \qquad r \le t \le s\]
@@ -19,10 +19,10 @@ Wie hängt $X$ von den Punkten ab?
 \begin{center}
 \framebox[3cm]{\rnode{Basis}{Basisfunktionen}} \ncangle[angleA=90,angleB=-90]{->}{Basis}{C} (stückweise lineare Funktionen von $t$ hängen von
 	$u_1, u_2, ...$ ab) \\[1em]
- % 22.3
+ 22.3
 \end{center}
 \begin{center}
- % 22.4
+ 22.4
 \end{center}
 Die Kurve existiert im Intervall $t \in [u_2, u_n]$
 \begin{itemize}
@@ -37,18 +37,18 @@ Die Kurve existiert im Intervall $t \in [u_2, u_n]$
 	\end{array}
  \]
 \begin{center}
- % 22.5\\[1em]
- % 22.6
+ 22.5\\[1em]
+ 22.6
 \end{center}
 
 \paragraph*{Basisfunktionen}
 \begin{center}
- % 22.7
+ 22.7
 \end{center}
 
 \paragraph*{kubische Splines}
 \begin{center}
- % 22.8
+ 22.8
 \end{center}
 
 \subsection{B-Splines vom Grad $\boldsymbol{d}$}
@@ -57,7 +57,7 @@ Die Kurve existiert im Intervall $t \in [u_2, u_n]$
  \item $n$ Kontrollpunkte $P_0, ..., P_{n-1}$. Diese werden als $P_i^{\boldsymbol{d+1}}$ deklariert
  \item die B-Spline-Kurve existiert für $t \in [u_d, u_n]$
 	\begin{center}
-	 % 22.9
+	 22.9
 	\end{center}
 \end{itemize}
 \[\boxed{P_i^k(t) = \frac{u_{d+k}-t}{u_{i+k}-u_i} \cdot P_{i-1}^{k+1} + \frac{t-u_i}{u_{i+k}-u_i} \cdot P_i^{k+1}},
@@ -70,7 +70,7 @@ $C_i^k(t)$ sind die Basisfunktionen
 
 \subsection{Basisfunktion}
 \begin{center}
- % 22.9
+ 22.9
 \end{center}
 \[\boxed{C_i^1(t) = \begin{cases}
            1, & u_i \le t \le u_{i+1}\\
@@ -100,7 +100,7 @@ $d = 3$, kubische Splines
 		& 0\quad0\quad0\quad1\quad1\quad1 &(\text{\footnotesize $n=4$, Bézier-Splines})
 \end{align*}
 \begin{center}
- % 22.10
+ 22.10
 \end{center}
 Für lauter verschiedene Knotenpunkte ist ein B-Spline der Ordnung $d$ $(d-1)$-mal stetig differenzierbar (von der
 Klasse $C^d-1$)\\[1em]
@@ -110,7 +110,7 @@ es geht aber Glattheit verloren!!
  \item 2 gleiche Werte: $3 \quad 4 \quad 5 \quad 5 \quad 6 \quad 7 \quad ...$ Kurve berührt eine \emph{Strecke} des
 	Kontrollpolygons, nur mehr $C^1$-stetig
 	\begin{center}
-	 % 22.11
+	 22.11
 	\end{center}
  \item 3 gleiche Werte: Kurve geht ddurch einen Kontrollpunkt, nur mehr $C^0$-stetig (stetig)
  \item 4 oder mehr gleiche Werte $\rightarrow$ unstetig

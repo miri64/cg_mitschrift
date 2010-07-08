@@ -1,6 +1,6 @@
 \section{Darstellung von geometrischen Modellen in Grafikbibliotheken}
 \begin{center}
- % 17.1
+ 17.1
 \end{center}
 typische Funktionsaufrufe in einer Grafikbibliothek wie OpenGL
 \begin{lstlisting}
@@ -34,7 +34,7 @@ aktuelle Transformationsmatrix
 \item Dazwischen werden die aktuellen Werte von CT auf einem Stapel gespeichert (Push) bzw. wiederhergestellt (Pop)
 \end{itemize}
 \begin{center}
- % 17.2
+ 17.2
 \end{center}
 \begin{lstlisting}
 setze af Einheitsmatrix				// CT = $I$
@@ -60,23 +60,23 @@ Objekte werden als gefülltes Volumen betrachten, nicht als Randflächen.
  \item \textbf{Boolesche Operationen:} $\cup$, $\cap$, $\setminus$ (eigentlich Mengenoperationen)
 	z. B:
 	\begin{center}
-	% 17.3
+	17.3
 	\end{center}
 	\begin{center}
-	%17.4
+	17.4
 	\end{center}
 	Man möchte nur reguläre Mengen betrachten. Eine Menge $K$ ist regulär, wenn sie der Abschluss ihres Inneren ist:
 	\[K = \overline{K^\circ}\]
 	\paragraph*{zur Erinnerung:} Das Innere der Menge $A$ ist definiert mit
 	\[A^\circ = \{x \in A\ |\ \exists\varepsilon > 0:\ \text{Kreis mit Radius $\varepsilon$ um $x$ $\subseteq A$}\}\]
 	\begin{center}
-	%17.5
+	17.5
 	\end{center}
 	Der Abschluss von $A$ ist definiert mit
 	\[\overline A = \mathbb{R}^2 \setminus (\mathbb{R}^2 - A)^\circ\]
 	(bzw. mit $\mathbb{R^3}$ im Raum)
 	\begin{center}
-	%17.6
+	17.6
 	\end{center}
 	Der Rand von $A$ ist definiert mit
 	\[\partial A := \overline A - A^\circ\]
@@ -87,13 +87,13 @@ Objekte werden als gefülltes Volumen betrachten, nicht als Randflächen.
 	 A \setminus^* B &:= \overline{(A \setminus B)^\circ}
 	\end{align*}
 	\begin{center}
-	 % 17.7
+	 17.7
 	\end{center}
 \end{itemize}
 \subsection{Darstellung in der Computergrafik}
 \[A \cup^* \left[(B \cap^* C) \setminus^* (D \cap^* E)\right]\]
 \begin{center}
- % 17.8
+ 17.8
 \end{center}
 Umwandlung in eine expliziete Darstellung des Randes ist aufwändig.
 
@@ -109,7 +109,7 @@ Oberflächenstücke den Rand des Ergebnisses bilden.
 \chapter{Strahlverfolgung (Raytracing)}
 gut geeignet für spiegelnde und transparente Körper.
 \begin{center}
- % 17.9
+ 17.9
 \end{center}
 \begin{enumerate}[A)]
  \item \textbf{"`Forward raytracing"'} Schicke Lichtstrahlen (Lichtteilchen) von der Lichtquelle aus und
@@ -124,7 +124,7 @@ gut geeignet für spiegelnde und transparente Körper.
 		Flächen treffen.
 	\end{enumerate}
 	\begin{center}
-	 % 17.10
+	 17.10
 	\end{center}
 	Bei Spiegelung kann man entweder den Strahl vor dem Auftreffen (Auge) oder nach dem Auftreffen (Objekt)
 	an der Spiegelungseben spiegeln $\rightarrow$ aus dem geknickten Sichtstrahl wird eine Gerade.
@@ -133,13 +133,13 @@ gut geeignet für spiegelnde und transparente Körper.
 \section{Gesetzmäßigkeiten}
 \subsection{Reflexion}
 \begin{center}
- % 12.11
+ 12.11
 \end{center}
 $\alpha = \beta$: Einfallswinkel = Ausfallswinkel
 
 \subsection{Brechung}
 \begin{center}
- % 12.12
+ 12.12
 \end{center}
 Übergang zwischen zwei Medien $M_1$ und $M_2$, die verschiedene optische Dichte $D_1$ bzw. $D_2$ haben.
 \[\frac{\cos \alpha}{\cos \beta} = \underbrace{\frac{D_2}{D_1}}_{\text{fest für 2 gegebene Materialien}}\]

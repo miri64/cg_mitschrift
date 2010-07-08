@@ -29,15 +29,15 @@ Alle diese Operationen werden heute von Hardwareausgeführt\\[1em]
 	Grundmodell: triangulierte Flächen.\\[1em]
 	Mit triangulierten Flächen lässt sich im Prinzip alles genügend fein approximieren
 	\begin{center}
-	 % 16.1
+	 16.1
 	\end{center}
 	(flache Polygone mit mehr als 3 Ecken sind in der Regel auch zugelassen)
 	\begin{center}
-	 % 16.2
+	 16.2
 	\end{center}
  \item[Möglichkeit 2)] \emph{Implizite Flächen} Fläche ist durch eine Gleichung gegeben
 	\begin{center}
-	 % 16.3
+	 16.3
 	\end{center}
 	\[(x^2 + y^2)^2 + 3z^3xy - 28xz^2 = 0\]
  \item[Möglichkeit 3)] parametrische Fläche\\
@@ -79,7 +79,7 @@ Umwandlung von impliziten oder paramtrischen Flächen in ein Dreicksgitter: "`Gi
  \vdots\ 
 \end{align*}
 \begin{center}
- % 12.4 + 5
+ 12.4 + 5
 \end{center}
 \paragraph*{Problem:} in einem typischen Dreiecksgitter kommen die gleichen Punkte mehrfach vor. Es ist
 	Verschwendung, die gleichen Daten mehrfach zu speichern bzw. zu übertragen.
@@ -92,12 +92,12 @@ Umwandlung von impliziten oder paramtrischen Flächen in ein Dreicksgitter: "`Gi
 	Flächen sind typischerweise \emph{orientiert}: Dreieck $P_1,P_2,P_3$ und Dreieck $P_1,P_3,P_2$ sind Vorder-
 	und Rückseite des gleichen Dreiecks im Raum, un sie können unterschiedliche Materialeigenschaften haben.
 	\begin{center}
-	 % 16.6
+	 16.6
 	\end{center}
 	Um noch mehr zu sparen, werden Dreiecke zu alternierenden Dreiecksstreifen bzw. Dreiecksfächern zusammengefasst.
 	(und Vierecke zu Vierecksstreifen)
 	\begin{center}
-	 % 16.7
+	 16.7
 	\end{center}
 	Für $n$ Dreicke benötigt man nur $n+2$ Punkte. Für isolierte Dreicke werden 3$n$ Punkte benötigt.
 \end{enumerate}
@@ -109,7 +109,7 @@ Umwandlung von impliziten oder paramtrischen Flächen in ein Dreicksgitter: "`Gi
 \end{itemize}
 Jede Kante wird durch zwei \emph{Halbkanten} repräsentiert, eine in jede Richtung
 \begin{center}
- % 16.8
+ 16.8
 \end{center}
 Jede Halbkante hat 3 Zeiger:
 \begin{itemize}
@@ -117,7 +117,7 @@ Jede Halbkante hat 3 Zeiger:
  \item $u(e)...$ Umkehrkante
 \end{itemize}
 \begin{center}
- %16.9
+ 16.9
 \end{center}
 \[
  \begin{array}{c||c|c|c}
@@ -154,6 +154,6 @@ bis $e_i = e_1$
  u(u(e)) &= e
 \end{align*}
 \begin{center}
- % s. Foto-20100604-01
+ \includegraphics[width=\linewidth]{Foto-20100604-01.eps}
 \end{center}
 
